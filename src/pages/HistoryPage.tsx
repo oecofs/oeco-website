@@ -15,7 +15,12 @@ import {
   Award, 
   BookOpen,
   Calendar,
-  Check
+  Check,
+  Target,
+  Users,
+  TrendingUp,
+  FileSpreadsheet,
+  AlertCircle
 } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
 
@@ -26,7 +31,7 @@ export const HistoryPage: React.FC = () => {
       {/* ========================================================================= */}
       {/* 1. HERO EDITORIAL DA FLORESTA & SUSTENTABILIDADE */}
       {/* ========================================================================= */}
-      <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-20 px-4 sm:px-6 lg:px-8 bg-[#112010] text-[#FAF8F5] overflow-hidden">
+      <section className="relative min-h-[85vh] flex items-center justify-center pt-32 pb-24 px-4 sm:px-6 lg:px-8 bg-[#112010] text-[#FAF8F5] overflow-hidden">
         {/* Background Forest Canopy Image with Ambient Scrim */}
         <div className="absolute inset-0 z-0">
           <img
@@ -40,14 +45,6 @@ export const HistoryPage: React.FC = () => {
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto text-center">
-          {/* Kicker Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#4F6D46]/30 border border-[#D1B688]/40 backdrop-blur-md mb-8">
-            <Leaf className="w-4 h-4 text-[#D1B688]" />
-            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase">
-              A NOSSA HISTÓRIA &amp; PROPÓSITO
-            </span>
-          </div>
-
           {/* Main Headline */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] mb-8 text-[#FAF8F5]">
             Não viemos para derrubar a árvore.{' '}
@@ -59,62 +56,103 @@ export const HistoryPage: React.FC = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-xl text-[#FAF8F5]/90 max-w-3xl mx-auto leading-relaxed mb-10 font-normal">
+          <p className="text-base sm:text-xl text-[#FAF8F5]/90 max-w-3xl mx-auto leading-relaxed font-normal">
             A OECO nasceu da união entre o rigor analítico da alta controladoria e a sabedoria biológica das formigas-tecelãs: construir a partir do que já existe, com diligência diária, sustentabilidade perene e zero atalhos.
           </p>
-
-          {/* 3 Value Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-xs sm:text-sm font-mono font-semibold">
-            <span className="px-4 py-2 rounded-xl bg-[#FAF8F5]/10 border border-[#D1B688]/30 backdrop-blur-sm text-[#D1B688]">
-              🌿 Ame o Processo
-            </span>
-            <span className="px-4 py-2 rounded-xl bg-[#FAF8F5]/10 border border-[#D1B688]/30 backdrop-blur-sm text-[#FAF8F5]/90">
-              🐜 A Sabedoria da Oecophylla
-            </span>
-            <span className="px-4 py-2 rounded-xl bg-[#FAF8F5]/10 border border-[#D1B688]/30 backdrop-blur-sm text-[#FAF8F5]/90">
-              🌱 Disciplina do 1% Diário
-            </span>
-          </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. ATO 1: O PONTO DE PARTIDA (A Inquietação na Trincheira) */}
+      {/* 2. A INQUIETAÇÃO NA TRINCHEIRA (Condensado + Imagem) */}
       {/* ========================================================================= */}
       <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#FAF8F5]">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-14">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#4F6D46] uppercase bg-[#4F6D46]/10 px-4 py-1.5 rounded-full border border-[#4F6D46]/20">
-              ATO 01 · A INQUIETAÇÃO ORIGINAL
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#112010] tracking-tight mt-4 mb-4">
-              Por que tantas empresas que vendem bem sangram no escuro?
-            </h2>
-            <div className="w-16 h-1 bg-[#D1B688] mx-auto rounded-full"></div>
+        <div className="max-w-7xl mx-auto">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+            
+            {/* Coluna Esquerda: Texto Condensado & Ágil (7 cols) */}
+            <div className="lg:col-span-7">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-[#112010] tracking-tight mb-6 leading-tight">
+                Por que tantas empresas que vendem bem sangram no escuro?
+              </h2>
+
+              <blockquote className="p-5 rounded-2xl bg-[#F2F5ED] border-l-4 border-[#4F6D46] mb-8 text-[#112010] font-medium text-base sm:text-lg italic leading-relaxed">
+                “O empresário brasileiro é um mestre da execução: acorda cedo, mobiliza equipes e entrega. Mas quando a noite cai, descobre-se refém de uma rotina financeira cega e estafante.”
+              </blockquote>
+
+              <div className="space-y-4">
+                {/* Ponto 1 */}
+                <div className="p-5 rounded-2xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
+                    <AlertCircle className="w-5 h-5 text-[#4F6D46]" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#112010] mb-1">
+                      O Paradoxo do Faturamento
+                    </h3>
+                    <p className="text-sm text-[#2C1810]/80 leading-relaxed">
+                      Faturar alto não significa ter lucro no bolso. Sem fluxo de caixa diário, a margem do negócio sangra silenciosamente em juros, multas e descasamento de prazos.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Ponto 2 */}
+                <div className="p-5 rounded-2xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
+                    <FileSpreadsheet className="w-5 h-5 text-[#4F6D46]" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#112010] mb-1">
+                      O Vazio das Consultorias Teóricas
+                    </h3>
+                    <p className="text-sm text-[#2C1810]/80 leading-relaxed">
+                      O mercado tenta vender relatórios de 100 páginas que ninguém aplica na prática. O que a empresa precisa é de uma esteira diária que execute e cuide das contas.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Ponto 3 */}
+                <div className="p-5 rounded-2xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-5 h-5 text-[#4F6D46]" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#112010] mb-1">
+                      Falta de Método, Não de Esforço
+                    </h3>
+                    <p className="text-sm text-[#2C1810]/80 leading-relaxed">
+                      O problema nunca foi a dedicação do dono. Faltava uma esteira de trabalho silenciosa, disciplinada e sustentável que protegesse a saúde do caixa.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Coluna Direita: Imagem da Trincheira (5 cols) */}
+            <div className="lg:col-span-5">
+              <div className="rounded-3xl overflow-hidden border border-[#EAE7DE] shadow-xl bg-white group">
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src="/images/site/mesa-planejamento-caixa.jpg"
+                    alt="Mesa de planejamento executivo com plantas e demonstrativos financeiros"
+                    className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
+                  />
+                </div>
+                <div className="p-6 bg-[#FAF8F5] border-t border-[#EAE7DE]">
+                  <p className="text-xs sm:text-sm text-[#5C3A1A] font-medium leading-relaxed">
+                    <strong>A trincheira da gestão:</strong> O abismo entre o que é planejado no papel e a sobrevivência do caixa na rotina real de fornecedores, impostos e medições.
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div className="prose prose-lg text-[#2C1810]/85 leading-relaxed space-y-6 text-base sm:text-lg">
-            <p>
-              Durante anos atuando na gestão de demonstrações financeiras e controladoria de grandes corporações, startups de rápido crescimento e fundos internacionais, uma realidade incômoda se repetia com clareza alarmante no Brasil:
-            </p>
-            <blockquote className="p-6 rounded-2xl bg-[#F2F5ED] border-l-4 border-[#4F6D46] my-6 italic text-[#112010] font-medium">
-              “O empresário brasileiro — e em especial o construtor civil — é um mestre da execução. Ele acorda cedo, negocia, mobiliza equipes, enfrenta o sol no canteiro e entrega obras grandiosas. Mas quando a noite cai, ele se descobre refém de uma rotina financeira cega e estafante.”
-            </blockquote>
-            <p>
-              O dinheiro entra em volumes impressionantes, mas ninguém sabe ao certo quanto realmente sobra. Contratos milionários têm sua margem silenciosamente corroída por compras de balcão na sexta-feira, aditivos de boca não formalizados, atrasos em medições e descasamentos brutais com a folha de pagamento.
-            </p>
-            <p>
-              E o mais grave: <strong>o problema quase nunca era a falta de empenho ou de clientes.</strong> O problema era que o mercado ensinou o empresário a buscar “atalhos milagrosos” ou a contratar consultorias que entregavam relatórios teóricos de 100 páginas que ninguém jamais implementava.
-            </p>
-            <p className="font-semibold text-[#112010]">
-              Faltava um método que olhasse para a rotina diária como o verdadeiro alicerce da empresa. Faltava uma esteira de trabalho diligente, silenciosa e sustentável.
-            </p>
-          </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. ATO 2: A REVELAÇÃO DA NATUREZA — POR QUE OECO? (Oecophylla) */}
+      {/* 3. A REVELAÇÃO DA NATUREZA — POR QUE OECO? (Oecophylla) */}
       {/* ========================================================================= */}
       <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#1B2E18] text-[#FAF8F5] relative overflow-hidden">
         {/* Glow ambient */}
@@ -122,10 +160,7 @@ export const HistoryPage: React.FC = () => {
 
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase bg-[#D1B688]/20 px-4 py-1.5 rounded-full border border-[#D1B688]/30">
-              ATO 02 · A ORIGEM DO NOME
-            </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mt-4 mb-5 text-[#FAF8F5]">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-5 text-[#FAF8F5]">
               A Sabedoria das Formigas-Tecelãs:{' '}
               <span className="text-[#D1B688]">Oecophylla</span>
             </h2>
@@ -189,15 +224,12 @@ export const HistoryPage: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. ATO 3: O LEMA INEQUEBRÁVEL — "AME O PROCESSO" */}
+      {/* 4. O LEMA INEQUEBRÁVEL — "AME O PROCESSO" */}
       {/* ========================================================================= */}
       <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#FAF8F5]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#4F6D46] uppercase bg-[#4F6D46]/10 px-4 py-1.5 rounded-full border border-[#4F6D46]/20">
-              ATO 03 · A NOSSA FILOSOFIA
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#112010] tracking-tight mt-4 mb-4">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#112010] tracking-tight mb-4">
               “Ame o Processo”: A Disciplina do 1% Diário
             </h2>
             <p className="text-base sm:text-lg text-[#5C3A1A]/85 max-w-2xl mx-auto">
@@ -249,15 +281,12 @@ export const HistoryPage: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. ATO 4: A TRAJETÓRIA DO FUNDADOR (A Solidez Técnica) */}
+      {/* 5. A TRAJETÓRIA DO FUNDADOR (A Solidez Técnica) */}
       {/* ========================================================================= */}
       <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#F4F6F0]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#4F6D46] uppercase bg-[#4F6D46]/10 px-4 py-1.5 rounded-full border border-[#4F6D46]/20">
-              ATO 04 · QUEM ESTÁ POR TRÁS
-            </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#112010] tracking-tight mt-4 mb-5">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#112010] tracking-tight mb-5">
               Rigor de Elite a Serviço da Economia Real
             </h2>
             <p className="text-base sm:text-lg text-[#5C3A1A]/85 leading-relaxed">
@@ -289,21 +318,21 @@ export const HistoryPage: React.FC = () => {
             {/* Timeline dos 4 Pilares da Trajetória */}
             <div className="lg:col-span-7 space-y-6">
               
-              {/* Etapa 1: UFRJ */}
+              {/* Etapa 1: UFRJ (Ajustado com datas exatas: 2012-2016 e 2017-2019) */}
               <div className="p-6 rounded-2xl bg-white border border-[#EAE7DE] shadow-sm hover:border-[#4F6D46]/40 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold tracking-wider text-[#4F6D46] uppercase">
-                    2014 — 2019 · FORMAÇÃO DE ELITE
+                    2012 — 2019 · FORMAÇÃO DE ELITE
                   </span>
                   <span className="text-xs font-bold text-[#D1B688] bg-[#112010] px-3 py-1 rounded-full">
                     UFRJ
                   </span>
                 </div>
                 <h4 className="text-lg sm:text-xl font-bold text-[#112010] mb-2">
-                  Graduação &amp; Mestrado em Ciências Contábeis
+                  Bacharelado (2012–2016) &amp; Mestrado (2017–2019) em Ciências Contábeis
                 </h4>
                 <p className="text-sm sm:text-base text-[#2C1810]/80 leading-relaxed">
-                  Formação integral pela Universidade Federal do Rio de Janeiro. Rigor em normas contábeis internacionais (IFRS), auditoria e controladoria avançada — a base técnica inegociável que ancora cada número auditado na OECO.
+                  Formação integral pela Universidade Federal do Rio de Janeiro: Bacharelado concluído em 2016 e Mestrado em Ciências Contábeis em 2019. Rigor em normas contábeis internacionais (IFRS), auditoria e inteligência fiscal — a base técnica inegociável que ancora cada número auditado na OECO.
                 </p>
               </div>
 
@@ -367,15 +396,12 @@ export const HistoryPage: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. ATO 5: OS 4 ALICERCES DO ECOSSISTEMA FINANCEIRO OECO */}
+      {/* 6. OS 4 ALICERCES DO ECOSSISTEMA FINANCEIRO OECO (Cards Centralizados & Destacados) */}
       {/* ========================================================================= */}
       <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-[#112010] text-[#FAF8F5]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase bg-[#D1B688]/20 px-4 py-1.5 rounded-full border border-[#D1B688]/30">
-              ATO 05 · O NOSSO COMPROMISSO
-            </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mt-4 mb-5 text-[#FAF8F5]">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-5 text-[#FAF8F5]">
               Os 4 Alicerces da Sua Floresta Financeira
             </h2>
             <p className="text-base sm:text-lg text-[#FAF8F5]/85 leading-relaxed">
@@ -384,83 +410,127 @@ export const HistoryPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {/* Pilar 1 */}
-            <div className="p-8 rounded-3xl bg-[#1A2E17] border border-[#D1B688]/30 flex flex-col justify-between hover:border-[#D1B688] transition-colors">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#D1B688]/20 text-[#D1B688] flex items-center justify-center mb-6 font-bold text-lg">
-                  01
+            {/* Pilar 1: Raízes Profundas */}
+            <div className="p-8 rounded-3xl bg-[#1A2E17] border border-[#D1B688]/30 flex flex-col justify-between items-center text-center hover:border-[#D1B688] transition-all duration-300 hover:shadow-xl group">
+              <div className="w-full flex flex-col items-center">
+                <div className="w-14 h-14 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/40 text-[#D1B688] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                  <Sparkles className="w-7 h-7 text-[#D1B688]" />
                 </div>
-                <h3 className="text-xl font-bold text-[#FAF8F5] mb-3">
-                  Raízes Profundas (Rotina Diária)
+                <h3 className="text-lg sm:text-xl font-bold text-[#FAF8F5] mb-3 leading-snug">
+                  Raízes Profundas <br />
+                  <span className="text-[#D1B688] text-sm font-semibold">(Rotina Diária)</span>
                 </h3>
-                <p className="text-sm text-[#FAF8F5]/80 leading-relaxed mb-6">
+                <p className="text-sm text-[#FAF8F5]/80 leading-relaxed">
                   Zero pendências acumuladas para o final do mês. Conciliação bancária diária e contas a pagar agendadas sem atrasos nem multas.
                 </p>
               </div>
-              <span className="text-xs font-mono font-semibold text-[#D1B688]">
-                Alívio da rotina braçal
-              </span>
+
+              {/* Alvo / Solução em Destaque */}
+              <div className="w-full mt-6 pt-4 border-t border-[#D1B688]/20">
+                <div className="flex flex-col items-center justify-center gap-1 py-3 px-3 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/35 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/60 transition-all">
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#D1B688] uppercase">
+                    Alvo Almejado
+                  </span>
+                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-[#FAF8F5]">
+                    <CheckCircle2 className="w-4 h-4 text-[#D1B688] shrink-0" />
+                    <span>Alívio da rotina braçal</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Pilar 2 */}
-            <div className="p-8 rounded-3xl bg-[#1A2E17] border border-[#D1B688]/30 flex flex-col justify-between hover:border-[#D1B688] transition-colors">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#D1B688]/20 text-[#D1B688] flex items-center justify-center mb-6 font-bold text-lg">
-                  02
+            {/* Pilar 2: Tronco Firme */}
+            <div className="p-8 rounded-3xl bg-[#1A2E17] border border-[#D1B688]/30 flex flex-col justify-between items-center text-center hover:border-[#D1B688] transition-all duration-300 hover:shadow-xl group">
+              <div className="w-full flex flex-col items-center">
+                <div className="w-14 h-14 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/40 text-[#D1B688] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                  <Target className="w-7 h-7 text-[#D1B688]" />
                 </div>
-                <h3 className="text-xl font-bold text-[#FAF8F5] mb-3">
-                  Tronco Firme (Orçado vs. Realizado)
+                <h3 className="text-lg sm:text-xl font-bold text-[#FAF8F5] mb-3 leading-snug">
+                  Tronco Firme <br />
+                  <span className="text-[#D1B688] text-sm font-semibold">(Orçado vs. Realizado)</span>
                 </h3>
-                <p className="text-sm text-[#FAF8F5]/80 leading-relaxed mb-6">
+                <p className="text-sm text-[#FAF8F5]/80 leading-relaxed">
                   Cada obra, projeto ou centro de custo é auditado como uma miniempresa. Você sabe com exatidão onde o lucro foi gerado.
                 </p>
               </div>
-              <span className="text-xs font-mono font-semibold text-[#D1B688]">
-                Blindagem ativa da margem
-              </span>
+
+              {/* Alvo / Solução em Destaque */}
+              <div className="w-full mt-6 pt-4 border-t border-[#D1B688]/20">
+                <div className="flex flex-col items-center justify-center gap-1 py-3 px-3 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/35 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/60 transition-all">
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#D1B688] uppercase">
+                    Alvo Almejado
+                  </span>
+                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-[#FAF8F5]">
+                    <CheckCircle2 className="w-4 h-4 text-[#D1B688] shrink-0" />
+                    <span>Blindagem ativa da margem</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Pilar 3 */}
-            <div className="p-8 rounded-3xl bg-[#1A2E17] border border-[#D1B688]/30 flex flex-col justify-between hover:border-[#D1B688] transition-colors">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#D1B688]/20 text-[#D1B688] flex items-center justify-center mb-6 font-bold text-lg">
-                  03
+            {/* Pilar 3: Simbioses Leais */}
+            <div className="p-8 rounded-3xl bg-[#1A2E17] border border-[#D1B688]/30 flex flex-col justify-between items-center text-center hover:border-[#D1B688] transition-all duration-300 hover:shadow-xl group">
+              <div className="w-full flex flex-col items-center">
+                <div className="w-14 h-14 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/40 text-[#D1B688] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                  <Users className="w-7 h-7 text-[#D1B688]" />
                 </div>
-                <h3 className="text-xl font-bold text-[#FAF8F5] mb-3">
-                  Simbioses Leais (Aliança Contábil)
+                <h3 className="text-lg sm:text-xl font-bold text-[#FAF8F5] mb-3 leading-snug">
+                  Simbioses Leais <br />
+                  <span className="text-[#D1B688] text-sm font-semibold">(Aliança Contábil)</span>
                 </h3>
-                <p className="text-sm text-[#FAF8F5]/80 leading-relaxed mb-6">
+                <p className="text-sm text-[#FAF8F5]/80 leading-relaxed">
                   Não competimos com o seu contador. Somos o braço direito dele na trincheira diária, enviando documentos redondos todo dia 1º.
                 </p>
               </div>
-              <span className="text-xs font-mono font-semibold text-[#D1B688]">
-                Contabilidade sem retrabalho
-              </span>
+
+              {/* Alvo / Solução em Destaque */}
+              <div className="w-full mt-6 pt-4 border-t border-[#D1B688]/20">
+                <div className="flex flex-col items-center justify-center gap-1 py-3 px-3 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/35 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/60 transition-all">
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#D1B688] uppercase">
+                    Alvo Almejado
+                  </span>
+                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-[#FAF8F5]">
+                    <CheckCircle2 className="w-4 h-4 text-[#D1B688] shrink-0" />
+                    <span>Contabilidade sem retrabalho</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Pilar 4 */}
-            <div className="p-8 rounded-3xl bg-[#1A2E17] border border-[#D1B688]/30 flex flex-col justify-between hover:border-[#D1B688] transition-colors">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#D1B688]/20 text-[#D1B688] flex items-center justify-center mb-6 font-bold text-lg">
-                  04
+            {/* Pilar 4: Copa Viva */}
+            <div className="p-8 rounded-3xl bg-[#1A2E17] border border-[#D1B688]/30 flex flex-col justify-between items-center text-center hover:border-[#D1B688] transition-all duration-300 hover:shadow-xl group">
+              <div className="w-full flex flex-col items-center">
+                <div className="w-14 h-14 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/40 text-[#D1B688] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                  <TrendingUp className="w-7 h-7 text-[#D1B688]" />
                 </div>
-                <h3 className="text-xl font-bold text-[#FAF8F5] mb-3">
-                  Copa Viva (Previsibilidade de Caixa)
+                <h3 className="text-lg sm:text-xl font-bold text-[#FAF8F5] mb-3 leading-snug">
+                  Copa Viva <br />
+                  <span className="text-[#D1B688] text-sm font-semibold">(Previsibilidade de Caixa)</span>
                 </h3>
-                <p className="text-sm text-[#FAF8F5]/80 leading-relaxed mb-6">
+                <p className="text-sm text-[#FAF8F5]/80 leading-relaxed">
                   Equalização entre pagamentos de folha e recebimentos de clientes. Gestão preventiva para nunca mais pagar a obra do seu cliente.
                 </p>
               </div>
-              <span className="text-xs font-mono font-semibold text-[#D1B688]">
-                Segurança para o futuro
-              </span>
+
+              {/* Alvo / Solução em Destaque */}
+              <div className="w-full mt-6 pt-4 border-t border-[#D1B688]/20">
+                <div className="flex flex-col items-center justify-center gap-1 py-3 px-3 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/35 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/60 transition-all">
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#D1B688] uppercase">
+                    Alvo Almejado
+                  </span>
+                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-[#FAF8F5]">
+                    <CheckCircle2 className="w-4 h-4 text-[#D1B688] shrink-0" />
+                    <span>Segurança para o futuro</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. ATO 6: O CONVITE & CTA BOTÂNICA FINAL */}
+      {/* 7. O CONVITE & CTA BOTÂNICA FINAL */}
       {/* ========================================================================= */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-[#FAF8F5] relative">
         <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-br from-[#112010] via-[#1B2E18] to-[#112010] text-[#FAF8F5] p-8 sm:p-14 lg:p-16 border-2 border-[#D1B688] shadow-2xl relative overflow-hidden text-center">
@@ -468,9 +538,6 @@ export const HistoryPage: React.FC = () => {
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#D1B688]/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
           <div className="relative z-10 max-w-3xl mx-auto">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase bg-[#D1B688]/20 px-4 py-1.5 rounded-full border border-[#D1B688]/30 inline-block mb-6">
-              VAMOS CONVERSAR SOBRE O SEU MOMENTO?
-            </span>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#FAF8F5] tracking-tight mb-6 leading-tight">
               Sua empresa merece uma estrutura tão sólida quanto o seu trabalho.
             </h2>
