@@ -25,6 +25,24 @@ export const AccountingPartnerSection: React.FC = () => {
           </p>
         </div>
 
+        {/* Visual Callout: Planejamento & Contabilidade */}
+        <div className="mb-12 rounded-3xl overflow-hidden border border-[#EAE7DE] shadow-sm relative aspect-[21/8] max-h-[260px] group bg-[#1C1815]">
+          <img
+            src="/images/site/mesa-planejamento-caixa.jpg"
+            alt="Mesa de planejamento financeiro com demonstrativo de fluxo de caixa e projetos arquitetônicos"
+            className="w-full h-full object-cover object-[center_50%] filter brightness-[0.9] group-hover:scale-102 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1815]/90 via-[#1C1815]/40 to-transparent"></div>
+          <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end max-w-lg">
+            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase mb-1">
+              CONEXÃO OPERACIONAL
+            </span>
+            <p className="text-base sm:text-xl font-bold text-white leading-snug">
+              Traduzimos a rotina de canteiro em demonstrativos de caixa limpos para a sua contabilidade atuar com excelência.
+            </p>
+          </div>
+        </div>
+
         {/* 2 Roles Comparison Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           

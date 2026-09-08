@@ -111,9 +111,24 @@ export const ServiceTiersSection: React.FC = () => {
               <p className="text-xs sm:text-sm font-bold text-[#D1B688] mb-4">
                 Para construtoras e contratos com orçamento acima de R$ 3 milhões
               </p>
-              <p className="text-sm sm:text-base text-[#FAF8F5]/85 mb-8 leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base text-[#FAF8F5]/85 mb-6 leading-relaxed max-w-xl">
                 Toda a rotina operacional combinada com inteligência profunda de canteiro: análise por centro de custo, orçado vs. realizado e blindagem ativa de contratos e retenções.
               </p>
+
+              {/* Mini Visual Preview: Orçado vs Realizado */}
+              <div className="mb-6 rounded-2xl overflow-hidden border border-[#D1B688]/40 aspect-[21/9] max-h-[170px] relative group bg-[#2C1810]">
+                <img
+                  src="/images/site/analise-orcado-realizado.jpg"
+                  alt="Auditoria e análise de orçado vs. realizado em projetos de grande porte"
+                  className="w-full h-full object-cover object-[center_35%] filter brightness-95 group-hover:scale-103 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1815] via-transparent to-transparent"></div>
+                <div className="absolute bottom-2.5 left-4 right-4">
+                  <p className="text-[11px] font-mono text-[#D1B688] font-bold uppercase tracking-wider">
+                    AUDITORIA CONTRATUAL · MEDIÇÃO &amp; CRONOGRAMA
+                  </p>
+                </div>
+              </div>
 
               <div className="space-y-4 mb-8">
                 <p className="text-xs font-bold text-[#D1B688] uppercase tracking-wider">

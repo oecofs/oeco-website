@@ -47,7 +47,7 @@ export const PainPointsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <span className="text-xs font-mono font-bold tracking-widest text-[#6B7F5A] uppercase bg-[#6B7F5A]/10 px-4 py-1.5 rounded-full border border-[#6B7F5A]/20">
             A TRINCHEIRA DO CANTEIRO DE OBRAS
           </span>
@@ -60,6 +60,24 @@ export const PainPointsSection: React.FC = () => {
           <p className="text-base sm:text-lg text-[#5C3A1A]/85 leading-relaxed">
             Faturamento é vaidade; lucro é sanidade. Empresas de engenharia e construção raramente enfrentam dificuldades por falta de contratos; elas sangram nas falhas silenciosas da rotina financeira.
           </p>
+        </div>
+
+        {/* Editorial Visual Banner: Canteiro em Ação */}
+        <div className="mb-12 rounded-3xl overflow-hidden border border-[#EAE7DE] shadow-md relative aspect-[21/9] sm:aspect-[24/8] max-h-[320px] group bg-[#1C1815]">
+          <img
+            src="/images/site/canteiro-sunset.jpg"
+            alt="Canteiro de obras de grande porte ao entardecer"
+            className="w-full h-full object-cover object-[center_35%] filter brightness-[0.88] group-hover:scale-102 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1815]/95 via-[#1C1815]/50 to-transparent"></div>
+          <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-end max-w-xl">
+            <span className="text-xs font-mono tracking-widest text-[#D1B688] uppercase font-bold mb-2">
+              ESCALA &amp; COMPLEXIDADE DE CANTEIRO
+            </span>
+            <p className="text-lg sm:text-2xl font-bold text-white leading-snug">
+              Obras acima de R$ 3 milhões exigem controle de caixa no mesmo rigor da engenharia de campo.
+            </p>
+          </div>
         </div>
 
         {/* 4 Cards Grid (Glassmorphism & Legibilidade Confortável) */}

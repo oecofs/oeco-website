@@ -72,17 +72,25 @@ export const PhilosophySection: React.FC = () => {
           })}
         </div>
 
-        {/* Highlight quote box */}
-        <div className="mt-14 p-6 sm:p-8 rounded-2xl bg-white border-l-4 border-[#4F6D46] shadow-sm max-w-4xl mx-auto flex flex-col sm:flex-row items-start sm:items-center gap-5">
-          <div className="w-12 h-12 rounded-full bg-[#4F6D46]/10 text-[#4F6D46] flex items-center justify-center shrink-0">
-            <ShieldAlert className="w-6 h-6" />
+        {/* Highlight box with Foundations Image */}
+        <div className="mt-14 rounded-3xl overflow-hidden bg-white border border-[#EAE7DE] shadow-md grid grid-cols-1 lg:grid-cols-12 items-stretch">
+          <div className="lg:col-span-5 min-h-[220px] lg:min-h-[260px] relative overflow-hidden group">
+            <img
+              src="/images/site/fundacoes-solidez.jpg"
+              alt="Fundações sólidas em concreto e armadura de aço"
+              className="w-full h-full object-cover filter brightness-95 group-hover:scale-103 transition-transform duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent via-black/20 to-transparent lg:to-white/40"></div>
           </div>
-          <div>
-            <p className="text-sm sm:text-base text-[#2C1810] font-medium leading-relaxed italic">
+          <div className="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-center bg-white">
+            <div className="w-12 h-12 rounded-2xl bg-[#4F6D46]/10 text-[#4F6D46] flex items-center justify-center mb-4">
+              <ShieldAlert className="w-6 h-6" />
+            </div>
+            <p className="text-base sm:text-lg text-[#2C1810] font-medium leading-relaxed italic mb-3">
               "Pequenos ajustes e disciplina diária geram resultados exponenciais no longo prazo. Faturamento alto sem processo é apenas um castelo de cartas esperando a primeira crise para ruir."
             </p>
-            <p className="text-xs font-bold text-[#6B7F5A] tracking-wider uppercase mt-1.5">
-              Princípio Fundamental OECO
+            <p className="text-xs font-bold text-[#6B7F5A] tracking-wider uppercase">
+              Princípio Fundamental OECO · Fundações Estruturadas
             </p>
           </div>
         </div>
