@@ -62,19 +62,19 @@ export const PainPointsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Editorial Visual Banner: Canteiro em Ação */}
-        <div className="mb-12 rounded-3xl overflow-hidden border border-[#EAE7DE] shadow-md relative aspect-[21/9] sm:aspect-[24/8] max-h-[320px] group bg-[#1C1815]">
+        {/* Editorial Visual Banner: Canteiro em Ação (Enquadramento Natural 2.35/1) */}
+        <div className="mb-14 rounded-3xl overflow-hidden border border-[#EAE7DE] shadow-lg relative aspect-[16/9] sm:aspect-[2.35/1] group bg-[#1C1815]">
           <img
             src="/images/site/canteiro-sunset.jpg"
             alt="Canteiro de obras de grande porte ao entardecer"
-            className="w-full h-full object-cover object-[center_35%] filter brightness-[0.88] group-hover:scale-102 transition-transform duration-700"
+            className="w-full h-full object-cover object-center filter brightness-[0.92] group-hover:scale-102 transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1815]/95 via-[#1C1815]/50 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1C1815]/95 via-[#1C1815]/40 to-transparent sm:bg-gradient-to-r sm:from-[#1C1815]/95 sm:via-[#1C1815]/50 sm:to-transparent"></div>
           <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-end max-w-xl">
             <span className="text-xs font-mono tracking-widest text-[#D1B688] uppercase font-bold mb-2">
               ESCALA &amp; COMPLEXIDADE DE CANTEIRO
             </span>
-            <p className="text-lg sm:text-2xl font-bold text-white leading-snug">
+            <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white leading-snug">
               Obras acima de R$ 3 milhões exigem controle de caixa no mesmo rigor da engenharia de campo.
             </p>
           </div>

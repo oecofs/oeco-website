@@ -111,24 +111,9 @@ export const ServiceTiersSection: React.FC = () => {
               <p className="text-xs sm:text-sm font-bold text-[#D1B688] mb-4">
                 Para construtoras e contratos com orçamento acima de R$ 3 milhões
               </p>
-              <p className="text-sm sm:text-base text-[#FAF8F5]/85 mb-6 leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base text-[#FAF8F5]/85 mb-8 leading-relaxed max-w-xl">
                 Toda a rotina operacional combinada com inteligência profunda de canteiro: análise por centro de custo, orçado vs. realizado e blindagem ativa de contratos e retenções.
               </p>
-
-              {/* Mini Visual Preview: Orçado vs Realizado */}
-              <div className="mb-6 rounded-2xl overflow-hidden border border-[#D1B688]/40 aspect-[21/9] max-h-[170px] relative group bg-[#2C1810]">
-                <img
-                  src="/images/site/analise-orcado-realizado.jpg"
-                  alt="Auditoria e análise de orçado vs. realizado em projetos de grande porte"
-                  className="w-full h-full object-cover object-[center_35%] filter brightness-95 group-hover:scale-103 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1815] via-transparent to-transparent"></div>
-                <div className="absolute bottom-2.5 left-4 right-4">
-                  <p className="text-[11px] font-mono text-[#D1B688] font-bold uppercase tracking-wider">
-                    AUDITORIA CONTRATUAL · MEDIÇÃO &amp; CRONOGRAMA
-                  </p>
-                </div>
-              </div>
 
               <div className="space-y-4 mb-8">
                 <p className="text-xs font-bold text-[#D1B688] uppercase tracking-wider">
@@ -171,6 +156,32 @@ export const ServiceTiersSection: React.FC = () => {
             </div>
           </div>
 
+        </div>
+
+        {/* Editorial Showcase Banner: Auditoria Física-Financeira (Foto 4 em enquadramento natural) */}
+        <div className="mt-14 rounded-3xl overflow-hidden bg-[#1C1815] text-[#FAF8F5] border border-[#D1B688]/40 shadow-2xl grid grid-cols-1 lg:grid-cols-12 items-stretch">
+          <div className="lg:col-span-6 relative aspect-[1.83/1] lg:aspect-auto overflow-hidden group bg-[#2C1810]">
+            <img
+              src="/images/site/analise-orcado-realizado.jpg"
+              alt="Auditoria e análise de orçado vs. realizado em projetos de grande porte"
+              className="w-full h-full object-cover object-center filter brightness-95 group-hover:scale-102 transition-transform duration-700"
+            />
+          </div>
+          <div className="lg:col-span-6 p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
+            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase mb-2">
+              AUDITORIA CIRÚRGICA DE CANTEIRO
+            </span>
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#FAF8F5] mb-4 leading-snug">
+              Como auditamos cada medição e contrato na prática
+            </h3>
+            <p className="text-sm sm:text-base text-[#FAF8F5]/85 leading-relaxed mb-6">
+              No BPO Estratégico, nenhuma medição é liberada no escuro. Cruzamos o avanço físico do canteiro com as planilhas orçadas, identificamos desvios em tempo real e garantimos que a margem planejada não seja corroída ao longo da execução da obra.
+            </p>
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-[#D1B688]">
+              <Star className="w-4 h-4 fill-current text-[#D1B688] shrink-0" />
+              <span>Controle financeiro de nível executivo para construtoras e obras acima de R$ 3 milhões.</span>
+            </div>
+          </div>
         </div>
 
       </div>

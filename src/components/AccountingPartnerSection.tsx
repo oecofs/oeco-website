@@ -25,20 +25,24 @@ export const AccountingPartnerSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Visual Callout: Planejamento & Contabilidade */}
-        <div className="mb-12 rounded-3xl overflow-hidden border border-[#EAE7DE] shadow-sm relative aspect-[21/8] max-h-[260px] group bg-[#1C1815]">
-          <img
-            src="/images/site/mesa-planejamento-caixa.jpg"
-            alt="Mesa de planejamento financeiro com demonstrativo de fluxo de caixa e projetos arquitetônicos"
-            className="w-full h-full object-cover object-[center_50%] filter brightness-[0.9] group-hover:scale-102 transition-transform duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1C1815]/90 via-[#1C1815]/40 to-transparent"></div>
-          <div className="absolute inset-0 p-6 sm:p-8 flex flex-col justify-end max-w-lg">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase mb-1">
-              CONEXÃO OPERACIONAL
+        {/* Editorial Split Banner: Conexão Canteiro & Contabilidade (Enquadramento Natural 1.83/1) */}
+        <div className="mb-14 rounded-3xl overflow-hidden bg-white border border-[#EAE7DE] shadow-md grid grid-cols-1 lg:grid-cols-12 items-center">
+          <div className="lg:col-span-6 relative aspect-[1.83/1] overflow-hidden group bg-[#FAF8F5]">
+            <img
+              src="/images/site/mesa-planejamento-caixa.jpg"
+              alt="Mesa de planejamento financeiro com demonstrativo de fluxo de caixa e projetos arquitetônicos"
+              className="w-full h-full object-cover object-center filter brightness-95 group-hover:scale-102 transition-transform duration-700"
+            />
+          </div>
+          <div className="lg:col-span-6 p-8 sm:p-10 flex flex-col justify-center">
+            <span className="text-xs font-mono font-bold tracking-widest text-[#4F6D46] uppercase mb-2">
+              CONEXÃO FÍSICO-FINANCEIRA
             </span>
-            <p className="text-base sm:text-xl font-bold text-white leading-snug">
-              Traduzimos a rotina de canteiro em demonstrativos de caixa limpos para a sua contabilidade atuar com excelência.
+            <h3 className="text-xl sm:text-2xl font-bold text-[#2C1810] mb-3 leading-snug">
+              Traduzimos a rotina de canteiro em demonstrativos de caixa limpos.
+            </h3>
+            <p className="text-sm sm:text-base text-[#5C3A1A]/85 leading-relaxed">
+              Enquanto a sua equipe foca na execução da obra e o seu contador cuida das obrigações fiscais, a OECO organiza o fluxo de caixa, as notas e os contratos com precisão cirúrgica.
             </p>
           </div>
         </div>
