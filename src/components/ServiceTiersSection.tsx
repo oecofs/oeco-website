@@ -23,11 +23,11 @@ export const ServiceTiersSection: React.FC = () => {
           </p>
         </div>
 
-        {/* 2 Main Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        {/* 2 Main Cards Grid - Equal Widths (50% / 50%) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
           
-          {/* Card 1: BPO Operacional (5 cols) */}
-          <div className="lg:col-span-5 rounded-3xl p-8 sm:p-10 bg-white border border-[#EAE7DE] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          {/* Card 1: BPO Operacional */}
+          <div className="rounded-3xl p-8 sm:p-10 lg:p-12 bg-white border border-[#EAE7DE] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div className="w-14 h-14 rounded-2xl bg-[#FAF8F5] border border-[#EAE7DE] flex items-center justify-center text-[#5C3A1A]">
@@ -89,8 +89,8 @@ export const ServiceTiersSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Card 2: BPO Estratégico & Projetos (7 cols - Highlighted Premium) */}
-          <div className="lg:col-span-7 rounded-3xl p-8 sm:p-12 bg-[#1C1815] text-[#FAF8F5] border-2 border-[#D1B688] shadow-2xl relative overflow-hidden flex flex-col justify-between">
+          {/* Card 2: BPO Estratégico & Projetos */}
+          <div className="rounded-3xl p-8 sm:p-10 lg:p-12 bg-[#1C1815] text-[#FAF8F5] border-2 border-[#D1B688] shadow-2xl relative overflow-hidden flex flex-col justify-between">
             {/* Ambient Lighting */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-[#D1B688]/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
 
@@ -111,7 +111,7 @@ export const ServiceTiersSection: React.FC = () => {
               <p className="text-xs sm:text-sm font-bold text-[#D1B688] mb-4">
                 Para construtoras e contratos com orçamento acima de R$ 3 milhões
               </p>
-              <p className="text-sm sm:text-base text-[#FAF8F5]/85 mb-8 leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base text-[#FAF8F5]/85 mb-8 leading-relaxed">
                 Toda a rotina operacional combinada com inteligência profunda de canteiro: análise por centro de custo, orçado vs. realizado e blindagem ativa de contratos e retenções.
               </p>
 
