@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MessageCircle, ArrowRight, ShieldCheck, Phone, MapPin } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
 
@@ -84,19 +85,24 @@ export const CtaFooterSection: React.FC = () => {
             </p>
             <ul className="space-y-3 text-sm text-[#FAF8F5]/80">
               <li>
-                <a href="#dores" className="hover:text-[#FAF8F5] transition-colors">Dores do Canteiro</a>
+                <Link to="/historia" className="text-[#D1B688] font-semibold hover:underline transition-colors flex items-center gap-1.5">
+                  <span>🌿 Nossa História &amp; Propósito</span>
+                </Link>
               </li>
               <li>
-                <a href="#filosofia" className="hover:text-[#FAF8F5] transition-colors">Metodologia &amp; Processo</a>
+                <Link to="/#dores" className="hover:text-[#FAF8F5] transition-colors">Dores do Canteiro</Link>
               </li>
               <li>
-                <a href="#contabilidade" className="hover:text-[#FAF8F5] transition-colors">Aliança Contábil</a>
+                <Link to="/#filosofia" className="hover:text-[#FAF8F5] transition-colors">Metodologia &amp; Processo</Link>
               </li>
               <li>
-                <a href="#solucoes" className="hover:text-[#FAF8F5] transition-colors">BPO Operacional vs. Estratégico</a>
+                <Link to="/#contabilidade" className="hover:text-[#FAF8F5] transition-colors">Aliança Contábil</Link>
               </li>
               <li>
-                <a href="#faq" className="hover:text-[#FAF8F5] transition-colors">Dúvidas Frequentes (FAQ)</a>
+                <Link to="/#solucoes" className="hover:text-[#FAF8F5] transition-colors">BPO Operacional vs. Estratégico</Link>
+              </li>
+              <li>
+                <Link to="/#faq" className="hover:text-[#FAF8F5] transition-colors">Dúvidas Frequentes (FAQ)</Link>
               </li>
             </ul>
           </div>

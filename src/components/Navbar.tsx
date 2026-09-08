@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { MessageCircle, Menu, X, ArrowUpRight, Leaf } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHistoryPage = location.pathname === '/historia';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,62 +18,98 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { label: 'Dores do Canteiro', href: '#dores' },
-    { label: 'O Processo', href: '#filosofia' },
-    { label: 'Aliança Contábil', href: '#contabilidade' },
-    { label: 'Soluções BPO', href: '#solucoes' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Início', href: '/' },
+    { label: 'Nossa História', href: '/historia', isSpecial: true },
+    { label: 'Dores do Canteiro', href: '/#dores' },
+    { label: 'O Processo', href: '/#filosofia' },
+    { label: 'Aliança Contábil', href: '/#contabilidade' },
+    { label: 'Soluções BPO', href: '/#solucoes' },
+    { label: 'FAQ', href: '/#faq' },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#FAF8F5]/90 backdrop-blur-md shadow-sm border-b border-[#EAE7DE] py-3.5'
+          ? isHistoryPage 
+            ? 'bg-[#112010]/90 backdrop-blur-md shadow-md border-b border-[#D1B688]/20 py-3.5'
+            : 'bg-[#FAF8F5]/90 backdrop-blur-md shadow-sm border-b border-[#EAE7DE] py-3.5'
           : 'bg-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Brand Logo */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-[#2C1810] text-[#D1B688] flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-105 transition-transform duration-200 border border-[#5C3A1A]/30">
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-105 transition-transform duration-200 border ${
+              isHistoryPage
+                ? 'bg-[#1B2E18] text-[#D1B688] border-[#D1B688]/40'
+                : 'bg-[#2C1810] text-[#D1B688] border-[#5C3A1A]/30'
+            }`}>
               O
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-[#2C1810]">
+              <span className={`text-xl font-bold tracking-tight ${
+                isHistoryPage ? 'text-[#FAF8F5]' : 'text-[#2C1810]'
+              }`}>
                 OECO
               </span>
-              <span className="text-[10px] font-semibold tracking-widest text-[#6B7F5A] uppercase -mt-1">
+              <span className={`text-[10px] font-semibold tracking-widest uppercase -mt-1 ${
+                isHistoryPage ? 'text-[#D1B688]' : 'text-[#6B7F5A]'
+              }`}>
                 Financial Solutions
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-7">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm font-medium text-[#5C3A1A]/80 hover:text-[#2C1810] hover:scale-102 transition-all duration-200"
-              >
-                {link.label}
-              </a>
-            ))}
+          <nav className="hidden lg:flex items-center gap-6">
+            {navLinks.map((link) => {
+              const isLinkActive = location.pathname === link.href;
+              return (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className={`text-sm font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                    link.isSpecial
+                      ? isHistoryPage
+                        ? 'text-[#D1B688] font-bold bg-[#D1B688]/15 px-3 py-1.5 rounded-full border border-[#D1B688]/30'
+                        : 'text-[#4F6D46] font-bold bg-[#4F6D46]/10 px-3 py-1.5 rounded-full border border-[#4F6D46]/20 hover:bg-[#4F6D46]/20'
+                      : isHistoryPage
+                        ? isLinkActive
+                          ? 'text-[#D1B688] font-bold'
+                          : 'text-[#FAF8F5]/80 hover:text-[#FAF8F5]'
+                        : isLinkActive
+                          ? 'text-[#2C1810] font-bold'
+                          : 'text-[#5C3A1A]/80 hover:text-[#2C1810]'
+                  }`}
+                >
+                  {link.isSpecial && <Leaf className="w-3.5 h-3.5" />}
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right Action CTA */}
           <div className="hidden sm:flex items-center gap-3">
             <a
-              href={buildWhatsAppLink(DEFAULT_WHATSAPP_MESSAGES.hero)}
+              href={buildWhatsAppLink(isHistoryPage ? DEFAULT_WHATSAPP_MESSAGES.history : DEFAULT_WHATSAPP_MESSAGES.hero)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2C1810] text-[#FAF8F5] text-xs font-semibold tracking-wide hover:bg-[#4F6D46] shadow-md hover:shadow-lg transition-all duration-300 group"
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide shadow-md hover:shadow-lg transition-all duration-300 group ${
+                isHistoryPage
+                  ? 'bg-[#D1B688] text-[#112010] hover:bg-[#FAF8F5]'
+                  : 'bg-[#2C1810] text-[#FAF8F5] hover:bg-[#4F6D46]'
+              }`}
             >
-              <span className="w-2 h-2 rounded-full bg-[#D1B688] animate-pulse"></span>
-              <MessageCircle className="w-4 h-4 text-[#D1B688] group-hover:text-white transition-colors" />
-              <span>Diagnóstico de Caixa</span>
+              <span className={`w-2 h-2 rounded-full animate-pulse ${
+                isHistoryPage ? 'bg-[#112010]' : 'bg-[#D1B688]'
+              }`}></span>
+              <MessageCircle className={`w-4 h-4 transition-colors ${
+                isHistoryPage ? 'text-[#112010]' : 'text-[#D1B688] group-hover:text-white'
+              }`} />
+              <span>{isHistoryPage ? 'Conversar com Matheus' : 'Diagnóstico de Caixa'}</span>
               <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
@@ -78,7 +117,11 @@ export const Navbar: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-[#2C1810] hover:bg-[#EAE7DE] transition-colors"
+            className={`lg:hidden p-2 rounded-xl transition-colors ${
+              isHistoryPage
+                ? 'text-[#FAF8F5] hover:bg-[#1B2E18]'
+                : 'text-[#2C1810] hover:bg-[#EAE7DE]'
+            }`}
             aria-label="Abrir menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -87,28 +130,45 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-3 p-5 rounded-2xl bg-white/95 backdrop-blur-xl border border-[#EAE7DE] shadow-xl animate-in fade-in slide-in-from-top-3 duration-200">
-            <div className="flex flex-col gap-3">
+          <div className={`lg:hidden mt-3 p-5 rounded-2xl backdrop-blur-xl border shadow-xl animate-in fade-in slide-in-from-top-3 duration-200 ${
+            isHistoryPage
+              ? 'bg-[#112010]/95 border-[#D1B688]/30 text-[#FAF8F5]'
+              : 'bg-white/95 border-[#EAE7DE] text-[#2C1810]'
+          }`}>
+            <div className="flex flex-col gap-2.5">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
-                  href={link.href}
+                  to={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2 text-sm font-medium text-[#2C1810] hover:bg-[#FAF8F5] rounded-lg transition-colors"
+                  className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-2 ${
+                    link.isSpecial
+                      ? isHistoryPage
+                        ? 'bg-[#D1B688]/20 text-[#D1B688] font-bold'
+                        : 'bg-[#4F6D46]/10 text-[#4F6D46] font-bold'
+                      : isHistoryPage
+                        ? 'hover:bg-[#1B2E18] text-[#FAF8F5]/90'
+                        : 'hover:bg-[#FAF8F5] text-[#2C1810]'
+                  }`}
                 >
-                  {link.label}
-                </a>
+                  {link.isSpecial && <Leaf className="w-4 h-4" />}
+                  <span>{link.label}</span>
+                </Link>
               ))}
-              <div className="pt-3 border-t border-[#EAE7DE]">
+              <div className={`pt-3 border-t mt-1 ${isHistoryPage ? 'border-[#D1B688]/20' : 'border-[#EAE7DE]'}`}>
                 <a
-                  href={buildWhatsAppLink(DEFAULT_WHATSAPP_MESSAGES.hero)}
+                  href={buildWhatsAppLink(isHistoryPage ? DEFAULT_WHATSAPP_MESSAGES.history : DEFAULT_WHATSAPP_MESSAGES.hero)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#2C1810] text-white text-xs font-semibold hover:bg-[#4F6D46] transition-colors"
+                  className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-semibold transition-colors ${
+                    isHistoryPage
+                      ? 'bg-[#D1B688] text-[#112010] hover:bg-[#FAF8F5]'
+                      : 'bg-[#2C1810] text-white hover:bg-[#4F6D46]'
+                  }`}
                 >
-                  <MessageCircle className="w-4 h-4 text-[#D1B688]" />
-                  <span>Agendar Diagnóstico de Caixa</span>
+                  <MessageCircle className="w-4 h-4" />
+                  <span>{isHistoryPage ? 'Conversar com Matheus' : 'Agendar Diagnóstico de Caixa'}</span>
                 </a>
               </div>
             </div>

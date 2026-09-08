@@ -10,4 +10,5 @@ export const DEFAULT_WHATSAPP_MESSAGES = {
   operational: 'Olá! Gostaria de entender mais sobre o BPO Financeiro Operacional da OECO para organizar a rotina financeira da minha empresa.',
   general: 'Olá! Gostaria de conversar com um especialista da OECO sobre gestão financeira.',
   faq: 'Olá! Li o FAQ no site da OECO e gostaria de tirar uma dúvida sobre a atuação financeira com meu negócio.',
+  history: 'Olá, Matheus! Conheci a história da OECO e me identifiquei muito com a filosofia de sustentabilidade, sem atalhos e foco no processo. Gostaria de conversar sobre as finanças da minha empresa.',
 };
