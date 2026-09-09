@@ -133,14 +133,14 @@ export const HistoryPage: React.FC = () => {
               <div className="rounded-3xl overflow-hidden border border-[#EAE7DE] shadow-xl bg-white group">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
-                    src="/images/site/mesa-planejamento-caixa.jpg"
-                    alt="Mesa de planejamento executivo com plantas e demonstrativos financeiros"
+                    src="/images/site/canteiro-gestao-obra.jpg"
+                    alt="Gestor acompanhando indicadores financeiros e fluxo de caixa em tablet no canteiro de obras"
                     className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
                   />
                 </div>
                 <div className="p-6 bg-[#FAF8F5] border-t border-[#EAE7DE]">
                   <p className="text-xs sm:text-sm text-[#5C3A1A] font-medium leading-relaxed">
-                    <strong>A trincheira da gestão:</strong> O abismo entre o que é planejado no papel e a sobrevivência do caixa na rotina real de fornecedores, impostos e medições.
+                    <strong>A trincheira da gestão:</strong> A conciliação diária entre a execução no canteiro e o controle cirúrgico de caixa, assegurando que cada obra gere lucro real.
                   </p>
                 </div>
               </div>
@@ -425,16 +425,12 @@ export const HistoryPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Alvo / Solução em Destaque */}
+              {/* Solução em Destaque */}
               <div className="w-full mt-6 pt-4 border-t border-[#D1B688]/20">
-                <div className="flex flex-col items-center justify-center gap-1 py-3 px-3 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/35 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/60 transition-all">
-                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#D1B688] uppercase">
-                    Alvo Almejado
+                <div className="py-3.5 px-4 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/40 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/70 transition-all text-center">
+                  <span className="text-sm sm:text-base font-bold text-[#FAF8F5] tracking-wide block">
+                    Alívio da rotina braçal
                   </span>
-                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-[#FAF8F5]">
-                    <CheckCircle2 className="w-4 h-4 text-[#D1B688] shrink-0" />
-                    <span>Alívio da rotina braçal</span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -454,16 +450,12 @@ export const HistoryPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Alvo / Solução em Destaque */}
+              {/* Solução em Destaque */}
               <div className="w-full mt-6 pt-4 border-t border-[#D1B688]/20">
-                <div className="flex flex-col items-center justify-center gap-1 py-3 px-3 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/35 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/60 transition-all">
-                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#D1B688] uppercase">
-                    Alvo Almejado
+                <div className="py-3.5 px-4 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/40 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/70 transition-all text-center">
+                  <span className="text-sm sm:text-base font-bold text-[#FAF8F5] tracking-wide block">
+                    Blindagem ativa da margem
                   </span>
-                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-[#FAF8F5]">
-                    <CheckCircle2 className="w-4 h-4 text-[#D1B688] shrink-0" />
-                    <span>Blindagem ativa da margem</span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -483,16 +475,12 @@ export const HistoryPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Alvo / Solução em Destaque */}
+              {/* Solução em Destaque */}
               <div className="w-full mt-6 pt-4 border-t border-[#D1B688]/20">
-                <div className="flex flex-col items-center justify-center gap-1 py-3 px-3 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/35 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/60 transition-all">
-                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#D1B688] uppercase">
-                    Alvo Almejado
+                <div className="py-3.5 px-4 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/40 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/70 transition-all text-center">
+                  <span className="text-sm sm:text-base font-bold text-[#FAF8F5] tracking-wide block">
+                    Contabilidade sem retrabalho
                   </span>
-                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-[#FAF8F5]">
-                    <CheckCircle2 className="w-4 h-4 text-[#D1B688] shrink-0" />
-                    <span>Contabilidade sem retrabalho</span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -512,16 +500,12 @@ export const HistoryPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Alvo / Solução em Destaque */}
+              {/* Solução em Destaque */}
               <div className="w-full mt-6 pt-4 border-t border-[#D1B688]/20">
-                <div className="flex flex-col items-center justify-center gap-1 py-3 px-3 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/35 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/60 transition-all">
-                  <span className="text-[10px] font-mono font-bold tracking-widest text-[#D1B688] uppercase">
-                    Alvo Almejado
+                <div className="py-3.5 px-4 rounded-2xl bg-[#D1B688]/15 border border-[#D1B688]/40 shadow-sm group-hover:bg-[#D1B688]/25 group-hover:border-[#D1B688]/70 transition-all text-center">
+                  <span className="text-sm sm:text-base font-bold text-[#FAF8F5] tracking-wide block">
+                    Segurança para o futuro
                   </span>
-                  <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-bold text-[#FAF8F5]">
-                    <CheckCircle2 className="w-4 h-4 text-[#D1B688] shrink-0" />
-                    <span>Segurança para o futuro</span>
-                  </div>
                 </div>
               </div>
             </div>
