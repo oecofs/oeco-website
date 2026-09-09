@@ -61,19 +61,19 @@ export const ElevationAct: React.FC<ElevationActProps> = ({
     return () => observer.disconnect();
   }, []);
 
-  // Transição Canva 'Elevação' / 'Rise' com curva cubic-bezier suave
+  // Transição Canva 'Elevação' / 'Rise' mais lenta, majestosa e fluida
   const transformClass = isVisible
     ? 'translate-y-0 opacity-100 scale-100'
     : scrollDirection === 'down'
-    ? 'translate-y-12 opacity-0 scale-[0.985]'
-    : '-translate-y-12 opacity-0 scale-[0.985]';
+    ? 'translate-y-16 opacity-0 scale-[0.98]'
+    : '-translate-y-16 opacity-0 scale-[0.98]';
 
   return (
     <div
       ref={containerRef}
       id={id}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${transformClass} ${className}`}
+      className={`transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform ${transformClass} ${className}`}
     >
       {children}
     </div>

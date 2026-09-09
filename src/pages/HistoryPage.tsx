@@ -86,48 +86,48 @@ export const HistoryPage: React.FC = () => {
             {/* 2 Colunas com Altura Perfeitamente Proporcional (6 cols vs 6 cols) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
               
-              {/* Coluna Esquerda: 3 Cards Ágeis (6 cols) */}
-              <div className="lg:col-span-6 flex flex-col justify-between gap-4">
+              {/* Coluna Esquerda: 3 Cards Ágeis com Tipografia Ampliada (6 cols) */}
+              <div className="lg:col-span-6 flex flex-col justify-between gap-5">
                 {/* Ponto 1 */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-4 flex-1 hover:border-[#4F6D46]/40 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
-                    <AlertCircle className="w-5 h-5 text-[#4F6D46]" />
+                <div className="p-6 sm:p-7 rounded-3xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-5 flex-1 hover:border-[#4F6D46]/40 hover:shadow-md transition-all">
+                  <div className="w-12 h-12 rounded-2xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
+                    <AlertCircle className="w-6 h-6 text-[#4F6D46]" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-[#112010] mb-1">
+                    <h3 className="text-lg sm:text-xl font-extrabold text-[#112010] mb-2 leading-snug">
                       O Paradoxo do Faturamento
                     </h3>
-                    <p className="text-sm text-[#2C1810]/80 leading-relaxed">
+                    <p className="text-sm sm:text-base text-[#2C1810]/85 leading-relaxed">
                       Faturar alto não significa ter lucro no bolso. Sem fluxo de caixa diário, a margem do negócio sangra silenciosamente em juros, multas e descasamento de prazos.
                     </p>
                   </div>
                 </div>
 
                 {/* Ponto 2 */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-4 flex-1 hover:border-[#4F6D46]/40 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
-                    <FileSpreadsheet className="w-5 h-5 text-[#4F6D46]" />
+                <div className="p-6 sm:p-7 rounded-3xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-5 flex-1 hover:border-[#4F6D46]/40 hover:shadow-md transition-all">
+                  <div className="w-12 h-12 rounded-2xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
+                    <FileSpreadsheet className="w-6 h-6 text-[#4F6D46]" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-[#112010] mb-1">
+                    <h3 className="text-lg sm:text-xl font-extrabold text-[#112010] mb-2 leading-snug">
                       O Vazio das Consultorias Teóricas
                     </h3>
-                    <p className="text-sm text-[#2C1810]/80 leading-relaxed">
+                    <p className="text-sm sm:text-base text-[#2C1810]/85 leading-relaxed">
                       O mercado tenta vender relatórios de 100 páginas que ninguém aplica na prática. O que a empresa precisa é de uma esteira diária que execute e cuide das contas.
                     </p>
                   </div>
                 </div>
 
                 {/* Ponto 3 */}
-                <div className="p-5 sm:p-6 rounded-2xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-4 flex-1 hover:border-[#4F6D46]/40 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
-                    <CheckCircle2 className="w-5 h-5 text-[#4F6D46]" />
+                <div className="p-6 sm:p-7 rounded-3xl bg-white border border-[#EAE7DE] shadow-sm flex items-start gap-5 flex-1 hover:border-[#4F6D46]/40 hover:shadow-md transition-all">
+                  <div className="w-12 h-12 rounded-2xl bg-[#F2F5ED] text-[#4F6D46] flex items-center justify-center shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-6 h-6 text-[#4F6D46]" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-[#112010] mb-1">
+                    <h3 className="text-lg sm:text-xl font-extrabold text-[#112010] mb-2 leading-snug">
                       Falta de Método, Não de Esforço
                     </h3>
-                    <p className="text-sm text-[#2C1810]/80 leading-relaxed">
+                    <p className="text-sm sm:text-base text-[#2C1810]/85 leading-relaxed">
                       O problema nunca foi a dedicação do dono. Faltava uma esteira de trabalho silenciosa, disciplinada e sustentável que protegesse a saúde do caixa.
                     </p>
                   </div>
@@ -137,15 +137,15 @@ export const HistoryPage: React.FC = () => {
               {/* Coluna Direita: Imagem do Canteiro Perfeitamente Alinhada e Proporcional (6 cols) */}
               <div className="lg:col-span-6 flex flex-col">
                 <div className="rounded-3xl overflow-hidden border border-[#EAE7DE] shadow-xl bg-white group flex-1 flex flex-col">
-                  <div className="relative flex-1 min-h-[280px] overflow-hidden">
+                  <div className="relative flex-1 min-h-[300px] overflow-hidden">
                     <img
                       src="/images/site/canteiro-gestao-obra.jpg"
                       alt="Gestor acompanhando indicadores financeiros e fluxo de caixa em tablet no canteiro de obras"
                       className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-700"
                     />
                   </div>
-                  <div className="p-6 bg-[#FAF8F5] border-t border-[#EAE7DE]">
-                    <p className="text-xs sm:text-sm text-[#5C3A1A] font-medium leading-relaxed">
+                  <div className="p-6 sm:p-7 bg-[#FAF8F5] border-t border-[#EAE7DE]">
+                    <p className="text-sm sm:text-base text-[#5C3A1A] font-medium leading-relaxed">
                       <strong>A trincheira da gestão:</strong> A conciliação diária entre a execução no canteiro e o controle cirúrgico de caixa, assegurando que cada obra gere lucro real.
                     </p>
                   </div>
@@ -556,9 +556,12 @@ export const HistoryPage: React.FC = () => {
                   <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </a>
 
-                <p className="text-xs text-[#D1B688] font-mono mt-6">
-                  Conversa inicial consultiva e sigilosa · Sem intermediários
-                </p>
+                <div className="mt-8 inline-flex items-center justify-center gap-2.5 px-6 py-2.5 rounded-full bg-white/10 border border-[#D1B688]/40 shadow-sm backdrop-blur-sm">
+                  <ShieldCheck className="w-4 h-4 text-[#D1B688] shrink-0" />
+                  <span className="text-sm sm:text-base font-semibold text-[#FAF8F5] tracking-wide">
+                    Conversa inicial consultiva e sigilosa · Sem intermediários
+                  </span>
+                </div>
               </div>
             </div>
           </ElevationAct>
