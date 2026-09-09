@@ -1,71 +1,112 @@
 import React from 'react';
-import { Stethoscope, Laptop, UserCheck, Briefcase, MessageCircle, ArrowRight } from 'lucide-react';
+import { MessageCircle, ArrowRight } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
 
 export const HaloSection: React.FC = () => {
   const sectors = [
     {
-      icon: Stethoscope,
-      name: 'Clínicas & Saúde em Geral',
-      tag: 'Médicas, Odontológicas & Terapias',
-      desc: 'Conciliação de convênios, cartões, repasses a profissionais parceiros e controle apurado de custos operacionais e insumos.',
+      title: 'Clínicas & Saúde em Geral',
+      badge: 'Saúde & Terapias',
+      image: '/images/site/setor-saude-clinicas.jpg?v=1',
+      profiles: [
+        'Clínicas Médicas e Especialidades',
+        'Consultórios Odontológicos',
+        'Centros de Fisioterapia e Psicologia',
+        'Clínicas de Estética e Diagnóstico',
+      ],
     },
     {
-      icon: UserCheck,
-      name: 'Profissionais Liberais',
-      tag: 'Engenheiros, Psicólogos, Médicos, Advogados',
-      desc: 'Gestão financeira e conciliação dedicada, separando com clareza a pessoa física da jurídica e eliminando o retrabalho.',
+      title: 'Profissionais Liberais',
+      badge: 'Atuação Autônoma',
+      image: '/images/site/setor-profissionais-liberais.jpg?v=1',
+      profiles: [
+        'Engenheiros Consultores e Peritos',
+        'Médicos e Cirurgiões',
+        'Advogados e Escritórios Jurídicos',
+        'Arquitetos e Designers de Interiores',
+      ],
     },
     {
-      icon: Laptop,
-      name: 'Empresas de Tecnologia',
-      tag: 'Startups, Software Houses & SaaS',
-      desc: 'Previsibilidade de receitas recorrentes, controle rígido de despesas e relatórios gerenciais claros para os sócios.',
+      title: 'Empresas de Tecnologia',
+      badge: 'Inovação & Digital',
+      image: '/images/site/setor-tecnologia-software.jpg?v=1',
+      profiles: [
+        'Startups e Negócios Digitais',
+        'Software Houses e SaaS',
+        'Fábricas de Aplicativos e Tech',
+        'Agências e Estúdios de Produto',
+      ],
     },
     {
-      icon: Briefcase,
-      name: 'Serviços B2B & Consultorias',
-      tag: 'Contratos & Prestação de Serviços',
-      desc: 'Emissão de notas fiscais, cobrança ativa, controle de retenções tributárias e acompanhamento diário de fluxo de caixa.',
+      title: 'Serviços B2B & Consultorias',
+      badge: 'Corporativo & Contratos',
+      image: '/images/site/setor-servicos-b2b.jpg?v=1',
+      profiles: [
+        'Consultorias de Gestão e RH',
+        'Empresas de Projetos e Fiscalização',
+        'Prestadores de Serviços Corporativos',
+        'Negócios Baseados em Contratos',
+      ],
     },
   ];
 
   return (
     <section id="segmentos" className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-[#F4EFEA]/60 border-t border-[#EAE7DE]">
       <div className="max-w-7xl mx-auto">
+        
+        {/* Section Header Refinado */}
         <div className="max-w-3xl mx-auto text-center mb-14">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#2C1810] tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-4 leading-tight">
             Não atua na construção civil? <br className="hidden sm:inline" />
             <span className="text-[#4F6D46]">
-              Aplicamos o mesmo rigor de processo ao seu negócio.
+              O mesmo método e governança para o seu setor.
             </span>
           </h2>
-          <p className="text-sm sm:text-base text-[#5C3A1A]/85 leading-relaxed">
-            Quem domina a complexidade de canteiros, compras industriais e contratos rigorosos opera a rotina financeira da sua empresa com facilidade, método e segurança inabalável.
+          <p className="text-base sm:text-lg text-[#5C3A1A]/85 leading-relaxed">
+            A disciplina de conciliação diária, previsibilidade de fluxo de caixa e governança sólida da OECO estruturadas para a dinâmica e os desafios da sua empresa.
           </p>
         </div>
 
+        {/* 4 Cards Grid com Ilustrações e Perfis de Clientes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {sectors.map((s, idx) => {
-            const Icon = s.icon;
-            return (
-              <div
-                key={idx}
-                className="p-7 rounded-3xl bg-white border border-[#EAE7DE] shadow-sm hover:border-[#D1B688] hover:shadow-md transition-all duration-200 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-2xl bg-[#FAF8F5] border border-[#EAE7DE] flex items-center justify-center text-[#5C3A1A] mb-5">
-                    <Icon className="w-6 h-6 text-[#4F6D46]" />
-                  </div>
-                  <span className="inline-block text-[11px] font-bold uppercase tracking-wider text-[#6B7F5A] bg-[#4F6D46]/10 px-2.5 py-0.5 rounded mb-2">
-                    {s.tag}
+          {sectors.map((s, idx) => (
+            <div
+              key={idx}
+              className="rounded-3xl bg-white border border-[#EAE7DE] shadow-sm hover:border-[#D1B688] hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group"
+            >
+              {/* Illustration Banner */}
+              <div className="relative aspect-[4/3] overflow-hidden bg-[#FAF8F5] border-b border-[#EAE7DE]">
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 filter contrast-[1.02]"
+                />
+                <div className="absolute top-3 left-3">
+                  <span className="inline-block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#4F6D46] bg-white/95 backdrop-blur-sm border border-[#EAE7DE] px-2.5 py-1 rounded-full shadow-sm">
+                    {s.badge}
                   </span>
-                  <h3 className="text-base sm:text-lg font-bold text-[#2C1810] mb-2.5">{s.name}</h3>
-                  <p className="text-sm text-[#5C3A1A]/80 leading-relaxed">{s.desc}</p>
                 </div>
               </div>
-            );
-          })}
+
+              {/* Card Body */}
+              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-[#1C1815] mb-4 leading-snug">
+                    {s.title}
+                  </h3>
+
+                  <ul className="space-y-2.5 text-sm text-[#5C3A1A]/85">
+                    {s.profiles.map((profile, pIdx) => (
+                      <li key={pIdx} className="flex items-center gap-2.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#4F6D46] shrink-0" />
+                        <span>{profile}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* CTA Destaque de Alto Impacto */}
@@ -95,6 +136,7 @@ export const HaloSection: React.FC = () => {
             </a>
           </div>
         </div>
+
       </div>
     </section>
   );
