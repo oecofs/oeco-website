@@ -4,7 +4,7 @@ import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp'
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="pt-28 sm:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
+    <section id="hero" className="pt-28 sm:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         
         {/* Main Dark Editorial Hero Card (BNI Perfil-GAINS Style) */}

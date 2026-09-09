@@ -7,7 +7,7 @@ export const CtaFooterSection: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#1C1815] text-[#FAF8F5] pt-16 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-t border-[#2E2824]">
+    <footer id="contato" className="bg-[#1C1815] text-[#FAF8F5] pt-16 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-t border-[#2E2824]">
       
       {/* Subtle Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[40rem] h-[20rem] bg-[#4F6D46]/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -49,9 +49,9 @@ export const CtaFooterSection: React.FC = () => {
           <div className="md:col-span-5">
             <div className="mb-5">
               <img
-                src="/images/brand/logo-oeco-gold.png?v=2"
-                alt="OECO Financial Solutions"
-                className="h-9 sm:h-10 w-auto object-contain"
+                src="/images/brand/sublogo-oeco-gold.png?v=3"
+                alt="OECO"
+                className="h-8 sm:h-9 w-auto object-contain"
               />
             </div>
             <p className="text-sm text-[#FAF8F5]/75 leading-relaxed max-w-sm mb-6">

@@ -7,6 +7,7 @@ import { ServiceTiersSection } from '../components/ServiceTiersSection';
 import { HaloSection } from '../components/HaloSection';
 import { FaqSection } from '../components/FaqSection';
 import { CtaFooterSection } from '../components/CtaFooterSection';
+import { HomeNavigator } from '../components/HomeNavigator';
 
 export const HomePage: React.FC = () => {
   return (
@@ -34,6 +35,9 @@ export const HomePage: React.FC = () => {
 
       {/* Dobra 8: CTA Final & Rodapé */}
       <CtaFooterSection />
+
+      {/* Navegador Lateral & Controles Estilo Apresentação */}
+      <HomeNavigator />
     </div>
   );
 };
