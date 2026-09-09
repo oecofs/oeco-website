@@ -68,11 +68,8 @@ export const PainPointsSection: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1C1815]/95 via-[#1C1815]/40 to-transparent sm:bg-gradient-to-r sm:from-[#1C1815]/95 sm:via-[#1C1815]/50 sm:to-transparent"></div>
           <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-end max-w-xl">
-            <span className="text-xs font-mono tracking-widest text-[#D1B688] uppercase font-bold mb-2">
-              ESCALA &amp; COMPLEXIDADE DE CANTEIRO
-            </span>
             <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white leading-snug">
-              Obras acima de R$ 3 milhões exigem controle de caixa no mesmo rigor da engenharia de campo.
+              Grandes obras exigem controle de caixa no mesmo rigor da engenharia de campo.
             </p>
           </div>
         </div>
@@ -128,9 +125,6 @@ export const PainPointsSection: React.FC = () => {
         {/* Section Bottom Callout */}
         <div className="mt-14 p-8 sm:p-10 rounded-3xl bg-[#2C1810] text-[#FAF8F5] border border-[#5C3A1A] flex flex-col sm:flex-row items-center justify-between gap-8 shadow-xl">
           <div>
-            <p className="text-xs font-mono tracking-widest text-[#D1B688] uppercase mb-2 font-bold">
-              DIAGNÓSTICO PREVENTIVO
-            </p>
             <h4 className="text-lg sm:text-xl font-bold text-[#FAF8F5]">
               Identifique quanto a sua construtora está deixando na mesa todo mês.
             </h4>

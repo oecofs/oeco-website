@@ -29,9 +29,6 @@ export const AccountingPartnerSection: React.FC = () => {
             />
           </div>
           <div className="lg:col-span-6 p-8 sm:p-10 flex flex-col justify-center">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#4F6D46] uppercase mb-2">
-              CONEXÃO FÍSICO-FINANCEIRA
-            </span>
             <h3 className="text-xl sm:text-2xl font-bold text-[#2C1810] mb-3 leading-snug">
               Traduzimos a rotina de canteiro em demonstrativos de caixa limpos.
             </h3>

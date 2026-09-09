@@ -39,7 +39,7 @@ export const ServiceTiersSection: React.FC = () => {
                 BPO Financeiro Operacional
               </h3>
               <p className="text-xs sm:text-sm font-bold text-[#6B7F5A] mb-4">
-                Para empresas com faturamento a partir de R$ 100k/mês
+                Estruturação de rotina, conciliação e gestão diária de contas
               </p>
               <p className="text-sm sm:text-base text-[#5C3A1A]/85 mb-8 leading-relaxed">
                 Ideal para quem precisa delegar o trabalho braçal do financeiro para especialistas, eliminando noites conferindo extratos e atrasos de pagamento.
@@ -106,7 +106,7 @@ export const ServiceTiersSection: React.FC = () => {
                 BPO Financeiro Estratégico
               </h3>
               <p className="text-xs sm:text-sm font-bold text-[#D1B688] mb-4">
-                Para construtoras e contratos com orçamento acima de R$ 3 milhões
+                Para construtoras, incorporadoras e grandes projetos
               </p>
               <p className="text-sm sm:text-base text-[#FAF8F5]/85 mb-8 leading-relaxed">
                 Toda a rotina operacional combinada com inteligência profunda de canteiro: análise por centro de custo, orçado vs. realizado e blindagem ativa de contratos e retenções.
@@ -165,19 +165,12 @@ export const ServiceTiersSection: React.FC = () => {
             />
           </div>
           <div className="lg:col-span-6 p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase mb-2">
-              AUDITORIA CIRÚRGICA DE CANTEIRO
-            </span>
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#FAF8F5] mb-4 leading-snug">
               Como auditamos cada medição e contrato na prática
             </h3>
-            <p className="text-sm sm:text-base text-[#FAF8F5]/85 leading-relaxed mb-6">
+            <p className="text-sm sm:text-base text-[#FAF8F5]/85 leading-relaxed">
               No BPO Estratégico, nenhuma medição é liberada no escuro. Cruzamos o avanço físico do canteiro com as planilhas orçadas, identificamos desvios em tempo real e garantimos que a margem planejada não seja corroída ao longo da execução da obra.
             </p>
-            <div className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-[#D1B688]">
-              <Star className="w-4 h-4 fill-current text-[#D1B688] shrink-0" />
-              <span>Controle financeiro de nível executivo para construtoras e obras acima de R$ 3 milhões.</span>
-            </div>
           </div>
         </div>
 
