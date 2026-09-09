@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, ArrowRight, ShieldCheck, Phone, MapPin } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
+import { useDiagnosticModal } from '../context/DiagnosticModalContext';
 
 export const CtaFooterSection: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const { openModal } = useDiagnosticModal();
 
   return (
     <footer id="contato" className="bg-[#1C1815] text-[#FAF8F5] pt-16 pb-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-t border-[#2E2824]">
@@ -24,20 +26,28 @@ export const CtaFooterSection: React.FC = () => {
               Em 30 minutos, mostramos onde a sua empresa pode estar perdendo margem e como estruturar processos diários sólidos sem interromper o andamento do canteiro.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => openModal()}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#D1B688] hover:bg-[#b89b6c] text-[#1C1815] font-extrabold text-base tracking-wide shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200 group"
+              >
+                <MessageCircle className="w-5 h-5 text-[#1C1815]" />
+                <span>Iniciar Pré-Diagnóstico Interativo</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+
               <a
                 href={buildWhatsAppLink(DEFAULT_WHATSAPP_MESSAGES.hero)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#D1B688] hover:bg-[#b89b6c] text-[#1C1815] font-extrabold text-base tracking-wide shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200 group"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl border border-[#FAF8F5]/25 hover:border-[#FAF8F5]/60 text-[#FAF8F5] hover:bg-white/5 font-semibold text-sm transition-all duration-200"
               >
-                <MessageCircle className="w-5 h-5 text-[#1C1815]" />
-                <span>Agendar Diagnóstico no WhatsApp</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <span>Falar Direto no WhatsApp</span>
               </a>
             </div>
             <div className="mt-6 flex items-center justify-center gap-2 text-xs sm:text-sm text-[#FAF8F5]/70">
               <ShieldCheck className="w-4 h-4 text-[#4F6D46]" />
-              <span>Conversa técnica, confidencial e sem compromisso.</span>
+              <span>Pacto de sigilo profissional OECO · Conversa técnica e confidencial.</span>
             </div>
           </div>
         </div>

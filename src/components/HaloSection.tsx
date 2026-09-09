@@ -1,8 +1,10 @@
 import React from 'react';
 import { MessageCircle, ArrowRight } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
+import { useDiagnosticModal } from '../context/DiagnosticModalContext';
 
 export const HaloSection: React.FC = () => {
+  const { openModal } = useDiagnosticModal();
   const sectors = [
     {
       title: 'Clínicas & Saúde em Geral',
@@ -124,16 +126,15 @@ export const HaloSection: React.FC = () => {
           </div>
 
           <div className="relative z-10 shrink-0 w-full sm:w-auto">
-            <a
-              href={buildWhatsAppLink(DEFAULT_WHATSAPP_MESSAGES.operational)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => openModal()}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#D1B688] hover:bg-[#b89b6c] text-[#1C1815] font-extrabold text-base tracking-wide shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200 group"
             >
               <MessageCircle className="w-5 h-5 text-[#1C1815]" />
-              <span>Falar com Nossa Equipe no WhatsApp</span>
+              <span>Solicitar Diagnóstico para Minha Empresa</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </button>
           </div>
         </div>
 

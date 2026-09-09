@@ -1,8 +1,10 @@
 import React from 'react';
 import { MessageCircle, ArrowRight } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
+import { useDiagnosticModal } from '../context/DiagnosticModalContext';
 
 export const HeroSection: React.FC = () => {
+  const { openModal } = useDiagnosticModal();
   return (
     <section id="hero" className="pt-28 sm:pt-36 pb-16 sm:pb-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -33,22 +35,21 @@ export const HeroSection: React.FC = () => {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <a
-                  href={buildWhatsAppLink(DEFAULT_WHATSAPP_MESSAGES.hero)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => openModal('Construção Civil & Obras')}
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#D1B688] hover:bg-[#b89b6c] text-[#1C1815] font-extrabold text-base tracking-wide shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200 group"
                 >
                   <MessageCircle className="w-5 h-5 text-[#1C1815]" />
                   <span>Agendar Diagnóstico de Caixa</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </button>
 
                 <a
-                  href="#solucoes"
+                  href="#onboarding"
                   className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl border border-[#FAF8F5]/25 hover:border-[#FAF8F5]/60 text-[#FAF8F5] hover:bg-white/5 font-semibold text-base transition-all duration-200"
                 >
-                  <span>Entender Nossas Soluções</span>
+                  <span>Conhecer o Onboarding</span>
                 </a>
               </div>
             </div>

@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MessageCircle, Menu, X, ArrowUpRight, Leaf } from 'lucide-react';
+import { MessageCircle, Menu, X, ArrowUpRight, Leaf, Sparkles } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
+import { useDiagnosticModal } from '../context/DiagnosticModalContext';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isHistoryPage = location.pathname === '/historia';
+  const { openModal } = useDiagnosticModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,8 +26,16 @@ export const Navbar: React.FC = () => {
     { label: 'O Processo', href: '/#filosofia' },
     { label: 'Aliança Contábil', href: '/#contabilidade' },
     { label: 'Soluções BPO', href: '/#solucoes' },
+    { label: 'Onboarding', href: '/#onboarding' },
     { label: 'FAQ', href: '/#faq' },
   ];
+
+  const handleCtaClick = (e: React.MouseEvent) => {
+    if (!isHistoryPage) {
+      e.preventDefault();
+      openModal();
+    }
+  };
 
   return (
     <header
@@ -49,7 +59,7 @@ export const Navbar: React.FC = () => {
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-5">
             {navLinks.map((link) => {
               const isLinkActive = location.pathname === link.href;
               return (
@@ -79,25 +89,29 @@ export const Navbar: React.FC = () => {
 
           {/* Right Action CTA */}
           <div className="hidden sm:flex items-center gap-3">
-            <a
-              href={buildWhatsAppLink(isHistoryPage ? DEFAULT_WHATSAPP_MESSAGES.history : DEFAULT_WHATSAPP_MESSAGES.hero)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide shadow-md hover:shadow-lg transition-all duration-300 group ${
-                isHistoryPage
-                  ? 'bg-[#D1B688] text-[#112010] hover:bg-[#FAF8F5]'
-                  : 'bg-[#2C1810] text-[#FAF8F5] hover:bg-[#4F6D46]'
-              }`}
-            >
-              <span className={`w-2 h-2 rounded-full animate-pulse ${
-                isHistoryPage ? 'bg-[#112010]' : 'bg-[#D1B688]'
-              }`}></span>
-              <MessageCircle className={`w-4 h-4 transition-colors ${
-                isHistoryPage ? 'text-[#112010]' : 'text-[#D1B688] group-hover:text-white'
-              }`} />
-              <span>{isHistoryPage ? 'Conversar com Matheus' : 'Diagnóstico de Caixa'}</span>
-              <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+            {isHistoryPage ? (
+              <a
+                href={buildWhatsAppLink(DEFAULT_WHATSAPP_MESSAGES.history)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide shadow-md hover:shadow-lg transition-all duration-300 group bg-[#D1B688] text-[#112010] hover:bg-[#FAF8F5]"
+              >
+                <span className="w-2 h-2 rounded-full animate-pulse bg-[#112010]"></span>
+                <MessageCircle className="w-4 h-4 text-[#112010]" />
+                <span>Conversar com Matheus</span>
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+            ) : (
+              <button
+                onClick={() => openModal()}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide shadow-md hover:shadow-lg transition-all duration-300 group bg-[#2C1810] text-[#FAF8F5] hover:bg-[#4F6D46]"
+              >
+                <span className="w-2 h-2 rounded-full animate-pulse bg-[#D1B688]"></span>
+                <Sparkles className="w-4 h-4 text-[#D1B688] group-hover:text-white" />
+                <span>Diagnóstico de Caixa</span>
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -142,20 +156,29 @@ export const Navbar: React.FC = () => {
                 </Link>
               ))}
               <div className={`pt-3 border-t mt-1 ${isHistoryPage ? 'border-[#D1B688]/20' : 'border-[#EAE7DE]'}`}>
-                <a
-                  href={buildWhatsAppLink(isHistoryPage ? DEFAULT_WHATSAPP_MESSAGES.history : DEFAULT_WHATSAPP_MESSAGES.hero)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-semibold transition-colors ${
-                    isHistoryPage
-                      ? 'bg-[#D1B688] text-[#112010] hover:bg-[#FAF8F5]'
-                      : 'bg-[#2C1810] text-white hover:bg-[#4F6D46]'
-                  }`}
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>{isHistoryPage ? 'Conversar com Matheus' : 'Agendar Diagnóstico de Caixa'}</span>
-                </a>
+                {isHistoryPage ? (
+                  <a
+                    href={buildWhatsAppLink(DEFAULT_WHATSAPP_MESSAGES.history)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-semibold transition-colors bg-[#D1B688] text-[#112010] hover:bg-[#FAF8F5]"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Conversar com Matheus</span>
+                  </a>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openModal();
+                    }}
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-semibold transition-colors bg-[#2C1810] text-white hover:bg-[#4F6D46]"
+                  >
+                    <Sparkles className="w-4 h-4 text-[#D1B688]" />
+                    <span>Agendar Diagnóstico de Caixa</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>

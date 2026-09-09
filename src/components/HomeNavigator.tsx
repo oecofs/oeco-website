@@ -14,8 +14,9 @@ const HOME_SLIDES: SlideItem[] = [
   { id: 'contabilidade', label: 'Aliança Contábil', short: '04' },
   { id: 'solucoes', label: 'Esteira de Serviços', short: '05' },
   { id: 'segmentos', label: 'Outros Segmentos', short: '06' },
-  { id: 'faq', label: 'Dúvidas Frequentes', short: '07' },
-  { id: 'contato', label: 'Diagnóstico & Contato', short: '08' },
+  { id: 'onboarding', label: 'Mapa de Onboarding', short: '07' },
+  { id: 'faq', label: 'Dúvidas Frequentes', short: '08' },
+  { id: 'contato', label: 'Diagnóstico & Contato', short: '09' },
 ];
 
 export const HomeNavigator: React.FC = () => {

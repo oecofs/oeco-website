@@ -5,6 +5,7 @@ import { PhilosophySection } from '../components/PhilosophySection';
 import { AccountingPartnerSection } from '../components/AccountingPartnerSection';
 import { ServiceTiersSection } from '../components/ServiceTiersSection';
 import { HaloSection } from '../components/HaloSection';
+import { OnboardingSection } from '../components/OnboardingSection';
 import { FaqSection } from '../components/FaqSection';
 import { CtaFooterSection } from '../components/CtaFooterSection';
 import { HomeNavigator } from '../components/HomeNavigator';
@@ -30,10 +31,13 @@ export const HomePage: React.FC = () => {
       {/* Dobra 6: Efeito Halo (Para Outros Setores) */}
       <HaloSection />
 
-      {/* Dobra 7: FAQ Interativo */}
+      {/* Dobra 7: Mapa de Onboarding (Jornada até fechar & Implantação 30 dias) */}
+      <OnboardingSection />
+
+      {/* Dobra 8: FAQ Interativo */}
       <FaqSection />
 
-      {/* Dobra 8: CTA Final & Rodapé */}
+      {/* Dobra 9: CTA Final & Rodapé */}
       <CtaFooterSection />
 
       {/* Navegador Lateral & Controles Estilo Apresentação */}
