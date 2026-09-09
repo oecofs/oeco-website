@@ -1,4 +1,4 @@
-name: Deploy to Hostinger via FTP
+name: Build and Deploy to 'deploy' branch
 
 on:
   push:
@@ -6,13 +6,16 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  web-deploy:
-    name: 🎉 Build & Deploy
+  build-and-deploy:
+    name: 🔨 Build & Publish to 'deploy' branch
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🚚 Get latest code
+      - name: 🚚 Checkout code
         uses: actions/checkout@v4
 
       - name: 🟢 Set up Node.js
@@ -27,19 +30,9 @@ jobs:
       - name: 🔨 Build production project
         run: npm run build
 
-      - name: 🧹 Prepare Server Host
-        id: prep
-        run: |
-          RAW_SERVER="${{ secrets.FTP_SERVER }}"
-          CLEAN_SERVER=$(echo "$RAW_SERVER" | sed -E 's~^[a-zA-Z]+://~~' | sed -E 's~:[0-9]+$~~' | tr -d '[:space:]' | sed -E 's~/+$~~')
-          echo "host=$CLEAN_SERVER" >> $GITHUB_OUTPUT
-
-      - name: 📂 Sync files to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: 🚀 Publish dist to 'deploy' branch
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          server: ${{ steps.prep.outputs.host }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ${{ secrets.FTP_DIR || 'public_html/' }}
-          dangerous-clean-slate: false
+          folder: dist
+          branch: deploy
+          clean: true
