@@ -2,6 +2,7 @@ import React from 'react';
 import { MessageCircle, ArrowRight } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
 import { useDiagnosticModal } from '../context/DiagnosticModalContext';
+import heroEngineerImg from '../assets/hero-gestao-canteiro-engenheiro.jpg';
 
 export const HeroSection: React.FC = () => {
   const { openModal } = useDiagnosticModal();
@@ -34,22 +35,22 @@ export const HeroSection: React.FC = () => {
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
                 <button
                   type="button"
                   onClick={() => openModal('Construção Civil & Obras')}
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-[#D1B688] hover:bg-[#b89b6c] text-[#1C1815] font-extrabold text-base tracking-wide shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200 group"
+                  className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 sm:py-4 rounded-xl bg-[#D1B688] hover:bg-[#b89b6c] text-[#1C1815] font-bold text-sm sm:text-base tracking-normal shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-200 group whitespace-nowrap cursor-pointer shrink-0"
                 >
-                  <MessageCircle className="w-5 h-5 text-[#1C1815]" />
-                  <span>Agendar Diagnóstico de Caixa</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <MessageCircle className="w-5 h-5 text-[#1C1815] shrink-0" />
+                  <span className="whitespace-nowrap">Agendar Diagnóstico de Caixa</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform shrink-0" />
                 </button>
 
                 <a
-                  href="#onboarding"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl border border-[#FAF8F5]/25 hover:border-[#FAF8F5]/60 text-[#FAF8F5] hover:bg-white/5 font-semibold text-base transition-all duration-200"
+                  href="#solucoes"
+                  className="inline-flex items-center justify-center px-6 py-3.5 sm:py-4 rounded-xl border border-[#FAF8F5]/30 hover:border-[#FAF8F5]/70 text-[#FAF8F5] hover:bg-white/5 font-semibold text-sm sm:text-base transition-all duration-200 whitespace-nowrap text-center shrink-0"
                 >
-                  <span>Conhecer o Onboarding</span>
+                  <span className="whitespace-nowrap">Entender Nossas Soluções</span>
                 </a>
               </div>
             </div>
@@ -58,9 +59,9 @@ export const HeroSection: React.FC = () => {
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#FAF8F5]/20 aspect-[3/4] group bg-[#2C1810]">
                 <img
-                  src="/images/photoshoot/web/IMG_8156_-_v2-web.jpg"
-                  alt="Matheus Marques · OECO Financial Solutions"
-                  className="w-full h-full object-cover object-[center_15%] group-hover:scale-103 transition-transform duration-700 filter brightness-95"
+                  src={heroEngineerImg}
+                  alt="Diretor de engenharia e gestão de obras · OECO"
+                  className="w-full h-full object-cover object-[center_20%] group-hover:scale-103 transition-transform duration-700 filter brightness-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1C1815]/70 via-transparent to-transparent"></div>
               </div>

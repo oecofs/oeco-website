@@ -7,11 +7,8 @@ import {
   ShieldCheck, 
   MessageCircle, 
   Briefcase, 
-  AlertTriangle, 
-  Layers, 
   User, 
   Building2, 
-  Phone,
   Sparkles
 } from 'lucide-react';
 import { useDiagnosticModal } from '../context/DiagnosticModalContext';
@@ -19,11 +16,11 @@ import { buildWhatsAppLink } from '../utils/whatsapp';
 
 interface DiagnosticFormData {
   segment: string;
+  revenue: string;
   bottleneck: string;
   currentSystem: string;
   name: string;
   company: string;
-  whatsapp: string;
 }
 
 const SEGMENT_OPTIONS = [
@@ -33,6 +30,15 @@ const SEGMENT_OPTIONS = [
   { id: 'tech', label: 'Tecnologia & Software (SaaS)', icon: '💻', description: 'Empresas de tecnologia, desenvolvimento e inovação' },
   { id: 'b2b', label: 'Serviços B2B & Consultorias', icon: '🤝', description: 'Prestadores de serviços e assessorias corporativas' },
   { id: 'outro', label: 'Outro Segmento Empresarial', icon: '🏢', description: 'Outros modelos de negócio e comércio' }
+];
+
+const REVENUE_OPTIONS = [
+  'Até R$ 50 mil / mês',
+  'De R$ 50 mil a R$ 100 mil / mês',
+  'De R$ 100 mil a R$ 300 mil / mês',
+  'De R$ 300 mil a R$ 500 mil / mês',
+  'De R$ 500 mil a R$ 1 milhão / mês',
+  'Acima de R$ 1 milhão / mês'
 ];
 
 const BOTTLENECK_OPTIONS = [
@@ -55,11 +61,11 @@ export const DiagnosticModal: React.FC = () => {
   const [step, setStep] = useState<number>(1);
   const [formData, setFormData] = useState<DiagnosticFormData>({
     segment: '',
+    revenue: '',
     bottleneck: '',
     currentSystem: '',
     name: '',
-    company: '',
-    whatsapp: ''
+    company: ''
   });
 
   // Set initial segment if passed
@@ -84,7 +90,7 @@ export const DiagnosticModal: React.FC = () => {
   if (!isOpen) return null;
 
   const handleNext = () => {
-    if (step < 4) {
+    if (step < 5) {
       setStep(step + 1);
     }
   };
@@ -101,9 +107,9 @@ export const DiagnosticModal: React.FC = () => {
       `------------------------------------------`,
       `👤 *Responsável:* ${formData.name.trim() || 'Não informado'}`,
       `🏢 *Empresa:* ${formData.company.trim() || 'Não informado'}`,
-      `📱 *WhatsApp:* ${formData.whatsapp.trim() || 'Não informado'}`,
       ``,
       `📌 *Segmento:* ${formData.segment || 'Não informado'}`,
+      `💰 *Faixa de Faturamento:* ${formData.revenue || 'Não informado'}`,
       `⚠️ *Principal Gargalo:* ${formData.bottleneck || 'Não informado'}`,
       `⚙️ *Gestão Atual:* ${formData.currentSystem || 'Não informado'}`,
       `------------------------------------------`,
@@ -136,7 +142,7 @@ export const DiagnosticModal: React.FC = () => {
                 Pré-Diagnóstico de Caixa & Rotina OECO
               </h2>
               <p className="text-xs text-[#FAF8F5]/70">
-                Mapeamento ágil em 3 passos para direcionar sua reunião executiva
+                Mapeamento ágil em etapas para direcionar sua conversa executiva
               </p>
             </div>
           </div>
@@ -149,9 +155,11 @@ export const DiagnosticModal: React.FC = () => {
           </button>
         </div>
 
-        {/* Stepper Progress Indicator */}
+        {/* Stepper Progress Indicator (5 Passos) */}
         <div className="px-6 sm:px-8 pt-5 pb-3 bg-[#F4EFEA] border-b border-[#EAE7DE]">
           <div className="flex items-center justify-between gap-2 text-xs font-semibold text-[#5C3A1A]">
+            
+            {/* Step 1: Segmento */}
             <div className={`flex items-center gap-1.5 ${step >= 1 ? 'text-[#2C1810]' : 'text-[#5C3A1A]/40'}`}>
               <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
                 step > 1 ? 'bg-[#4F6D46] text-white' : step === 1 ? 'bg-[#D1B688] text-[#1C1815] font-bold' : 'bg-stone-300 text-stone-600'
@@ -162,31 +170,33 @@ export const DiagnosticModal: React.FC = () => {
             </div>
             <div className="h-[2px] flex-1 bg-[#EAE7DE] mx-1">
               <div className={`h-full bg-[#4F6D46] transition-all duration-300 ${
-                step === 1 ? 'w-0' : step === 2 ? 'w-1/2' : 'w-full'
+                step === 1 ? 'w-0' : 'w-full'
               }`}></div>
             </div>
 
+            {/* Step 2: Faturamento */}
             <div className={`flex items-center gap-1.5 ${step >= 2 ? 'text-[#2C1810]' : 'text-[#5C3A1A]/40'}`}>
               <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
                 step > 2 ? 'bg-[#4F6D46] text-white' : step === 2 ? 'bg-[#D1B688] text-[#1C1815] font-bold' : 'bg-stone-300 text-stone-600'
               }`}>
                 {step > 2 ? '✓' : '2'}
               </span>
-              <span className="hidden sm:inline">Gargalo</span>
+              <span className="hidden sm:inline">Faturamento</span>
             </div>
             <div className="h-[2px] flex-1 bg-[#EAE7DE] mx-1">
               <div className={`h-full bg-[#4F6D46] transition-all duration-300 ${
-                step <= 2 ? 'w-0' : step === 3 ? 'w-1/2' : 'w-full'
+                step <= 2 ? 'w-0' : 'w-full'
               }`}></div>
             </div>
 
+            {/* Step 3: Gargalo */}
             <div className={`flex items-center gap-1.5 ${step >= 3 ? 'text-[#2C1810]' : 'text-[#5C3A1A]/40'}`}>
               <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
                 step > 3 ? 'bg-[#4F6D46] text-white' : step === 3 ? 'bg-[#D1B688] text-[#1C1815] font-bold' : 'bg-stone-300 text-stone-600'
               }`}>
                 {step > 3 ? '✓' : '3'}
               </span>
-              <span className="hidden sm:inline">Gestão Atual</span>
+              <span className="hidden sm:inline">Gargalo</span>
             </div>
             <div className="h-[2px] flex-1 bg-[#EAE7DE] mx-1">
               <div className={`h-full bg-[#4F6D46] transition-all duration-300 ${
@@ -194,14 +204,31 @@ export const DiagnosticModal: React.FC = () => {
               }`}></div>
             </div>
 
-            <div className={`flex items-center gap-1.5 ${step === 4 ? 'text-[#2C1810]' : 'text-[#5C3A1A]/40'}`}>
+            {/* Step 4: Gestão Atual */}
+            <div className={`flex items-center gap-1.5 ${step >= 4 ? 'text-[#2C1810]' : 'text-[#5C3A1A]/40'}`}>
               <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
-                step === 4 ? 'bg-[#D1B688] text-[#1C1815] font-bold' : 'bg-stone-300 text-stone-600'
+                step > 4 ? 'bg-[#4F6D46] text-white' : step === 4 ? 'bg-[#D1B688] text-[#1C1815] font-bold' : 'bg-stone-300 text-stone-600'
               }`}>
-                4
+                {step > 4 ? '✓' : '4'}
+              </span>
+              <span className="hidden sm:inline">Gestão</span>
+            </div>
+            <div className="h-[2px] flex-1 bg-[#EAE7DE] mx-1">
+              <div className={`h-full bg-[#4F6D46] transition-all duration-300 ${
+                step <= 4 ? 'w-0' : 'w-full'
+              }`}></div>
+            </div>
+
+            {/* Step 5: Conexão */}
+            <div className={`flex items-center gap-1.5 ${step === 5 ? 'text-[#2C1810]' : 'text-[#5C3A1A]/40'}`}>
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] ${
+                step === 5 ? 'bg-[#D1B688] text-[#1C1815] font-bold' : 'bg-stone-300 text-stone-600'
+              }`}>
+                5
               </span>
               <span className="hidden sm:inline">Conexão</span>
             </div>
+
           </div>
         </div>
 
@@ -212,9 +239,9 @@ export const DiagnosticModal: React.FC = () => {
           {step === 1 && (
             <div className="space-y-4 animate-in fade-in duration-200">
               <div className="mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 1 de 4</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 1 de 5</span>
                 <h3 className="text-xl font-extrabold text-[#2C1810] tracking-tight mt-1">
-                  Qual é a atividade principal da sua empresa?
+                  Qual é o segmento principal da sua empresa?
                 </h3>
                 <p className="text-xs text-[#5C3A1A]/80 mt-1">
                   Adaptamos a estrutura de centros de custo e conciliação de acordo com a sua realidade.
@@ -254,11 +281,53 @@ export const DiagnosticModal: React.FC = () => {
             </div>
           )}
 
-          {/* STEP 2: BOTTLENECK */}
+          {/* STEP 2: REVENUE RANGE (Apenas lista limpa com as faixas, sem detalhe embaixo) */}
           {step === 2 && (
             <div className="space-y-4 animate-in fade-in duration-200">
               <div className="mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 2 de 4</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 2 de 5</span>
+                <h3 className="text-xl font-extrabold text-[#2C1810] tracking-tight mt-1">
+                  Qual é a faixa média de faturamento mensal da empresa?
+                </h3>
+                <p className="text-xs text-[#5C3A1A]/80 mt-1">
+                  Essa informação nos permite dimensionar a equipe e a intensidade ideal do BPO Financeiro.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                {REVENUE_OPTIONS.map((opt) => {
+                  const isSelected = formData.revenue === opt;
+                  return (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, revenue: opt })}
+                      className={`w-full text-left p-4 rounded-2xl border transition-all duration-200 flex items-center justify-between group ${
+                        isSelected
+                          ? 'border-[#4F6D46] bg-[#4F6D46]/10 ring-2 ring-[#4F6D46]/20 shadow-sm'
+                          : 'border-[#EAE7DE] bg-white hover:border-[#D1B688] hover:bg-[#FAF8F5]'
+                      }`}
+                    >
+                      <span className="text-sm font-bold text-[#2C1810] group-hover:text-[#4F6D46] transition-colors">
+                        {opt}
+                      </span>
+                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 transition-colors ${
+                        isSelected ? 'border-[#4F6D46] bg-[#4F6D46] text-white' : 'border-[#5C3A1A]/30 bg-white'
+                      }`}>
+                        {isSelected && <CheckCircle2 className="w-3.5 h-3.5" />}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* STEP 3: BOTTLENECK */}
+          {step === 3 && (
+            <div className="space-y-4 animate-in fade-in duration-200">
+              <div className="mb-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 3 de 5</span>
                 <h3 className="text-xl font-extrabold text-[#2C1810] tracking-tight mt-1">
                   Qual é a maior dor ou gargalo financeiro hoje?
                 </h3>
@@ -301,11 +370,11 @@ export const DiagnosticModal: React.FC = () => {
             </div>
           )}
 
-          {/* STEP 3: CURRENT SYSTEM */}
-          {step === 3 && (
+          {/* STEP 4: CURRENT SYSTEM */}
+          {step === 4 && (
             <div className="space-y-4 animate-in fade-in duration-200">
               <div className="mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 3 de 4</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 4 de 5</span>
                 <h3 className="text-xl font-extrabold text-[#2C1810] tracking-tight mt-1">
                   Como o financeiro roda na empresa atualmente?
                 </h3>
@@ -348,11 +417,11 @@ export const DiagnosticModal: React.FC = () => {
             </div>
           )}
 
-          {/* STEP 4: IDENTIFICATION & SUBMISSION */}
-          {step === 4 && (
+          {/* STEP 5: IDENTIFICATION & SUBMISSION (Sem campo de WhatsApp) */}
+          {step === 5 && (
             <div className="space-y-5 animate-in fade-in duration-200">
               <div className="mb-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 4 de 4 · Conexão Executiva</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#4F6D46]">Passo 5 de 5 · Conexão Executiva</span>
                 <h3 className="text-xl font-extrabold text-[#2C1810] tracking-tight mt-1">
                   Para quem e onde enviamos a análise prévia?
                 </h3>
@@ -367,10 +436,14 @@ export const DiagnosticModal: React.FC = () => {
                   <Briefcase className="w-4 h-4 text-[#4F6D46]" />
                   <span>Resumo do seu Pré-Diagnóstico:</span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-stone-700">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-stone-700">
                   <div className="bg-white p-2.5 rounded-xl border border-[#EAE7DE]">
                     <span className="text-[10px] text-stone-400 uppercase font-semibold block">Segmento</span>
                     <span className="font-bold text-[#2C1810] line-clamp-1">{formData.segment || 'Não informado'}</span>
+                  </div>
+                  <div className="bg-white p-2.5 rounded-xl border border-[#EAE7DE]">
+                    <span className="text-[10px] text-stone-400 uppercase font-semibold block">Faturamento</span>
+                    <span className="font-bold text-[#2C1810] line-clamp-1">{formData.revenue || 'Não informado'}</span>
                   </div>
                   <div className="bg-white p-2.5 rounded-xl border border-[#EAE7DE]">
                     <span className="text-[10px] text-stone-400 uppercase font-semibold block">Gargalo</span>
@@ -383,8 +456,8 @@ export const DiagnosticModal: React.FC = () => {
                 </div>
               </div>
 
-              {/* Contact Inputs */}
-              <form onSubmit={handleSubmitWhatsApp} className="space-y-3 pt-1">
+              {/* Contact Inputs (Apenas Nome e Empresa) */}
+              <form onSubmit={handleSubmitWhatsApp} className="space-y-3.5 pt-1">
                 <div>
                   <label className="block text-xs font-bold text-[#2C1810] mb-1">
                     Seu Nome Completo *
@@ -402,39 +475,20 @@ export const DiagnosticModal: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-[#2C1810] mb-1">
-                      Nome da Empresa / Projeto *
-                    </label>
-                    <div className="relative">
-                      <Building2 className="w-4 h-4 text-[#5C3A1A]/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                      <input
-                        type="text"
-                        required
-                        placeholder="Ex: Construtora Horizonte"
-                        value={formData.company}
-                        onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#EAE7DE] bg-white text-sm text-[#2C1810] focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent outline-none transition-all"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-[#2C1810] mb-1">
-                      WhatsApp com DDD *
-                    </label>
-                    <div className="relative">
-                      <Phone className="w-4 h-4 text-[#5C3A1A]/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                      <input
-                        type="tel"
-                        required
-                        placeholder="Ex: (21) 99999-9999"
-                        value={formData.whatsapp}
-                        onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#EAE7DE] bg-white text-sm text-[#2C1810] focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent outline-none transition-all"
-                      />
-                    </div>
+                <div>
+                  <label className="block text-xs font-bold text-[#2C1810] mb-1">
+                    Nome da Empresa / Projeto *
+                  </label>
+                  <div className="relative">
+                    <Building2 className="w-4 h-4 text-[#5C3A1A]/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ex: Construtora Horizonte"
+                      value={formData.company}
+                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                      className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#EAE7DE] bg-white text-sm text-[#2C1810] focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent outline-none transition-all"
+                    />
                   </div>
                 </div>
 
@@ -484,19 +538,21 @@ export const DiagnosticModal: React.FC = () => {
             </button>
           )}
 
-          {step < 4 ? (
+          {step < 5 ? (
             <button
               type="button"
               onClick={handleNext}
               disabled={
                 (step === 1 && !formData.segment) ||
-                (step === 2 && !formData.bottleneck) ||
-                (step === 3 && !formData.currentSystem)
+                (step === 2 && !formData.revenue) ||
+                (step === 3 && !formData.bottleneck) ||
+                (step === 4 && !formData.currentSystem)
               }
               className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 ${
                 ((step === 1 && formData.segment) ||
-                 (step === 2 && formData.bottleneck) ||
-                 (step === 3 && formData.currentSystem))
+                 (step === 2 && formData.revenue) ||
+                 (step === 3 && formData.bottleneck) ||
+                 (step === 4 && formData.currentSystem))
                   ? 'bg-[#2C1810] text-[#FAF8F5] hover:bg-[#4F6D46] shadow-sm'
                   : 'bg-stone-300 text-stone-500 cursor-not-allowed'
               }`}
