@@ -42,9 +42,9 @@ export const Navbar: React.FC = () => {
           {/* Brand Official Logo */}
           <Link to="/" className="flex items-center group py-1">
             <img
-              src={isHistoryPage ? '/images/brand/logo-oeco-gold.png' : '/images/brand/logo-oeco-dark.png'}
+              src={isHistoryPage ? '/images/brand/logo-oeco-gold.png?v=2' : '/images/brand/logo-oeco-dark.png?v=2'}
               alt="OECO Financial Solutions"
-              className="h-8 sm:h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
+              className="h-9 sm:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
             />
           </Link>
 

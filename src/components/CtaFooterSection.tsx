@@ -49,7 +49,7 @@ export const CtaFooterSection: React.FC = () => {
           <div className="md:col-span-5">
             <div className="mb-5">
               <img
-                src="/images/brand/logo-oeco-gold.png"
+                src="/images/brand/logo-oeco-gold.png?v=2"
                 alt="OECO Financial Solutions"
                 className="h-9 sm:h-10 w-auto object-contain"
               />
