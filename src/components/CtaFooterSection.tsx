@@ -17,9 +17,6 @@ export const CtaFooterSection: React.FC = () => {
         {/* Pre-Footer Action Box */}
         <div className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-gradient-to-br from-[#2C1810] to-[#1C1815] border border-[#D1B688]/40 shadow-2xl text-center mb-20 relative overflow-hidden">
           <div className="max-w-3xl mx-auto">
-            <span className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase bg-[#FAF8F5]/10 px-4 py-1.5 rounded-full border border-[#D1B688]/30 inline-block mb-4">
-              DIAGNÓSTICO TÉCNICO DE CAIXA
-            </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#FAF8F5] tracking-tight mb-5 leading-tight">
               Vamos analisar o fluxo de caixa dos seus projetos atuais?
             </h2>
@@ -50,18 +47,12 @@ export const CtaFooterSection: React.FC = () => {
           
           {/* Brand Info (5 cols) */}
           <div className="md:col-span-5">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-11 h-11 rounded-xl bg-[#FAF8F5]/10 text-[#D1B688] flex items-center justify-center font-bold text-xl border border-[#D1B688]/30">
-                O
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-bold tracking-tight text-[#FAF8F5]">
-                  OECO
-                </span>
-                <span className="text-[11px] font-semibold tracking-widest text-[#D1B688] uppercase -mt-1">
-                  Financial Solutions
-                </span>
-              </div>
+            <div className="mb-5">
+              <img
+                src="/images/brand/logo-oeco-gold.png"
+                alt="OECO Financial Solutions"
+                className="h-9 sm:h-10 w-auto object-contain"
+              />
             </div>
             <p className="text-sm text-[#FAF8F5]/75 leading-relaxed max-w-sm mb-6">
               Gestão financeira estratégica e BPO para construtoras, empresas de projetos e negócios em expansão. Construindo processos financeiros sólidos, consistentes e sem atalhos.

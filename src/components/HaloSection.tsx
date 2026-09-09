@@ -30,10 +30,7 @@ export const HaloSection: React.FC = () => {
     <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-[#F4EFEA]/60 border-t border-[#EAE7DE]">
       <div className="max-w-7xl mx-auto">
         <div className="max-w-3xl mx-auto text-center mb-14">
-          <span className="text-xs font-mono font-bold tracking-widest text-[#5C3A1A] uppercase bg-[#EAE7DE] px-4 py-1.5 rounded-full border border-[#D1B688]/50">
-            OUTROS SEGMENTOS
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#2C1810] tracking-tight mt-4 mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#2C1810] tracking-tight mb-4">
             Não atua na construção civil? <br className="hidden sm:inline" />
             <span className="text-[#4F6D46]">
               Aplicamos o mesmo rigor de processo ao seu negócio.

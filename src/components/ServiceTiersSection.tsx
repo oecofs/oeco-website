@@ -9,10 +9,7 @@ export const ServiceTiersSection: React.FC = () => {
         
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
-          <span className="text-xs font-mono font-bold tracking-widest text-[#6B7F5A] uppercase bg-[#6B7F5A]/10 px-4 py-1.5 rounded-full border border-[#6B7F5A]/20">
-            A NOSSA ESTEIRA DE ATUAÇÃO
-          </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mt-4 mb-5 leading-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-5 leading-tight">
             Dois Níveis de Atuação. <br />
             <span className="text-[#5C3A1A] underline decoration-[#D1B688]/70 underline-offset-8">
               O rigor exato para o momento da sua empresa.

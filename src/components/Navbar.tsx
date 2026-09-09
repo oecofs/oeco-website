@@ -39,27 +39,13 @@ export const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-105 transition-transform duration-200 border ${
-              isHistoryPage
-                ? 'bg-[#1B2E18] text-[#D1B688] border-[#D1B688]/40'
-                : 'bg-[#2C1810] text-[#D1B688] border-[#5C3A1A]/30'
-            }`}>
-              O
-            </div>
-            <div className="flex flex-col">
-              <span className={`text-xl font-bold tracking-tight ${
-                isHistoryPage ? 'text-[#FAF8F5]' : 'text-[#2C1810]'
-              }`}>
-                OECO
-              </span>
-              <span className={`text-[10px] font-semibold tracking-widest uppercase -mt-1 ${
-                isHistoryPage ? 'text-[#D1B688]' : 'text-[#6B7F5A]'
-              }`}>
-                Financial Solutions
-              </span>
-            </div>
+          {/* Brand Official Logo */}
+          <Link to="/" className="flex items-center group py-1">
+            <img
+              src={isHistoryPage ? '/images/brand/logo-oeco-gold.png' : '/images/brand/logo-oeco-dark.png'}
+              alt="OECO Financial Solutions"
+              className="h-8 sm:h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
+            />
           </Link>
 
           {/* Desktop Nav Links */}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Handshake, FileSpreadsheet, Calculator, CheckCircle2, ArrowRightLeft } from 'lucide-react';
+import { FileSpreadsheet, Calculator, CheckCircle2, ArrowRightLeft } from 'lucide-react';
 
 export const AccountingPartnerSection: React.FC = () => {
   return (
@@ -8,12 +8,6 @@ export const AccountingPartnerSection: React.FC = () => {
         
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <Handshake className="w-5 h-5 text-[#4F6D46]" />
-            <span className="text-xs font-mono font-bold tracking-widest text-[#4F6D46] uppercase">
-              ALIANÇA &amp; COMPLEMENTARIDADE
-            </span>
-          </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-5 leading-tight">
             Trabalhamos ao lado da sua contabilidade, <br />
             <span className="text-[#5C3A1A] underline decoration-[#D1B688]/70 underline-offset-8">

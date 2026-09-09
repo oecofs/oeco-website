@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, HelpCircle, MessageCircle } from 'lucide-react';
+import { ChevronDown, MessageCircle } from 'lucide-react';
 import { buildWhatsAppLink, DEFAULT_WHATSAPP_MESSAGES } from '../utils/whatsapp';
 
 export const FaqSection: React.FC = () => {
@@ -38,12 +38,6 @@ export const FaqSection: React.FC = () => {
         
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <HelpCircle className="w-5 h-5 text-[#6B7F5A]" />
-            <span className="text-xs font-mono font-bold tracking-widest text-[#6B7F5A] uppercase">
-              DÚVIDAS FREQUENTES
-            </span>
-          </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-4">
             Perguntas Frequentes sobre a OECO
           </h2>
