@@ -11,7 +11,7 @@ export const AccountingPartnerSection: React.FC = () => {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-5 leading-tight">
             Trabalhamos ao lado da sua contabilidade, <br />
             <span className="text-[#5C3A1A] underline decoration-[#D1B688]/70 underline-offset-8">
-              não no lugar dela.
+              não no lugar dela
             </span>
           </h2>
           <p className="text-base sm:text-lg text-[#5C3A1A]/85 leading-relaxed">
@@ -30,7 +30,7 @@ export const AccountingPartnerSection: React.FC = () => {
           </div>
           <div className="lg:col-span-6 p-8 sm:p-10 flex flex-col justify-center">
             <h3 className="text-xl sm:text-2xl font-bold text-[#2C1810] mb-3 leading-snug">
-              Traduzimos a rotina de canteiro em demonstrativos de caixa limpos.
+              Traduzimos a rotina de canteiro em demonstrativos de caixa limpos
             </h3>
             <p className="text-sm sm:text-base text-[#5C3A1A]/85 leading-relaxed">
               Enquanto a sua equipe foca na execução da obra e o seu contador cuida das obrigações fiscais, a OECO organiza o fluxo de caixa, as notas e os contratos com precisão cirúrgica.

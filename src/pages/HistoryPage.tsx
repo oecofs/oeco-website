@@ -51,12 +51,11 @@ export const HistoryPage: React.FC = () => {
             {/* Main Headline */}
             <ElevationItem delay={0}>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] mb-8 text-[#FAF8F5]">
-                Não viemos para derrubar a árvore.{' '}
-                <br className="hidden sm:inline" />
+                Não viemos para derrubar a árvore <br className="hidden sm:inline" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D1B688] via-[#E2D2B2] to-[#6B7F5A]">
-                  Viemos para tecer a estrutura
+                  Viemos para construir a estrutura
                 </span>{' '}
-                que protege o seu trabalho.
+                que protege o seu trabalho
               </h1>
             </ElevationItem>
 
@@ -603,7 +602,7 @@ export const HistoryPage: React.FC = () => {
               <div className="relative z-10 max-w-3xl mx-auto">
                 <ElevationItem delay={0}>
                   <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#FAF8F5] tracking-tight mb-6 leading-tight">
-                    Sua empresa merece uma estrutura tão sólida quanto o seu trabalho.
+                    Sua empresa merece uma estrutura tão sólida quanto o seu trabalho
                   </h2>
                 </ElevationItem>
 

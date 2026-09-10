@@ -10,9 +10,10 @@ export const ServiceTiersSection: React.FC = () => {
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-5 leading-tight">
-            Dois Níveis de Atuação. <br />
+            Dois Níveis de Atuação <br />
             <span className="text-[#5C3A1A] underline decoration-[#D1B688]/70 underline-offset-8">
-              O rigor exato para o momento da sua empresa.
+              O rigor exato para o <br className="hidden sm:inline" />
+              <span className="whitespace-nowrap">momento da sua empresa</span>
             </span>
           </h2>
           <p className="text-base sm:text-lg text-[#5C3A1A]/85 leading-relaxed">

@@ -33,8 +33,8 @@ export const PhilosophySection: React.FC = () => {
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-20">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-5 leading-tight">
-            Não acreditamos em fórmulas mágicas. <br />
-            <span className="text-[#4F6D46]">Acreditamos na solidez do processo.</span>
+            Não acreditamos em fórmulas mágicas <br />
+            <span className="text-[#4F6D46]">Acreditamos na solidez do processo</span>
           </h2>
           <p className="text-base sm:text-lg text-[#5C3A1A]/85 leading-relaxed">
             Assim como não se ergue uma edificação sem fundações profundas, não existe lucratividade sustentável sem rotinas financeiras sólidas. Nós amamos o processo de construir consistência dia após dia — sem jeitinhos, sem improvisos e sem atalhos.

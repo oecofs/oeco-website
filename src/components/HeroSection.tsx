@@ -25,7 +25,7 @@ export const HeroSection: React.FC = () => {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#FAF8F5] leading-[1.15] mb-6">
                 Você é construtor ou financeira? <br className="hidden sm:inline" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D1B688] via-[#FAF8F5] to-[#D1B688]">
-                  Pare de bancar a obra do seu cliente.
+                  Pare de bancar a obra do seu cliente
                 </span>
               </h1>
 

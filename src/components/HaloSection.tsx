@@ -61,7 +61,7 @@ export const HaloSection: React.FC = () => {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-4 leading-tight">
             Não atua na construção civil? <br className="hidden sm:inline" />
             <span className="text-[#4F6D46]">
-              O mesmo método e governança para o seu setor.
+              O mesmo método e governança para o seu setor
             </span>
           </h2>
           <p className="text-base sm:text-lg text-[#5C3A1A]/85 leading-relaxed">

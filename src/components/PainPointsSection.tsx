@@ -49,7 +49,7 @@ export const PainPointsSection: React.FC = () => {
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#2C1810] tracking-tight mb-5 leading-tight">
-            A sua obra deu lucro na planilha, mas a conta fechou no vermelho. <br className="hidden sm:inline" />
+            A sua obra deu lucro na planilha, mas a conta fechou no vermelho <br className="hidden sm:inline" />
             <span className="text-[#5C3A1A] underline decoration-[#D1B688]/70 underline-offset-8">
               Por que isso acontece?
             </span>
@@ -69,7 +69,7 @@ export const PainPointsSection: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#1C1815]/95 via-[#1C1815]/40 to-transparent sm:bg-gradient-to-r sm:from-[#1C1815]/95 sm:via-[#1C1815]/50 sm:to-transparent"></div>
           <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-end max-w-xl">
             <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white leading-snug">
-              Grandes obras exigem controle de caixa no mesmo rigor da engenharia de campo.
+              Grandes obras exigem controle de caixa no mesmo rigor da engenharia de campo
             </p>
           </div>
         </div>
@@ -126,7 +126,7 @@ export const PainPointsSection: React.FC = () => {
         <div className="mt-14 p-8 sm:p-10 rounded-3xl bg-[#2C1810] text-[#FAF8F5] border border-[#5C3A1A] flex flex-col sm:flex-row items-center justify-between gap-8 shadow-xl">
           <div>
             <h4 className="text-lg sm:text-xl font-bold text-[#FAF8F5]">
-              Identifique quanto a sua construtora está deixando na mesa todo mês.
+              Identifique quanto a sua construtora está deixando na mesa todo mês
             </h4>
             <p className="text-sm text-[#FAF8F5]/80 mt-1">
               Uma conversa técnica e objetiva de 30 minutos sobre a estrutura de caixa dos seus projetos.

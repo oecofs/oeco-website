@@ -129,7 +129,7 @@ export const OnboardingSection: React.FC = () => {
         {/* Section Header (Título restaurado e sem a tag conforme solicitado) */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#2C1810] tracking-tight leading-[1.15] mb-4">
-            Do primeiro contato à governança permanente.
+            Do primeiro contato à governança permanente
           </h2>
           <p className="text-base sm:text-lg text-[#5C3A1A] font-medium leading-relaxed">
             Nada de promessas genéricas ou caixas pretas. Conheça com total transparência o caminho até fechar contrato e exatamente como organizamos sua empresa nos primeiros 30 dias.
