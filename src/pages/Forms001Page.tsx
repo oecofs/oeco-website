@@ -105,6 +105,8 @@ export const Forms001Page: React.FC = () => {
   const [software, setSoftware] = useState<string>('');
   const [customSoftware, setCustomSoftware] = useState<string>('');
   const [practiceAreas, setPracticeAreas] = useState<string[]>([]);
+  const [customPracticeArea, setCustomPracticeArea] = useState<string>('');
+  const [showCustomAreaInput, setShowCustomAreaInput] = useState<boolean>(false);
   const [firmSize, setFirmSize] = useState<string>('');
   const [painPoints, setPainPoints] = useState<string[]>([]);
   const [innovationProfile, setInnovationProfile] = useState<string>('high');
@@ -142,6 +144,8 @@ export const Forms001Page: React.FC = () => {
     setSoftware('');
     setCustomSoftware('');
     setPracticeAreas([]);
+    setCustomPracticeArea('');
+    setShowCustomAreaInput(false);
     setFirmSize('');
     setPainPoints([]);
     setInnovationProfile('high');
@@ -158,6 +162,20 @@ export const Forms001Page: React.FC = () => {
     setPracticeAreas(prev => 
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
+  };
+
+  const handleAddCustomArea = () => {
+    const trimmed = customPracticeArea.trim();
+    if (!trimmed) return;
+    const formatted = trimmed.startsWith('⚖️') || trimmed.startsWith('📄') || trimmed.startsWith('🏛️')
+      ? trimmed
+      : `⚖️ ${trimmed}`;
+    
+    if (!practiceAreas.includes(formatted)) {
+      setPracticeAreas(prev => [...prev, formatted]);
+    }
+    setCustomPracticeArea('');
+    setShowCustomAreaInput(false);
   };
 
   const handleTogglePainPoint = (id: string) => {
@@ -584,13 +602,16 @@ export const Forms001Page: React.FC = () => {
                 </div>
 
                 {software === 'Outro' && (
-                  <div className="pt-2">
+                  <div className="pt-2 space-y-1.5 animate-in fade-in">
+                    <label className="block text-[11px] font-bold text-[#4F6D46]">
+                      ✏️ Especifique qual outro software eles usam:
+                    </label>
                     <input
                       type="text"
-                      placeholder="Digite o nome do outro software..."
+                      placeholder="Ex: Advise, ProJuris Cloud, Sistema Próprio, etc."
                       value={customSoftware}
                       onChange={(e) => setCustomSoftware(e.target.value)}
-                      className="w-full px-3 py-2 border border-slate-300 rounded-xl text-xs bg-slate-50 outline-none focus:border-[#4F6D46] focus:bg-white"
+                      className="w-full px-3.5 py-2.5 border-2 border-[#4F6D46]/40 rounded-xl text-xs bg-white outline-none focus:border-[#4F6D46] shadow-2xs font-semibold"
                       autoFocus
                     />
                   </div>
@@ -625,7 +646,63 @@ export const Forms001Page: React.FC = () => {
                       </button>
                     );
                   })}
+
+                  {/* Exibe áreas customizadas adicionadas */}
+                  {practiceAreas
+                    .filter((a) => !PRACTICE_AREAS.some((d) => d.label === a))
+                    .map((custom) => (
+                      <button
+                        key={custom}
+                        type="button"
+                        onClick={() => handleTogglePracticeArea(custom)}
+                        className="px-3 py-2 rounded-xl text-xs font-bold border bg-purple-100 border-purple-400 text-purple-950 shadow-2xs flex items-center gap-1.5 cursor-pointer"
+                      >
+                        <span>✓</span>
+                        <span>{custom}</span>
+                        <span className="text-[10px] text-purple-600 font-normal hover:text-red-500 ml-0.5">✕</span>
+                      </button>
+                    ))}
+
+                  {/* Botão de abrir input Outro */}
+                  <button
+                    type="button"
+                    onClick={() => setShowCustomAreaInput(prev => !prev)}
+                    className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center gap-1.5 ${
+                      showCustomAreaInput
+                        ? 'bg-purple-600 border-purple-600 text-white shadow-2xs'
+                        : 'bg-slate-50 border-dashed border-slate-300 text-slate-600 hover:border-slate-400'
+                    }`}
+                  >
+                    <span>{showCustomAreaInput ? '✕' : '➕'}</span>
+                    <span>Outro</span>
+                  </button>
                 </div>
+
+                {showCustomAreaInput && (
+                  <div className="pt-2 flex items-center gap-2 animate-in fade-in">
+                    <input
+                      type="text"
+                      placeholder="Digite outra área (ex: Marítimo, Eleitoral, Aeronáutico...)"
+                      value={customPracticeArea}
+                      onChange={(e) => setCustomPracticeArea(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          handleAddCustomArea();
+                        }
+                      }}
+                      className="flex-1 px-3.5 py-2.5 border-2 border-purple-400/50 rounded-xl text-xs bg-white outline-none focus:border-purple-600 shadow-2xs font-semibold"
+                      autoFocus
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddCustomArea}
+                      className="px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs shrink-0 cursor-pointer"
+                    >
+                      + Add
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* 3. Porte da Banca */}
