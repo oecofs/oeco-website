@@ -79,6 +79,7 @@ export const PhilosophySection: React.FC = () => {
               src="/images/site/fundacoes-solidez.jpg"
               alt="Fundações sólidas em concreto e armadura de aço"
               className="w-full h-full object-cover filter brightness-95 group-hover:scale-103 transition-transform duration-700"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent via-black/20 to-transparent lg:to-white/40"></div>
           </div>

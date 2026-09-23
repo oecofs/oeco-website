@@ -17,7 +17,7 @@ export const CtaFooterSection: React.FC = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Pre-Footer Action Box */}
-        <div className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-gradient-to-br from-[#2C1810] to-[#1C1815] border border-[#D1B688]/40 shadow-2xl text-center mb-20 relative overflow-hidden">
+        <div className="p-6 sm:p-12 lg:p-16 rounded-3xl bg-gradient-to-br from-[#2C1810] to-[#1C1815] border border-[#D1B688]/40 shadow-2xl text-center mb-20 relative overflow-hidden">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#FAF8F5] tracking-tight mb-5 leading-tight">
               Vamos analisar o fluxo de caixa dos seus projetos atuais?
@@ -62,6 +62,7 @@ export const CtaFooterSection: React.FC = () => {
                 src="/images/brand/sublogo-oeco-gold.png?v=3"
                 alt="OECO"
                 className="h-8 sm:h-9 w-auto object-contain"
+                loading="lazy"
               />
             </div>
             <p className="text-sm text-[#FAF8F5]/75 leading-relaxed max-w-sm mb-6">
@@ -84,27 +85,17 @@ export const CtaFooterSection: React.FC = () => {
             <p className="text-xs font-mono font-bold tracking-widest text-[#D1B688] uppercase mb-4">
               NAVEGAÇÃO
             </p>
-            <ul className="space-y-3 text-sm text-[#FAF8F5]/80">
+            <ul className="space-y-1 text-sm text-[#FAF8F5]/80">
               <li>
-                <Link to="/historia" className="text-[#D1B688] font-semibold hover:underline transition-colors flex items-center gap-1.5">
+                <Link to="/historia" className="text-[#D1B688] font-semibold hover:underline transition-colors flex items-center gap-1.5 py-1.5">
                   <span>🌿 Nossa História &amp; Propósito</span>
                 </Link>
               </li>
-              <li>
-                <Link to="/#dores" className="hover:text-[#FAF8F5] transition-colors">Dores do Canteiro</Link>
-              </li>
-              <li>
-                <Link to="/#filosofia" className="hover:text-[#FAF8F5] transition-colors">Metodologia &amp; Processo</Link>
-              </li>
-              <li>
-                <Link to="/#contabilidade" className="hover:text-[#FAF8F5] transition-colors">Aliança Contábil</Link>
-              </li>
-              <li>
-                <Link to="/#solucoes" className="hover:text-[#FAF8F5] transition-colors">BPO Operacional vs. Estratégico</Link>
-              </li>
-              <li>
-                <Link to="/#faq" className="hover:text-[#FAF8F5] transition-colors">Dúvidas Frequentes (FAQ)</Link>
-              </li>
+              <li><Link to="/#dores" className="hover:text-[#FAF8F5] transition-colors block py-1.5">Dores do Canteiro</Link></li>
+              <li><Link to="/#filosofia" className="hover:text-[#FAF8F5] transition-colors block py-1.5">Metodologia &amp; Processo</Link></li>
+              <li><Link to="/#contabilidade" className="hover:text-[#FAF8F5] transition-colors block py-1.5">Aliança Contábil</Link></li>
+              <li><Link to="/#solucoes" className="hover:text-[#FAF8F5] transition-colors block py-1.5">BPO Operacional vs. Estratégico</Link></li>
+              <li><Link to="/#faq" className="hover:text-[#FAF8F5] transition-colors block py-1.5">Dúvidas Frequentes (FAQ)</Link></li>
             </ul>
           </div>
 
@@ -120,7 +111,7 @@ export const CtaFooterSection: React.FC = () => {
               href={buildWhatsAppLink(DEFAULT_WHATSAPP_MESSAGES.general)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-[#FAF8F5]/10 hover:bg-[#FAF8F5]/20 text-[#D1B688] text-sm font-semibold border border-[#D1B688]/30 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-4 rounded-xl bg-[#FAF8F5]/10 hover:bg-[#FAF8F5]/20 text-[#D1B688] text-sm font-semibold border border-[#D1B688]/30 transition-colors min-h-[48px]"
             >
               <MessageCircle className="w-4 h-4" />
               <span>Chamar no WhatsApp</span>

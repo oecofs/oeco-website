@@ -26,6 +26,7 @@ export const AccountingPartnerSection: React.FC = () => {
               src="/images/site/mesa-planejamento-caixa.jpg"
               alt="Mesa de planejamento financeiro com demonstrativo de fluxo de caixa e projetos arquitetônicos"
               className="w-full h-full object-cover object-center filter brightness-95 group-hover:scale-102 transition-transform duration-700"
+              loading="lazy"
             />
           </div>
           <div className="lg:col-span-6 p-8 sm:p-10 flex flex-col justify-center">

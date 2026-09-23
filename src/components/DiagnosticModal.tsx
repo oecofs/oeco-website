@@ -126,9 +126,9 @@ export const DiagnosticModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-[#1C1815]/75 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[100] flex items-start sm:items-center justify-center p-4 sm:p-6 overflow-y-auto bg-[#1C1815]/75 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-2xl bg-[#FAF8F5] rounded-3xl shadow-2xl border border-[#EAE7DE] overflow-hidden my-auto"
+        className="relative w-full max-w-2xl bg-[#FAF8F5] rounded-3xl shadow-2xl border border-[#EAE7DE] overflow-hidden my-4 sm:my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Bar */}
@@ -233,7 +233,7 @@ export const DiagnosticModal: React.FC = () => {
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-8 max-h-[68vh] overflow-y-auto">
+        <div className="p-5 sm:p-8 max-h-[60vh] sm:max-h-[68vh] overflow-y-auto">
           
           {/* STEP 1: SEGMENT */}
           {step === 1 && (

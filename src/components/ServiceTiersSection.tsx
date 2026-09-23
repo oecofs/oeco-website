@@ -163,6 +163,7 @@ export const ServiceTiersSection: React.FC = () => {
               src="/images/site/analise-orcado-realizado.jpg"
               alt="Auditoria e análise de orçado vs. realizado em projetos de grande porte"
               className="w-full h-full object-cover object-center filter brightness-95 group-hover:scale-102 transition-transform duration-700"
+              loading="lazy"
             />
           </div>
           <div className="lg:col-span-6 p-8 sm:p-10 lg:p-12 flex flex-col justify-center">

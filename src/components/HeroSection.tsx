@@ -57,11 +57,13 @@ export const HeroSection: React.FC = () => {
 
             {/* Right Visual Image Column (5 cols) com Foto Oficial Limpa */}
             <div className="lg:col-span-5 relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#FAF8F5]/20 aspect-[3/4] group bg-[#2C1810]">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-[#FAF8F5]/20 aspect-[16/9] lg:aspect-[3/4] group bg-[#2C1810]">
                 <img
                   src={heroEngineerImg}
                   alt="Diretor de engenharia e gestão de obras · OECO"
                   className="w-full h-full object-cover object-[center_20%] group-hover:scale-103 transition-transform duration-700 filter brightness-95"
+                  loading="eager"
+                  fetchPriority="high"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1C1815]/70 via-transparent to-transparent"></div>
               </div>

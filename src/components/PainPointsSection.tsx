@@ -65,6 +65,7 @@ export const PainPointsSection: React.FC = () => {
             src="/images/site/canteiro-sunset.jpg"
             alt="Canteiro de obras de grande porte ao entardecer"
             className="w-full h-full object-cover object-center filter brightness-[0.92] group-hover:scale-102 transition-transform duration-700"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1C1815]/95 via-[#1C1815]/40 to-transparent sm:bg-gradient-to-r sm:from-[#1C1815]/95 sm:via-[#1C1815]/50 sm:to-transparent"></div>
           <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-end max-w-xl">
@@ -81,7 +82,7 @@ export const PainPointsSection: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="rounded-3xl p-8 sm:p-10 bg-white/90 backdrop-blur-sm border border-[#EAE7DE] shadow-sm hover:shadow-xl hover:border-[#D1B688] transition-all duration-300 flex flex-col justify-between group"
+                className="rounded-3xl p-6 sm:p-10 bg-white/90 backdrop-blur-sm border border-[#EAE7DE] shadow-sm hover:shadow-xl hover:border-[#D1B688] transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   {/* Card Top */}
@@ -108,7 +109,7 @@ export const PainPointsSection: React.FC = () => {
                 </div>
 
                 {/* OECO Solution Footer */}
-                <div className="pt-5 border-t border-[#EAE7DE] bg-[#FAF8F5]/80 -mx-8 sm:-mx-10 -mb-8 sm:-mb-10 p-6 px-8 sm:px-10 rounded-b-3xl">
+                <div className="pt-5 border-t border-[#EAE7DE] bg-[#FAF8F5]/80 -mx-6 sm:-mx-10 -mb-6 sm:-mb-10 p-6 px-6 sm:px-10 rounded-b-3xl">
                   <p className="text-xs font-bold text-[#4F6D46] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#4F6D46]"></span>
                     Como a OECO estanca esse vazamento:

@@ -82,6 +82,7 @@ export const HaloSection: React.FC = () => {
                   src={s.image}
                   alt={s.title}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 filter contrast-[1.02]"
+                  loading="lazy"
                 />
                 <div className="absolute top-3 left-3">
                   <span className="inline-block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#4F6D46] bg-white/95 backdrop-blur-sm border border-[#EAE7DE] px-2.5 py-1 rounded-full shadow-sm">
@@ -91,7 +92,7 @@ export const HaloSection: React.FC = () => {
               </div>
 
               {/* Card Body */}
-              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+              <div className="p-5 sm:p-7 flex-1 flex flex-col justify-between">
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold text-[#1C1815] mb-4 leading-snug">
                     {s.title}
