@@ -37,21 +37,21 @@ export const BniBioPage: React.FC = () => {
       title: "Mestrado em Ciências Contábeis",
       institution: "Universidade Federal do Rio de Janeiro (UFRJ)",
       icon: GraduationCap,
-      description: "Aprofundamento analítico e acadêmico em pesquisa contábil e controladoria, refinando o pensamento crítico sobre como a contabilidade impacta as decisões empresariais."
+      description: "Dissertação defendida em 2019 sobre a contabilização de criptomoedas, tema pioneiro e disruptivo no cenário nacional e internacional. Trabalho apresentado em congresso internacional no Japão e publicado em revista acadêmica internacional."
     },
     {
       period: "2018 — 2021",
       title: "Lemobs & Ecossistema de Startups",
       institution: "Gestão Financeira & Controladoria",
       icon: Rocket,
-      description: "Estruturação completa do setor financeiro de startups de tecnologia. Implementação de rotinas diárias e controles rigorosos que deixaram um legado de governança preservado até hoje."
+      description: "Estruturação completa do setor financeiro em startups de tecnologia, deixando na Lemobs um legado financeiro sólido e processos de controle que continuam rodando com excelência há mais de 4 anos."
     },
     {
       period: "2022 — 2026",
       title: "Carta (EUA)",
       institution: "Implementação de Fundos (VC / PE / PC)",
       icon: Globe2,
-      description: "Atuação como Contador de Implementação na multinacional americana líder em gestão de equity e fundos de investimento, trabalhando diretamente com gestores e sócios de fundos americanos."
+      description: "Atuação direta com executivos do mercado americano e gestores de fundos com mais de $500M de AUM (Assets Under Management). Pelo alto desempenho e precisão técnica, assumiu a carteira dos maiores clientes da multinacional."
     }
   ];
 
@@ -82,29 +82,32 @@ export const BniBioPage: React.FC = () => {
       <main className="flex-1 py-10 sm:py-16 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
           
-          {/* Header Profile Info */}
-          <div className="bg-[#FFFFFF] border border-[#E7DFD5] rounded-3xl p-6 sm:p-10 shadow-sm mb-12">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+          {/* Header Profile Info (com fundo escuro elegante gerando contraste igual ao GAINS) */}
+          <div className="bg-[#1C1815] text-[#FAF8F5] border border-[#2E2824] rounded-3xl p-6 sm:p-10 shadow-lg mb-12 relative overflow-hidden">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8 relative z-10">
               <div className="relative shrink-0">
                 <img
                   src="/images/bni/profile.jpg"
                   alt="Matheus Marques"
-                  className="w-28 h-28 sm:w-36 sm:h-36 rounded-2xl object-cover object-top border-2 border-[#E7DFD5] shadow-sm"
+                  className="w-36 h-36 sm:w-44 sm:h-44 rounded-2xl object-cover object-[center_15%] border-2 border-[#3D342D] shadow-lg ring-4 ring-[#FAF8F5]/10"
                 />
-                <span className="absolute -bottom-2 -right-2 px-2.5 py-1 rounded-full bg-[#1C1815] text-[#D1B688] text-[10px] font-mono tracking-widest uppercase border border-[#3D342D]">
-                  M.Sc. UFRJ
-                </span>
               </div>
 
               <div className="text-center sm:text-left flex-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF6F0] border border-[#E7DFD5] text-[#8C8275] text-xs font-mono uppercase tracking-wider mb-2">
-                  <span>Biografia & Trajetória</span>
-                </div>
-                <h1 className="text-3xl sm:text-4xl font-light text-[#1C1815] tracking-tight mb-2">
-                  Matheus <span className="font-serif italic font-normal text-[#CF2030]">Marques</span>
+                <h1 className="text-3xl sm:text-4xl font-normal text-[#FAF8F5] tracking-tight mb-2">
+                  Matheus Marques
                 </h1>
-                <p className="text-sm sm:text-base text-[#665D52] font-normal leading-relaxed">
-                  Fundador da <strong className="text-[#1C1815]">Oeco Financial Solutions</strong>, mestre em Ciências Contábeis pela UFRJ e apaixonado por transformar a rotina financeira de empresas através do método diário e diligente do BPO.
+                
+                <div className="text-base sm:text-lg text-[#D1B688] font-medium font-sans mb-1">
+                  Especialista em BPO Financeiro
+                </div>
+                
+                <div className="text-sm sm:text-base text-[#FAF8F5]/90 font-medium font-sans mb-3">
+                  Oeco Financial Solutions
+                </div>
+
+                <p className="text-sm sm:text-base text-[#B5AEA4] font-normal leading-relaxed">
+                  Fundador da <strong className="text-[#FAF8F5]">Oeco Financial Solutions</strong>, mestre em Ciências Contábeis pela UFRJ e apaixonado por transformar a rotina financeira de empresas através do método diário e diligente do <strong className="text-[#D1B688]">BPO Financeiro</strong>.
                 </p>
               </div>
             </div>
@@ -123,7 +126,7 @@ export const BniBioPage: React.FC = () => {
 
             <div className="bg-[#FFFFFF] border border-[#E7DFD5] rounded-3xl p-6 sm:p-8 space-y-5 text-[#594F45] leading-relaxed text-sm sm:text-base">
               <p>
-                Eu sempre amei a <strong className="text-[#1C1815]">ciência contábil</strong>. A contabilidade pura é fascinante: é a linguagem dos negócios, a ciência capaz de revelar a saúde, a liquidez e a real capacidade de geração de riqueza de qualquer empreendimento.
+                Eu amo a <strong className="text-[#1C1815]">ciência contábil</strong>. A contabilidade pura é fascinante: é a linguagem dos negócios, a ciência capaz de revelar a saúde, a liquidez e a real capacidade de geração de riqueza de qualquer empreendimento.
               </p>
               
               <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF6F0] border-l-4 border-[#CF2030] text-[#1C1815] italic font-serif text-base sm:text-lg">
@@ -135,7 +138,7 @@ export const BniBioPage: React.FC = () => {
               </p>
 
               <p>
-                Foi por buscar algo que gerasse <strong className="text-[#1C1815]">impacto direto e transformador</strong> na vida dos donos de negócios que escolhi fundar a Oeco focando no <strong className="text-[#CF2030]">BPO Financeiro</strong>. No BPO, nós não ficamos distantes esperando o mês fechar. Nós estamos na trincheira diária: agendando pagamentos, conciliando cada centavo matinalmente e garantindo que o gestor tenha paz para liderar e vender, com a certeza de que a retaguarda financeira está blindada.
+                Foi por buscar algo que gerasse <strong className="text-[#1C1815]">impacto direto e transformador</strong> na vida dos donos de negócios que escolhi fundar a Oeco focando no <strong className="text-[#CF2030]">BPO Financeiro</strong>. No BPO Financeiro, nós não ficamos distantes esperando o mês fechar. Nós estamos na trincheira diária: agendando pagamentos, conciliando cada centavo matinalmente e garantindo que o gestor tenha paz para liderar e vender, com a certeza de que a retaguarda financeira está blindada.
               </p>
             </div>
           </section>
