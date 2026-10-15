@@ -6,6 +6,9 @@ import { HomePage } from './pages/HomePage';
 import { HistoryPage } from './pages/HistoryPage';
 import { OnboardingPage } from './pages/OnboardingPage';
 import { MatheusPerfilGainsPage } from './pages/MatheusPerfilGainsPage';
+import { BniHubPage } from './pages/bni/BniHubPage';
+import { BniBioPage } from './pages/bni/BniBioPage';
+import { BniGainsPage } from './pages/bni/BniGainsPage';
 import { Forms001Page } from './pages/Forms001Page';
 import { DiagnosticModalProvider, useDiagnosticModal } from './context/DiagnosticModalContext';
 import { DiagnosticModal } from './components/DiagnosticModal';
@@ -13,7 +16,7 @@ import { DiagnosticModal } from './components/DiagnosticModal';
 function AppContent() {
   const location = useLocation();
   const { openModal } = useDiagnosticModal();
-  const isBniPage = location.pathname.toLowerCase().startsWith('/matheus-perfilgains');
+  const isBniPage = location.pathname.toLowerCase().startsWith('/bni') || location.pathname.toLowerCase().startsWith('/matheus-perfilgains');
   const isFormsPage = location.pathname.toLowerCase().startsWith('/forms');
   const isStandalone = isBniPage || isFormsPage;
 
@@ -45,7 +48,15 @@ function AppContent() {
           <Route path="/diagnostico-de-caixa" element={<HomePage />} />
           <Route path="/historia" element={<HistoryPage />} />
           <Route path="/onboarding" element={<OnboardingPage />} />
-          <Route path="/matheus-perfilgains" element={<MatheusPerfilGainsPage />} />
+          
+          {/* Espaço BNI Modular */}
+          <Route path="/bni" element={<BniHubPage />} />
+          <Route path="/bni/biografia" element={<BniBioPage />} />
+          <Route path="/bni/perfil-gains" element={<BniGainsPage />} />
+          
+          {/* Rota legada BNI */}
+          <Route path="/matheus-perfilgains" element={<BniHubPage />} />
+
           <Route path="/forms001" element={<Forms001Page />} />
           <Route path="/forms" element={<Forms001Page />} />
           <Route path="*" element={<HomePage />} />
