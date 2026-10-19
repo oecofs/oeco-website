@@ -37,7 +37,7 @@ export interface BeautyLead {
 
 const STORAGE_KEY = 'oeco_beauty_workshop_leads';
 const WEBHOOK_STORAGE_KEY = 'oeco_beauty_webhook_url';
-export const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxn8G-99IDmxIvx3Gd0SqnI86nbHTpzo9mmgoqG7PSfpzn1rdFGBP472po6IgihKV-i/exec';
+export const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbw48G8RTwp6MybXMa0BHnTNXKRUJHAffU7pUM-RK9Ii80qW2HtuEuHIdy7VQFFlgSAC/exec';
 export const TOTAL_SEATS_PER_SESSION = 90;
 
 // 4 Turmas com links dos grupos de WhatsApp e Google Agenda
