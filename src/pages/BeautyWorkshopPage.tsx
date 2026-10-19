@@ -922,41 +922,70 @@ export const BeautyWorkshopPage: React.FC = () => {
 
               return (
                 <div className="mt-8 pt-6 border-t-2 border-dashed border-[#EAC9D1] text-left space-y-5 animate-in fade-in duration-300">
-                  {/* Cabeçalho da Premiação */}
+                  {/* Cabeçalho da Premiação & Banner de R$ 7.500 */}
                   <div className="bg-gradient-to-r from-[#FFF5F7] via-[#FDF0F3] to-[#FCEAEF] border-2 border-[#D9A3AF] rounded-3xl p-5 sm:p-6 relative overflow-hidden shadow-sm">
+                    {/* Banner Dourado / Marsala de Destaque Total de Premiação */}
+                    <div className="bg-gradient-to-r from-[#7D1D32] via-[#94263F] to-[#681729] text-white rounded-2xl p-4 sm:p-5 mb-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-3 relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+                      <div className="flex items-center gap-3.5 relative z-10 text-center sm:text-left">
+                        <div className="w-12 h-12 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center shrink-0 text-2xl shadow-inner">
+                          🏆
+                        </div>
+                        <div>
+                          <div className="text-[10px] font-black uppercase tracking-widest text-[#FCEBEB] bg-white/20 inline-block px-2 py-0.5 rounded-full mb-0.5">
+                            Premiação Exclusiva do Evento
+                          </div>
+                          <div className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                            R$ 7.500,00 em Prêmios
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-center sm:text-right relative z-10 border-t sm:border-t-0 sm:border-l border-white/20 pt-2 sm:pt-0 sm:pl-4">
+                        <span className="text-[11px] text-[#FCEBEB]/90 font-medium block">
+                          Serão 3 profissionais premiadas ao vivo
+                        </span>
+                        <span className="text-xs font-bold text-amber-200 uppercase tracking-wide">
+                          Ganha quem indicar mais!
+                        </span>
+                      </div>
+                    </div>
+
                     <div className="flex items-start gap-3.5">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7D1D32] to-[#A32A44] text-white flex items-center justify-center shrink-0 shadow-md">
-                        <Trophy className="w-6 h-6 text-[#FCEBEB]" />
+                      <div className="w-10 h-10 rounded-xl bg-[#7D1D32] text-white flex items-center justify-center shrink-0 shadow-sm">
+                        <Gift className="w-5 h-5 text-[#FCEBEB]" />
                       </div>
                       <div className="space-y-1">
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#7D1D32] text-white text-[10px] font-black uppercase tracking-wider">
-                          🎁 Desafio Oficial de Indicação
-                        </div>
-                        <h3 className="text-lg sm:text-xl font-black text-[#2D0F16] tracking-tight">
-                          Quer Concorrer a um Prêmio que Será Sorteado ao Final dos Webinars?
+                        <h3 className="text-base sm:text-lg font-black text-[#2D0F16] tracking-tight">
+                          Como Funciona o Desafio de Indicação?
                         </h3>
                         <p className="text-xs sm:text-sm text-[#5C2B36] font-medium leading-relaxed">
-                          A premiação será dada para quem gerar o maior número de referências e indicações confirmadas para o evento. Compartilhe seu link exclusivo abaixo!
+                          A premiação será entregue para as 3 pessoas que gerarem o maior número de amigas e profissionais inscritas no <strong>Webinar Beleza das Finanças</strong>. Todas as premiadas recebem diagnóstico com Matheus!
                         </p>
                       </div>
                     </div>
 
-                    {/* Os 3 Prêmios Oficiais OECO */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-4">
+                    {/* Os 3 Prêmios Oficiais OECO com Valores */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
                       {/* 1º Lugar */}
                       <div className="bg-white/95 rounded-2xl p-4 border-2 border-[#D9A3AF] shadow-xs flex flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
                           1º Lugar
                         </div>
                         <div>
-                          <div className="text-2xl mb-1.5">🥇</div>
-                          <div className="text-xs font-black text-[#7D1D32] leading-tight">
-                            6 Meses de Consultoria + Sistema Oeco Start
+                          <div className="flex items-center gap-1.5 mb-1.5">
+                            <span className="text-2xl">🥇</span>
+                            <span className="px-2 py-0.5 rounded-full bg-[#7D1D32]/10 text-[#7D1D32] font-black text-xs">
+                              R$ 4.100 em prêmios
+                            </span>
                           </div>
-                          <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
-                            • 1h exclusiva de consultoria por mês durante 6 meses<br />
-                            • Acesso ao sistema financeiro <strong>Oeco Start 100% gratuito</strong>
-                          </p>
+                          <div className="text-xs font-black text-[#7D1D32] leading-tight">
+                            6 Meses de Consultoria + Oeco Start
+                          </div>
+                          <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                            <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                            <li>• <strong>6 meses de consultoria</strong> (1h exclusiva por mês)</li>
+                            <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante os 6 meses de consultoria</li>
+                          </ul>
                         </div>
                         <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-[#7D1D32] uppercase tracking-wide">
                           Troféu de Ouro
@@ -969,14 +998,20 @@ export const BeautyWorkshopPage: React.FC = () => {
                           2º Lugar
                         </div>
                         <div>
-                          <div className="text-2xl mb-1.5">🥈</div>
-                          <div className="text-xs font-black text-stone-900 leading-tight">
-                            3 Meses de Consultoria + Sistema Oeco Start
+                          <div className="flex items-center gap-1.5 mb-1.5">
+                            <span className="text-2xl">🥈</span>
+                            <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-800 font-black text-xs">
+                              R$ 2.300 em prêmios
+                            </span>
                           </div>
-                          <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
-                            • 1h exclusiva de consultoria por mês durante 3 meses<br />
-                            • Acesso ao sistema financeiro <strong>Oeco Start 100% gratuito</strong>
-                          </p>
+                          <div className="text-xs font-black text-stone-900 leading-tight">
+                            3 Meses de Consultoria + Oeco Start
+                          </div>
+                          <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                            <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                            <li>• <strong>3 meses de consultoria</strong> (1h exclusiva por mês)</li>
+                            <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante os 3 meses de consultoria</li>
+                          </ul>
                         </div>
                         <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
                           Troféu de Prata
@@ -989,14 +1024,20 @@ export const BeautyWorkshopPage: React.FC = () => {
                           3º Lugar
                         </div>
                         <div>
-                          <div className="text-2xl mb-1.5">🥉</div>
-                          <div className="text-xs font-black text-stone-900 leading-tight">
-                            1 Mês de Consultoria + Sistema Oeco Start
+                          <div className="flex items-center gap-1.5 mb-1.5">
+                            <span className="text-2xl">🥉</span>
+                            <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 font-black text-xs">
+                              R$ 1.100 em prêmios
+                            </span>
                           </div>
-                          <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
-                            • 1h exclusiva de consultoria individual<br />
-                            • Acesso ao sistema financeiro <strong>Oeco Start 100% gratuito</strong>
-                          </p>
+                          <div className="text-xs font-black text-stone-900 leading-tight">
+                            1 Mês de Consultoria + Oeco Start
+                          </div>
+                          <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                            <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                            <li>• <strong>1 mês de consultoria</strong> (1h exclusiva individual)</li>
+                            <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante o mês de consultoria</li>
+                          </ul>
                         </div>
                         <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
                           Troféu de Bronze
@@ -1107,68 +1148,112 @@ export const BeautyWorkshopPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Banner Dourado / Marsala de Destaque Total de Premiação */}
+            <div className="bg-gradient-to-r from-[#7D1D32] via-[#94263F] to-[#681729] text-white rounded-2xl p-4 sm:p-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-3 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="flex items-center gap-3.5 relative z-10 text-center sm:text-left">
+                <div className="w-12 h-12 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center shrink-0 text-2xl shadow-inner">
+                  🏆
+                </div>
+                <div>
+                  <div className="text-[10px] font-black uppercase tracking-widest text-[#FCEBEB] bg-white/20 inline-block px-2 py-0.5 rounded-full mb-0.5">
+                    Premiação Total do Evento
+                  </div>
+                  <div className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                    R$ 7.500,00 em Prêmios
+                  </div>
+                </div>
+              </div>
+              <div className="text-center sm:text-right relative z-10 border-t sm:border-t-0 sm:border-l border-white/20 pt-2 sm:pt-0 sm:pl-4">
+                <span className="text-[11px] text-[#FCEBEB]/90 font-medium block">
+                  Serão 3 profissionais premiadas ao vivo
+                </span>
+                <span className="text-xs font-bold text-amber-200 uppercase tracking-wide">
+                  Ganha quem indicar mais!
+                </span>
+              </div>
+            </div>
+
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
               Para validar sua participação e vincular as indicações a você, <strong>preencha seu nome e WhatsApp</strong>. A premiação será dada para quem gerar o maior número de referências confirmadas no <strong>Webinar Beleza das Finanças</strong>:
             </p>
 
-            {/* Os 3 Prêmios Oficiais OECO */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {/* Os 3 Prêmios Oficiais OECO com Valores */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* 1º Lugar */}
               <div className="bg-white rounded-2xl p-4 border-2 border-[#D9A3AF] shadow-xs flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
                   1º Lugar
                 </div>
                 <div>
-                  <div className="text-2xl mb-1.5">🥇</div>
-                  <div className="text-xs font-black text-[#7D1D32] leading-tight">
-                    6 Meses de Consultoria + Sistema Oeco Start
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span className="text-2xl">🥇</span>
+                    <span className="px-2 py-0.5 rounded-full bg-[#7D1D32]/10 text-[#7D1D32] font-black text-xs">
+                      R$ 4.100 em prêmios
+                    </span>
                   </div>
-                  <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
-                    • 1h exclusiva de consultoria por mês durante 6 meses<br />
-                    • Sistema financeiro <strong>Oeco Start 100% gratuito</strong>
-                  </p>
+                  <div className="text-xs font-black text-[#7D1D32] leading-tight">
+                    6 Meses de Consultoria + Oeco Start
+                  </div>
+                  <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                    <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                    <li>• <strong>6 meses de consultoria</strong> (1h exclusiva por mês)</li>
+                    <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante os 6 meses de consultoria</li>
+                  </ul>
                 </div>
-                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-[#7D1D32] uppercase">
+                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-[#7D1D32] uppercase tracking-wide">
                   Troféu de Ouro
                 </div>
               </div>
 
               {/* 2º Lugar */}
               <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-0 right-0 bg-stone-800 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                <div className="absolute top-0 right-0 bg-stone-800 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
                   2º Lugar
                 </div>
                 <div>
-                  <div className="text-2xl mb-1.5">🥈</div>
-                  <div className="text-xs font-black text-stone-900 leading-tight">
-                    3 Meses de Consultoria + Sistema Oeco Start
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span className="text-2xl">🥈</span>
+                    <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-800 font-black text-xs">
+                      R$ 2.300 em prêmios
+                    </span>
                   </div>
-                  <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
-                    • 1h exclusiva de consultoria por mês durante 3 meses<br />
-                    • Sistema financeiro <strong>Oeco Start 100% gratuito</strong>
-                  </p>
+                  <div className="text-xs font-black text-stone-900 leading-tight">
+                    3 Meses de Consultoria + Oeco Start
+                  </div>
+                  <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                    <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                    <li>• <strong>3 meses de consultoria</strong> (1h exclusiva por mês)</li>
+                    <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante os 3 meses de consultoria</li>
+                  </ul>
                 </div>
-                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase">
+                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
                   Troféu de Prata
                 </div>
               </div>
 
               {/* 3º Lugar */}
               <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-0 right-0 bg-stone-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                <div className="absolute top-0 right-0 bg-stone-600 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
                   3º Lugar
                 </div>
                 <div>
-                  <div className="text-2xl mb-1.5">🥉</div>
-                  <div className="text-xs font-black text-stone-900 leading-tight">
-                    1 Mês de Consultoria + Sistema Oeco Start
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span className="text-2xl">🥉</span>
+                    <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 font-black text-xs">
+                      R$ 1.100 em prêmios
+                    </span>
                   </div>
-                  <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
-                    • 1h exclusiva de consultoria individual<br />
-                    • Sistema financeiro <strong>Oeco Start 100% gratuito</strong>
-                  </p>
+                  <div className="text-xs font-black text-stone-900 leading-tight">
+                    1 Mês de Consultoria + Oeco Start
+                  </div>
+                  <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                    <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                    <li>• <strong>1 mês de consultoria</strong> (1h exclusiva individual)</li>
+                    <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante o mês de consultoria</li>
+                  </ul>
                 </div>
-                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase">
+                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
                   Troféu de Bronze
                 </div>
               </div>
