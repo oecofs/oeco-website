@@ -727,41 +727,48 @@ export const BeautyWorkshopPage: React.FC = () => {
 
         {/* FORMATO 3: FOLHETO DISPLAY VERTICAL */}
         {format === 'flyer' && (
-          <div className="max-w-md w-full bg-white border-2 border-dashed border-[#1C1815]/30 rounded-3xl p-8 text-center space-y-6 shadow-sm print:border-none print:shadow-none">
-            <div className="inline-block bg-[#1C1815] text-[#FAF8F5] text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
-              OECO Financial Solutions
+          <div className={`max-w-md w-full ${currentTheme.cardBg} ${currentTheme.textColor} border-2 border-dashed ${currentTheme.borderColor} rounded-3xl p-8 text-center space-y-6 shadow-md print:border-none print:shadow-none transition-colors`}>
+            {/* Logo Oficial OECO */}
+            <div className="flex justify-center mb-2">
+              <img 
+                src={currentTheme.logoSrc} 
+                alt="OECO Financial Solutions" 
+                className="h-[6mm] w-auto object-contain"
+              />
             </div>
 
             <div className="space-y-2">
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1C1815]">
-                Webinar Beleza das Finanças
+              <h1 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${currentTheme.titleColor}`}>
+                Webinar <span className={currentTheme.titleHighlight}>Beleza das Finanças</span>
               </h1>
-              <p className="text-sm text-stone-600 font-medium">
-                Aprenda a precificar seus serviços, separar as contas PF e PJ e fazer o lucro sobrar no fim do mês!
+              <p className={`text-sm ${currentTheme.subtextColor} font-medium leading-relaxed`}>
+                Pare de pagar para trabalhar: o método prático para precificar certo, blindar seu caixa e ter lucro real no seu negócio de beleza.
               </p>
             </div>
 
             {/* QR Code */}
-            <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-stone-200 inline-block shadow-inner">
+            <div className={`${currentTheme.qrBg} p-5 rounded-3xl border-2 ${currentTheme.qrBorder} inline-block shadow-sm`}>
               <img 
                 src={qrCodeUrl} 
                 alt="QR Code de Inscrição no Webinar"
-                className="w-56 h-56 mx-auto rounded-lg object-contain"
+                className="w-56 h-56 mx-auto rounded-xl object-contain"
               />
             </div>
 
             <div className="space-y-1">
-              <p className="text-xs uppercase tracking-wider font-bold text-[#4F6D46]">
-                Aponte a câmera do seu celular
+              <p className={`text-xs uppercase tracking-wider font-extrabold ${currentTheme.titleHighlight} flex items-center justify-center gap-1.5`}>
+                <span>📸 Aponte a câmera do seu celular</span>
               </p>
-              <p className="text-xs text-stone-500 font-mono">
-                oecofs.com/forms/beleza
-              </p>
+              <div className="inline-block mt-1">
+                <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-wider ${currentTheme.pillBg}`}>
+                  100% Gratuito
+                </span>
+              </div>
             </div>
 
-            <div className="bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs text-stone-700 space-y-1">
-              <div className="font-semibold text-stone-900">🗓️ 26 e 27 de Outubro • Online ao Vivo</div>
-              <div>Turmas exclusivas às 18:00 e 19:00 • 100% Gratuito</div>
+            <div className={`border ${currentTheme.dividerColor} rounded-2xl p-3.5 text-xs ${currentTheme.footerBg} space-y-1 bg-black/5`}>
+              <div className="font-bold">🗓️ 26 e 27 de Outubro • Online ao Vivo</div>
+              <div>Turmas exclusivas às 18:00 e 19:00 • Vagas Limitadas</div>
             </div>
           </div>
         )}
