@@ -777,31 +777,32 @@ export const BeautyWorkshopPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#292524] font-sans pb-16 selection:bg-[#4F6D46] selection:text-white">
-      {/* Top Banner do Evento */}
-      <header className="bg-[#1C1815] text-[#FAF8F5] border-b border-[#2E2824] py-6 px-4 sm:px-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#4F6D46]/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-[#FDF9F8] text-[#2D0F16] font-sans pb-16 selection:bg-[#7D1D32] selection:text-white">
+      {/* Top Banner do Evento em Marsala & Nude Chic */}
+      <header className="bg-gradient-to-b from-[#2E0B13] via-[#3F111C] to-[#24080E] text-[#FFF7F7] border-b border-[#521A26] py-7 px-4 sm:px-6 relative overflow-hidden shadow-lg">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#7D1D32]/25 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D9A3AF]/10 rounded-full blur-2xl pointer-events-none" />
         
-        <div className="max-w-2xl mx-auto space-y-3 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D1B688]/15 border border-[#D1B688]/30 text-[#D1B688] text-xs font-semibold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5" /> Edição Especial Professional Fair RJ • 100% Gratuito
+        <div className="max-w-2xl mx-auto space-y-3.5 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#D9A3AF]/20 border border-[#D9A3AF]/40 text-[#FCEBEB] text-xs font-bold uppercase tracking-wider shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#E8B2BD]" /> Edição Especial Professional Fair RJ • 100% Gratuito
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#FAF8F5]">
-            Webinar Beleza das Finanças
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+            Webinar <span className="text-[#E8B2BD]">Beleza das Finanças</span>
           </h1>
-          <p className="text-sm text-[#FAF8F5]/85 max-w-lg mx-auto leading-relaxed">
-            Aprenda a precificar com segurança, separar as contas PF e PJ e fazer o lucro sobrar no fim do mês no seu salão, estúdio ou atendimento.
+          <p className="text-sm text-[#FCEBEB]/90 max-w-lg mx-auto leading-relaxed">
+            Pare de pagar para trabalhar: o método prático para precificar certo, blindar seu caixa e ter lucro real no seu negócio de beleza.
           </p>
 
-          <div className="flex items-center justify-center gap-4 pt-2 text-xs text-[#FAF8F5]/70">
+          <div className="flex items-center justify-center gap-4 pt-2 text-xs text-[#FCEBEB]/80 font-medium">
             <span className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-[#D1B688]" /> 26 e 27 de Outubro
+              <Calendar className="w-4 h-4 text-[#E8B2BD]" /> 26 e 27 de Outubro
             </span>
             <span className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-[#D1B688]" /> Turmas 18h e 19h
+              <Clock className="w-4 h-4 text-[#E8B2BD]" /> Turmas 18h e 19h
             </span>
             <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-[#D1B688]" /> 100% Online
+              <ShieldCheck className="w-4 h-4 text-[#E8B2BD]" /> 100% Online
             </span>
           </div>
         </div>
@@ -891,15 +892,15 @@ export const BeautyWorkshopPage: React.FC = () => {
           </div>
         ) : (
           /* FORMULÁRIO DE CAPTURA RÁPIDA */
-          <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-5 sm:p-8 shadow-xl border border-stone-200 mt-4 space-y-7">
+          <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-5 sm:p-8 shadow-xl border border-[#EAC9D1] mt-4 space-y-7">
             
             {/* ETAPA 1: CONTATO */}
             <section className="space-y-4">
-              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
-                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+              <div className="flex items-center gap-2 border-b border-[#F4DEE3] pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#7D1D32] text-white text-xs font-bold flex items-center justify-center shadow-xs">
                   1
                 </span>
-                <h2 className="text-base font-bold text-stone-900">
+                <h2 className="text-base font-bold text-[#2D0F16]">
                   Seus Dados de Contato
                 </h2>
               </div>
@@ -915,7 +916,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Ex: Amanda Silva"
-                    className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent text-sm transition-all"
+                    className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-[#FFFDFD] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#7D1D32] focus:border-transparent text-sm transition-all"
                   />
                 </div>
 
@@ -930,7 +931,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                       value={whatsapp}
                       onChange={handlePhoneChange}
                       placeholder="(21) 99999-9999"
-                      className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent text-sm transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-[#FFFDFD] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#7D1D32] focus:border-transparent text-sm transition-all"
                     />
                   </div>
 
@@ -943,7 +944,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="amanda@exemplo.com"
-                      className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent text-sm transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-[#FFFDFD] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#7D1D32] focus:border-transparent text-sm transition-all"
                     />
                   </div>
                 </div>
@@ -953,13 +954,13 @@ export const BeautyWorkshopPage: React.FC = () => {
                     Instagram do seu trabalho / salão <span className="text-stone-400 font-normal">(opcional)</span>
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-3 text-stone-400 text-sm font-medium">@</span>
+                    <span className="absolute left-4 top-3 text-[#B26B7B] text-sm font-medium">@</span>
                     <input
                       type="text"
                       value={instagram}
                       onChange={(e) => setInstagram(e.target.value)}
                       placeholder="studio.amanda"
-                      className="w-full pl-8 pr-4 py-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent text-sm transition-all"
+                      className="w-full pl-8 pr-4 py-3 rounded-xl border border-stone-300 bg-[#FFFDFD] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#7D1D32] focus:border-transparent text-sm transition-all"
                     />
                   </div>
                 </div>
@@ -968,11 +969,11 @@ export const BeautyWorkshopPage: React.FC = () => {
 
             {/* ETAPA 2: NICHO DE ATUAÇÃO */}
             <section className="space-y-3">
-              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
-                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+              <div className="flex items-center gap-2 border-b border-[#F4DEE3] pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#7D1D32] text-white text-xs font-bold flex items-center justify-center shadow-xs">
                   2
                 </span>
-                <h2 className="text-base font-bold text-stone-900">
+                <h2 className="text-base font-bold text-[#2D0F16]">
                   Qual é a sua principal área de atuação? *
                 </h2>
               </div>
@@ -987,8 +988,8 @@ export const BeautyWorkshopPage: React.FC = () => {
                       onClick={() => setNiche(item.id)}
                       className={`p-3 rounded-xl text-left border text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
                         isSelected
-                          ? 'border-[#4F6D46] bg-[#4F6D46]/10 text-[#292524] ring-2 ring-[#4F6D46]'
-                          : 'border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-700'
+                          ? 'border-[#7D1D32] bg-[#7D1D32]/10 text-[#2D0F16] ring-2 ring-[#7D1D32]'
+                          : 'border-stone-200 bg-stone-50/70 hover:bg-[#FDF3F5] hover:border-[#D9A3AF] text-stone-700'
                       }`}
                     >
                       <span>{item.label}</span>
@@ -1008,7 +1009,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                     value={customNiche}
                     onChange={(e) => setCustomNiche(e.target.value)}
                     placeholder="Ex: Bronzeamento, Tatuagem, Piercing, Terapias..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#4F6D46] bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] text-xs sm:text-sm"
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#7D1D32] bg-white focus:outline-none focus:ring-2 focus:ring-[#7D1D32] text-xs sm:text-sm"
                     autoFocus
                   />
                 </div>
@@ -1017,11 +1018,11 @@ export const BeautyWorkshopPage: React.FC = () => {
 
             {/* ETAPA 3: ESTRUTURA E FORMALIZAÇÃO */}
             <section className="space-y-4">
-              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
-                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+              <div className="flex items-center gap-2 border-b border-[#F4DEE3] pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#7D1D32] text-white text-xs font-bold flex items-center justify-center shadow-xs">
                   3
                 </span>
-                <h2 className="text-base font-bold text-stone-900">
+                <h2 className="text-base font-bold text-[#2D0F16]">
                   Estrutura & Formalização do seu Negócio
                 </h2>
               </div>
@@ -1039,8 +1040,8 @@ export const BeautyWorkshopPage: React.FC = () => {
                         key={model.id}
                         className={`flex items-center gap-3 p-3 rounded-xl border text-xs sm:text-sm cursor-pointer transition-all ${
                           isSelected
-                            ? 'border-[#4F6D46] bg-[#4F6D46]/10 font-semibold text-stone-900'
-                            : 'border-stone-200 hover:bg-stone-50 text-stone-700'
+                            ? 'border-[#7D1D32] bg-[#7D1D32]/10 font-bold text-[#2D0F16]'
+                            : 'border-stone-200 bg-stone-50/70 hover:bg-[#FDF3F5] text-stone-700'
                         }`}
                       >
                         <input
@@ -1049,7 +1050,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                           value={model.id}
                           checked={isSelected}
                           onChange={() => setBusinessModel(model.id)}
-                          className="accent-[#4F6D46] w-4 h-4"
+                          className="accent-[#7D1D32] w-4 h-4"
                         />
                         <span>{model.label}</span>
                       </label>
@@ -1071,8 +1072,8 @@ export const BeautyWorkshopPage: React.FC = () => {
                         key={form.id}
                         className={`flex items-center gap-3 p-3 rounded-xl border text-xs sm:text-sm cursor-pointer transition-all ${
                           isSelected
-                            ? 'border-[#4F6D46] bg-[#4F6D46]/10 font-semibold text-stone-900'
-                            : 'border-stone-200 hover:bg-stone-50 text-stone-700'
+                            ? 'border-[#7D1D32] bg-[#7D1D32]/10 font-bold text-[#2D0F16]'
+                            : 'border-stone-200 bg-stone-50/70 hover:bg-[#FDF3F5] text-stone-700'
                         }`}
                       >
                         <input
@@ -1081,7 +1082,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                           value={form.id}
                           checked={isSelected}
                           onChange={() => setFormalization(form.id)}
-                          className="accent-[#4F6D46] w-4 h-4"
+                          className="accent-[#7D1D32] w-4 h-4"
                         />
                         <span>{form.label}</span>
                       </label>
@@ -1093,12 +1094,12 @@ export const BeautyWorkshopPage: React.FC = () => {
 
             {/* ETAPA 4: DORES DO NEGÓCIO (CHECKBOXES) */}
             <section className="space-y-3">
-              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
-                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+              <div className="flex items-center gap-2 border-b border-[#F4DEE3] pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#7D1D32] text-white text-xs font-bold flex items-center justify-center shadow-xs">
                   4
                 </span>
                 <div>
-                  <h2 className="text-base font-bold text-stone-900">
+                  <h2 className="text-base font-bold text-[#2D0F16]">
                     Seus Maiores Desafios Financeiros
                   </h2>
                   <p className="text-xs text-stone-500">
@@ -1125,19 +1126,19 @@ export const BeautyWorkshopPage: React.FC = () => {
                       }}
                       className={`flex items-start gap-3.5 p-4 rounded-2xl border text-xs sm:text-sm cursor-pointer transition-all select-none ${
                         isChecked
-                          ? 'border-[#4F6D46] bg-[#4F6D46]/10 shadow-sm ring-1 ring-[#4F6D46]'
-                          : 'border-stone-200 bg-stone-50/60 hover:bg-stone-100 hover:border-stone-300 text-stone-700'
+                          ? 'border-[#7D1D32] bg-[#7D1D32]/10 shadow-sm ring-1 ring-[#7D1D32]'
+                          : 'border-stone-200 bg-stone-50/60 hover:bg-[#FDF3F5] hover:border-[#D9A3AF] text-stone-700'
                       }`}
                     >
                       <div className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 border transition-all ${
                         isChecked
-                          ? 'bg-[#4F6D46] border-[#4F6D46] text-white shadow-xs'
+                          ? 'bg-[#7D1D32] border-[#7D1D32] text-white shadow-xs'
                           : 'border-stone-300 bg-white'
                       }`}>
                         {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                       </div>
                       <div className="space-y-0.5 flex-1">
-                        <div className={`font-semibold ${isChecked ? 'text-stone-900 font-bold' : 'text-stone-800'}`}>
+                        <div className={`font-semibold ${isChecked ? 'text-[#2D0F16] font-bold' : 'text-stone-800'}`}>
                           {pain.label}
                         </div>
                         {pain.desc && (
@@ -1155,7 +1156,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                               value={customPainPoint}
                               onChange={(e) => setCustomPainPoint(e.target.value)}
                               placeholder="Qual outro desafio você enfrenta? Ex: clientes que desmarcam em cima da hora, cobrança..."
-                              className="w-full px-3 py-2 rounded-xl border border-[#4F6D46] bg-white text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#4F6D46]"
+                              className="w-full px-3 py-2 rounded-xl border border-[#7D1D32] bg-white text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#7D1D32]"
                               autoFocus
                             />
                           </div>
@@ -1169,12 +1170,12 @@ export const BeautyWorkshopPage: React.FC = () => {
 
             {/* ETAPA 5: ESCOLHA DA TURMA DO WORKSHOP */}
             <section className="space-y-3">
-              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
-                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+              <div className="flex items-center gap-2 border-b border-[#F4DEE3] pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#7D1D32] text-white text-xs font-bold flex items-center justify-center shadow-xs">
                   5
                 </span>
                 <div>
-                  <h2 className="text-base font-bold text-stone-900">
+                  <h2 className="text-base font-bold text-[#2D0F16]">
                     Escolha sua Turma do Workshop *
                   </h2>
                   <p className="text-xs text-stone-500">
@@ -1198,8 +1199,8 @@ export const BeautyWorkshopPage: React.FC = () => {
                         isSoldOut
                           ? 'border-stone-200 bg-stone-100/70 opacity-60 cursor-not-allowed'
                           : isSelected
-                            ? 'border-[#4F6D46] bg-[#4F6D46]/15 ring-2 ring-[#4F6D46] shadow-sm cursor-pointer'
-                            : 'border-stone-200 bg-stone-50 hover:bg-stone-100 cursor-pointer'
+                            ? 'border-[#7D1D32] bg-[#7D1D32]/15 ring-2 ring-[#7D1D32] shadow-sm cursor-pointer'
+                            : 'border-stone-200 bg-stone-50/70 hover:bg-[#FDF3F5] cursor-pointer'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -1210,14 +1211,14 @@ export const BeautyWorkshopPage: React.FC = () => {
                           disabled={isSoldOut}
                           checked={isSelected}
                           onChange={() => !isSoldOut && setSessionId(session.id)}
-                          className="accent-[#4F6D46] w-4 h-4 cursor-pointer disabled:cursor-not-allowed"
+                          className="accent-[#7D1D32] w-4 h-4 cursor-pointer disabled:cursor-not-allowed"
                         />
                         <div>
-                          <div className="text-xs sm:text-sm font-bold text-stone-900">
+                          <div className="text-xs sm:text-sm font-bold text-[#2D0F16]">
                             {session.day}
                           </div>
                           <div className="text-xs text-stone-600 font-medium flex items-center gap-1 mt-0.5">
-                            <Clock className="w-3 h-3 text-[#4F6D46]" /> Às {session.time} (ao vivo)
+                            <Clock className="w-3 h-3 text-[#7D1D32]" /> Às {session.time} (ao vivo)
                           </div>
                         </div>
                       </div>
@@ -1246,14 +1247,14 @@ export const BeautyWorkshopPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#1C1815] hover:bg-[#2E2824] text-white py-4 px-6 rounded-2xl font-bold text-base flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50"
+                className="w-full bg-gradient-to-r from-[#7D1D32] via-[#91223A] to-[#681729] hover:from-[#681729] hover:to-[#52111F] text-white py-4 px-6 rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 tracking-wide"
               >
                 {isSubmitting ? (
                   <span>Salvando inscrição...</span>
                 ) : (
                   <>
                     <span>Garantir Minha Vaga Gratuita</span>
-                    <ArrowRight className="w-5 h-5 text-[#D1B688]" />
+                    <ArrowRight className="w-5 h-5 text-[#FCEBEB]" />
                   </>
                 )}
               </button>
