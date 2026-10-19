@@ -367,64 +367,139 @@ export const BeautyWorkshopPage: React.FC = () => {
   // Folheto & Cartão Imprimível com QR Code
   if (isPrintMode) {
     const format = searchParams.get('format') || 'card';
-    const colorTheme = searchParams.get('theme') || 'warm'; // 'warm' | 'fendi' | 'olive'
+    const colorTheme = searchParams.get('theme') || 'rose'; // 'rose' | 'emerald' | 'gold' | 'marsala' | 'warm' | 'fendi'
 
-    // Temas de cor disponíveis
+    // Temas de cor disponíveis calibrados para estética e feiras de beleza
     const themeStyles = {
-      // Opção 1: Bege Quente & Areia Dourada (Sand Warm)
+      // 1. Rosé Gold & Bronze Luxo (Estética Avançada / Harmonização)
+      rose: {
+        id: 'rose',
+        name: 'Rosé Gold & Bronze',
+        category: 'Beleza & Estética',
+        cardBg: 'bg-gradient-to-br from-[#FFF5F2] via-[#FCEAE5] to-[#F5DDD6]',
+        textColor: 'text-[#2C1814]',
+        titleColor: 'text-[#2C1814]',
+        titleHighlight: 'text-[#B8543B]',
+        subtextColor: 'text-[#5A3831]',
+        borderColor: 'border-[#E8B8AA]',
+        dividerColor: 'border-[#ECC2B5]',
+        qrBg: 'bg-white',
+        qrBorder: 'border-[#E8B8AA]',
+        qrTextColor: 'text-[#2C1814]',
+        footerBg: 'text-[#6C4239]',
+        pillBg: 'bg-[#B8543B] text-white',
+        qrDotColor: '2C1814',
+        logoSrc: '/images/brand/sublogo-oeco-dark.png',
+        badgeBg: 'bg-[#F2CCC0]',
+      },
+      // 2. Emerald Green & Dourado (Cosmética de Luxo & Verde OECO)
+      emerald: {
+        id: 'emerald',
+        name: 'Esmeralda & Ouro (Dark)',
+        category: 'Beleza & Estética',
+        cardBg: 'bg-gradient-to-br from-[#122318] via-[#1A3324] to-[#0E1D14]',
+        textColor: 'text-[#F5EEDB]',
+        titleColor: 'text-[#FAF5EB]',
+        titleHighlight: 'text-[#E2C382]',
+        subtextColor: 'text-[#D8CDBC]',
+        borderColor: 'border-[#C9A96E]/50',
+        dividerColor: 'border-[#C9A96E]/30',
+        qrBg: 'bg-white',
+        qrBorder: 'border-[#C9A96E]',
+        qrTextColor: 'text-[#122318]',
+        footerBg: 'text-[#D8CDBC]',
+        pillBg: 'bg-[#C9A96E] text-[#122318]',
+        qrDotColor: '122318',
+        logoSrc: '/images/brand/sublogo-oeco-gold.png',
+        badgeBg: 'bg-[#1A3324]',
+      },
+      // 3. Dourado Âmbar & Champagne (Iluminação Glamour / Alta Maquiagem)
+      gold: {
+        id: 'gold',
+        name: 'Dourado Âmbar & Sol',
+        category: 'Beleza & Estética',
+        cardBg: 'bg-gradient-to-br from-[#FFFDF7] via-[#FFF6DD] to-[#F7E5B5]',
+        textColor: 'text-[#261A0C]',
+        titleColor: 'text-[#261A0C]',
+        titleHighlight: 'text-[#9E650D]',
+        subtextColor: 'text-[#573E1D]',
+        borderColor: 'border-[#DFBA73]',
+        dividerColor: 'border-[#E7C684]',
+        qrBg: 'bg-white',
+        qrBorder: 'border-[#DFBA73]',
+        qrTextColor: 'text-[#261A0C]',
+        footerBg: 'text-[#614520]',
+        pillBg: 'bg-[#1C1815] text-[#F9E29D]',
+        qrDotColor: '261A0C',
+        logoSrc: '/images/brand/sublogo-oeco-dark.png',
+        badgeBg: 'bg-[#F7E5B5]',
+      },
+      // 4. Borgonha / Marsala & Nude (Esmalteria & Cabelo de Poder)
+      marsala: {
+        id: 'marsala',
+        name: 'Marsala & Nude Chic',
+        category: 'Beleza & Estética',
+        cardBg: 'bg-gradient-to-br from-[#FFF7F7] via-[#F9EBEB] to-[#F3D7D7]',
+        textColor: 'text-[#2D0F16]',
+        titleColor: 'text-[#2D0F16]',
+        titleHighlight: 'text-[#7D1D32]',
+        subtextColor: 'text-[#562B34]',
+        borderColor: 'border-[#D9A3AF]',
+        dividerColor: 'border-[#E0B2BD]',
+        qrBg: 'bg-white',
+        qrBorder: 'border-[#D9A3AF]',
+        qrTextColor: 'text-[#2D0F16]',
+        footerBg: 'text-[#63353F]',
+        pillBg: 'bg-[#7D1D32] text-white',
+        qrDotColor: '2D0F16',
+        logoSrc: '/images/brand/sublogo-oeco-dark.png',
+        badgeBg: 'bg-[#F3D7D7]',
+      },
+      // 5. Bege Areia Quente (Clean Clássico)
       warm: {
         id: 'warm',
         name: 'Bege Areia Quente',
-        badge: 'Opção 1',
+        category: 'Neutros OECO',
         cardBg: 'bg-[#F5EFE6]',
         textColor: 'text-[#241B14]',
         titleColor: 'text-[#241B14]',
+        titleHighlight: 'text-[#4F6D46]',
         subtextColor: 'text-[#4A3E36]',
         borderColor: 'border-[#D9CEBF]',
         dividerColor: 'border-[#DFD5C6]',
         qrBg: 'bg-[#FCFAF7]',
         qrBorder: 'border-[#DFD5C6]',
+        qrTextColor: 'text-stone-900',
         footerBg: 'text-[#5C4D42]',
         pillBg: 'bg-[#4F6D46] text-white',
         qrDotColor: '241B14',
+        logoSrc: '/images/brand/sublogo-oeco-dark.png',
+        badgeBg: 'bg-[#F5EFE6]',
       },
-      // Opção 2: Bege Fendi & Linho Suave (Earthy Fendi)
+      // 6. Bege Fendi / Linho
       fendi: {
         id: 'fendi',
         name: 'Bege Fendi / Linho',
-        badge: 'Opção 2',
+        category: 'Neutros OECO',
         cardBg: 'bg-[#ECE5DC]',
         textColor: 'text-[#1F1C19]',
         titleColor: 'text-[#1F1C19]',
+        titleHighlight: 'text-[#2E2823]',
         subtextColor: 'text-[#4E4741]',
         borderColor: 'border-[#D2C8BC]',
         dividerColor: 'border-[#D8CFB5]',
         qrBg: 'bg-white',
         qrBorder: 'border-[#CEC4B7]',
+        qrTextColor: 'text-stone-900',
         footerBg: 'text-[#5E564F]',
         pillBg: 'bg-[#2E2823] text-white',
         qrDotColor: '1F1C19',
-      },
-      // Opção 3: Bege Camurça com Verde Oliva OECO (Biophilic Luxury)
-      olive: {
-        id: 'olive',
-        name: 'Bege Camurça & Oliva',
-        badge: 'Opção 3',
-        cardBg: 'bg-[#F3EDE2]',
-        textColor: 'text-[#1A1815]',
-        titleColor: 'text-[#1A1815]',
-        subtextColor: 'text-[#484239]',
-        borderColor: 'border-[#CFBEA5]',
-        dividerColor: 'border-[#D9CCA4]',
-        qrBg: 'bg-white',
-        qrBorder: 'border-[#4F6D46]/30',
-        footerBg: 'text-[#3E3830]',
-        pillBg: 'bg-[#4F6D46] text-white',
-        qrDotColor: '1C1815',
+        logoSrc: '/images/brand/sublogo-oeco-dark.png',
+        badgeBg: 'bg-[#ECE5DC]',
       }
     };
 
-    const currentTheme = themeStyles[colorTheme as keyof typeof themeStyles] || themeStyles.warm;
+    const currentTheme = themeStyles[colorTheme as keyof typeof themeStyles] || themeStyles.rose;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent('https://oecofs.com/forms/beleza')}&color=${currentTheme.qrDotColor}`;
 
     // Helper para alternar query param sem perder o outro
@@ -443,7 +518,7 @@ export const BeautyWorkshopPage: React.FC = () => {
             {/* Logo Oficial OECO */}
             <div className="mb-1">
               <img 
-                src="/images/brand/sublogo-oeco-dark.png" 
+                src={currentTheme.logoSrc} 
                 alt="OECO Financial Solutions" 
                 className="h-[4.5mm] w-auto object-contain"
               />
@@ -451,7 +526,7 @@ export const BeautyWorkshopPage: React.FC = () => {
 
             {/* Título do Webinar */}
             <div className={`text-[12px] font-black leading-tight ${currentTheme.titleColor} tracking-tight`}>
-              Webinar Beleza das Finanças
+              Webinar <span className={currentTheme.titleHighlight}>Beleza das Finanças</span>
             </div>
 
             {/* Subtítulo de Alto Desejo */}
@@ -463,7 +538,9 @@ export const BeautyWorkshopPage: React.FC = () => {
           {/* Rodapé do Cartão */}
           <div className={`pt-1 border-t ${currentTheme.dividerColor} text-[7.5px] ${currentTheme.footerBg} font-bold flex items-center justify-between`}>
             <span>🗓️ 26 e 27/10 • Ao Vivo</span>
-            <span className="text-[#4F6D46] font-extrabold uppercase">100% Gratuito</span>
+            <span className={`px-1.5 py-0.5 rounded text-[7px] font-black uppercase tracking-wider ${currentTheme.pillBg}`}>
+              100% Gratuito
+            </span>
           </div>
         </div>
 
@@ -476,7 +553,7 @@ export const BeautyWorkshopPage: React.FC = () => {
               className="w-[26mm] h-[26mm] object-contain"
             />
           </div>
-          <div className="text-[8px] font-extrabold text-center text-stone-900 mt-1 uppercase tracking-wider flex items-center justify-center gap-0.5">
+          <div className={`text-[8px] font-extrabold text-center ${currentTheme.textColor} mt-1 uppercase tracking-wider flex items-center justify-center gap-0.5`}>
             <span>Aponte a câmera</span>
           </div>
         </div>
@@ -486,7 +563,7 @@ export const BeautyWorkshopPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-stone-100 text-[#1C1815] p-4 sm:p-8 flex flex-col items-center font-sans print:bg-white print:p-0">
         {/* Barra Superior de Formatos e Temas (Ocultada na Impressão) */}
-        <div className="max-w-2xl w-full bg-white p-4 rounded-2xl shadow-sm border border-stone-200 mb-6 flex flex-col gap-3 print:hidden">
+        <div className="max-w-3xl w-full bg-white p-4 rounded-2xl shadow-sm border border-stone-200 mb-6 flex flex-col gap-3.5 print:hidden">
           {/* Linha 1: Formatos */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-100 pb-3">
             <div className="flex items-center gap-1.5 text-xs font-semibold">
@@ -533,44 +610,96 @@ export const BeautyWorkshopPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Linha 2: Filtros de Paleta de Cores (Bege) */}
-          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-            <span className="text-stone-400 text-[11px] uppercase mr-1">Cor do Cartão:</span>
-            <Link
-              to={getThemeUrl('warm')}
-              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
-                colorTheme === 'warm' 
-                  ? 'bg-[#F5EFE6] border-[#D9CEBF] text-[#241B14] ring-2 ring-[#4F6D46]' 
-                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
-              }`}
-            >
-              <span className="w-3.5 h-3.5 rounded-full bg-[#F5EFE6] border border-[#D9CEBF] inline-block shadow-inner" />
-              <span>1. Bege Areia Quente</span>
-            </Link>
+          {/* Linha 2: Filtros de Cores Específicas para o Setor de Beleza */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-stone-500 text-[11px] font-bold uppercase tracking-wider">
+                🎨 Cores de Alto Impacto para Feira de Beleza:
+              </span>
+              <span className="text-[10px] text-stone-400">
+                Clique para alternar e pré-visualizar
+              </span>
+            </div>
 
-            <Link
-              to={getThemeUrl('fendi')}
-              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
-                colorTheme === 'fendi' 
-                  ? 'bg-[#ECE5DC] border-[#D2C8BC] text-[#1F1C19] ring-2 ring-[#4F6D46]' 
-                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
-              }`}
-            >
-              <span className="w-3.5 h-3.5 rounded-full bg-[#ECE5DC] border border-[#D2C8BC] inline-block shadow-inner" />
-              <span>2. Bege Fendi / Linho</span>
-            </Link>
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+              {/* Opção Rosé Gold */}
+              <Link
+                to={getThemeUrl('rose')}
+                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                  colorTheme === 'rose' 
+                    ? 'bg-[#FCEAE5] border-[#E8B8AA] text-[#2C1814] ring-2 ring-[#B8543B] font-bold shadow-xs' 
+                    : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                }`}
+              >
+                <span className="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-[#E8B8AA] to-[#FFF5F2] border border-[#E8B8AA] inline-block shadow-inner" />
+                <span>✨ Rosé Gold Luxo</span>
+              </Link>
 
-            <Link
-              to={getThemeUrl('olive')}
-              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
-                colorTheme === 'olive' 
-                  ? 'bg-[#F3EDE2] border-[#CFBEA5] text-[#1A1815] ring-2 ring-[#4F6D46]' 
-                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
-              }`}
-            >
-              <span className="w-3.5 h-3.5 rounded-full bg-[#F3EDE2] border border-[#CFBEA5] inline-block shadow-inner" />
-              <span>3. Bege Camurça & Oliva</span>
-            </Link>
+              {/* Opção Emerald & Gold */}
+              <Link
+                to={getThemeUrl('emerald')}
+                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                  colorTheme === 'emerald' 
+                    ? 'bg-[#1A3324] border-[#C9A96E] text-[#FAF5EB] ring-2 ring-[#C9A96E] font-bold shadow-xs' 
+                    : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                }`}
+              >
+                <span className="w-3.5 h-3.5 rounded-full bg-[#1A3324] border border-[#C9A96E] inline-block shadow-inner" />
+                <span>💎 Esmeralda & Ouro (Dark)</span>
+              </Link>
+
+              {/* Opção Gold Amber */}
+              <Link
+                to={getThemeUrl('gold')}
+                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                  colorTheme === 'gold' 
+                    ? 'bg-[#FFF6DD] border-[#DFBA73] text-[#261A0C] ring-2 ring-[#9E650D] font-bold shadow-xs' 
+                    : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                }`}
+              >
+                <span className="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-[#F7E5B5] to-[#FFFDF7] border border-[#DFBA73] inline-block shadow-inner" />
+                <span>🌟 Dourado Âmbar Glamour</span>
+              </Link>
+
+              {/* Opção Marsala */}
+              <Link
+                to={getThemeUrl('marsala')}
+                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                  colorTheme === 'marsala' 
+                    ? 'bg-[#F9EBEB] border-[#D9A3AF] text-[#2D0F16] ring-2 ring-[#7D1D32] font-bold shadow-xs' 
+                    : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                }`}
+              >
+                <span className="w-3.5 h-3.5 rounded-full bg-gradient-to-tr from-[#D9A3AF] to-[#FFF7F7] border border-[#D9A3AF] inline-block shadow-inner" />
+                <span>💄 Marsala & Nude Chic</span>
+              </Link>
+
+              {/* Opção Bege Areia Quente */}
+              <Link
+                to={getThemeUrl('warm')}
+                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                  colorTheme === 'warm' 
+                    ? 'bg-[#F5EFE6] border-[#D9CEBF] text-[#241B14] ring-2 ring-[#4F6D46] font-bold shadow-xs' 
+                    : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                }`}
+              >
+                <span className="w-3.5 h-3.5 rounded-full bg-[#F5EFE6] border border-[#D9CEBF] inline-block shadow-inner" />
+                <span>☕ Bege Areia Clássico</span>
+              </Link>
+
+              {/* Opção Bege Fendi */}
+              <Link
+                to={getThemeUrl('fendi')}
+                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                  colorTheme === 'fendi' 
+                    ? 'bg-[#ECE5DC] border-[#D2C8BC] text-[#1F1C19] ring-2 ring-[#4F6D46] font-bold shadow-xs' 
+                    : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                }`}
+              >
+                <span className="w-3.5 h-3.5 rounded-full bg-[#ECE5DC] border border-[#D2C8BC] inline-block shadow-inner" />
+                <span>🏛️ Fendi / Linho</span>
+              </Link>
+            </div>
           </div>
         </div>
 
