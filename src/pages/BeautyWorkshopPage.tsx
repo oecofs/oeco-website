@@ -38,6 +38,7 @@ export interface BeautyLead {
 const STORAGE_KEY = 'oeco_beauty_workshop_leads';
 const WEBHOOK_STORAGE_KEY = 'oeco_beauty_webhook_url';
 export const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxn8G-99IDmxIvx3Gd0SqnI86nbHTpzo9mmgoqG7PSfpzn1rdFGBP472po6IgihKV-i/exec';
+export const TOTAL_SEATS_PER_SESSION = 90;
 
 // 4 Turmas com links dos grupos de WhatsApp e Google Agenda
 export const SESSIONS = [
@@ -155,6 +156,7 @@ export const BeautyWorkshopPage: React.FC = () => {
   const [painPoints, setPainPoints] = useState<string[]>([]);
   const [customPainPoint, setCustomPainPoint] = useState('');
   const [sessionId, setSessionId] = useState('seg-19');
+  const [sessionCounts, setSessionCounts] = useState<Record<string, number>>({});
 
   // UI State
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -163,12 +165,22 @@ export const BeautyWorkshopPage: React.FC = () => {
   const [leadsList, setLeadsList] = useState<BeautyLead[]>([]);
   const [webhookUrl, setWebhookUrl] = useState('');
 
-  // Load leads and webhook from localStorage
+  // Load leads, webhook and session counts from localStorage & Webhook
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
-        setLeadsList(JSON.parse(stored));
+        const parsed: BeautyLead[] = JSON.parse(stored);
+        setLeadsList(parsed);
+
+        // Contar inscritos por turma localmente
+        const counts: Record<string, number> = {};
+        parsed.forEach(lead => {
+          const matchedSession = SESSIONS.find(s => s.label === lead.session || s.id === lead.session);
+          const key = matchedSession ? matchedSession.id : lead.session;
+          counts[key] = (counts[key] || 0) + 1;
+        });
+        setSessionCounts(prev => ({ ...counts, ...prev }));
       }
       const savedWebhook = localStorage.getItem(WEBHOOK_STORAGE_KEY);
       if (savedWebhook) {
@@ -176,6 +188,34 @@ export const BeautyWorkshopPage: React.FC = () => {
       }
     } catch (e) {
       console.error('Erro ao ler leads do storage:', e);
+    }
+
+    // Tentar sincronizar contagem remota do Google Sheets (se endpoint suportar GET)
+    const target = (webhookUrl || DEFAULT_WEBHOOK_URL).trim();
+    if (target) {
+      fetch(`${target}?action=getCounts`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && typeof data === 'object') {
+            setSessionCounts(prev => ({ ...prev, ...data }));
+          }
+        })
+        .catch(() => {
+          // Silencioso em caso de CORS ou sem endpoint GET
+        });
+    }
+
+    // Suporte para teste visual na URL (ex: ?test_vagas=15)
+    const testVagas = searchParams.get('test_vagas');
+    if (testVagas && !isNaN(Number(testVagas))) {
+      const remaining = Number(testVagas);
+      const simulatedCount = Math.max(0, TOTAL_SEATS_PER_SESSION - remaining);
+      setSessionCounts({
+        'seg-18': simulatedCount,
+        'seg-19': Math.min(TOTAL_SEATS_PER_SESSION, simulatedCount + 3),
+        'ter-18': Math.max(0, simulatedCount - 4),
+        'ter-19': simulatedCount
+      });
     }
 
     if (searchParams.get('admin') === 'true') {
@@ -250,6 +290,10 @@ export const BeautyWorkshopPage: React.FC = () => {
       const updated = [newLead, ...leadsList];
       setLeadsList(updated);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      setSessionCounts(prev => ({
+        ...prev,
+        [sessionId]: (prev[sessionId] || 0) + 1
+      }));
     } catch (err) {
       console.warn('Erro ao salvar lead localmente:', err);
     }
@@ -895,13 +939,20 @@ export const BeautyWorkshopPage: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {SESSIONS.map(session => {
                   const isSelected = sessionId === session.id;
+                  const count = sessionCounts[session.id] || 0;
+                  const remaining = Math.max(0, TOTAL_SEATS_PER_SESSION - count);
+                  const isAlmostFull = remaining <= 20 && remaining > 0;
+                  const isSoldOut = remaining === 0;
+
                   return (
                     <label
                       key={session.id}
-                      className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${
-                        isSelected
-                          ? 'border-[#4F6D46] bg-[#4F6D46]/15 ring-2 ring-[#4F6D46] shadow-sm'
-                          : 'border-stone-200 bg-stone-50 hover:bg-stone-100'
+                      className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
+                        isSoldOut
+                          ? 'border-stone-200 bg-stone-100/70 opacity-60 cursor-not-allowed'
+                          : isSelected
+                            ? 'border-[#4F6D46] bg-[#4F6D46]/15 ring-2 ring-[#4F6D46] shadow-sm cursor-pointer'
+                            : 'border-stone-200 bg-stone-50 hover:bg-stone-100 cursor-pointer'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -909,9 +960,10 @@ export const BeautyWorkshopPage: React.FC = () => {
                           type="radio"
                           name="session"
                           value={session.id}
+                          disabled={isSoldOut}
                           checked={isSelected}
-                          onChange={() => setSessionId(session.id)}
-                          className="accent-[#4F6D46] w-4 h-4"
+                          onChange={() => !isSoldOut && setSessionId(session.id)}
+                          className="accent-[#4F6D46] w-4 h-4 cursor-pointer disabled:cursor-not-allowed"
                         />
                         <div>
                           <div className="text-xs sm:text-sm font-bold text-stone-900">
@@ -923,9 +975,19 @@ export const BeautyWorkshopPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-white/80 border border-stone-200 text-stone-600">
-                        Vagas Limitadas
-                      </span>
+                      {isSoldOut ? (
+                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-red-100 border border-red-200 text-red-700">
+                          Esgotado
+                        </span>
+                      ) : isAlmostFull ? (
+                        <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-amber-100 border border-amber-300 text-amber-800 animate-pulse flex items-center gap-1 shadow-xs">
+                          🔥 {remaining} vagas restantes
+                        </span>
+                      ) : (
+                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-white/80 border border-stone-200 text-stone-600">
+                          Vagas Limitadas
+                        </span>
+                      )}
                     </label>
                   );
                 })}
