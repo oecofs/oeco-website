@@ -1,0 +1,1063 @@
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
+import { 
+  Sparkles, 
+  CheckCircle2, 
+  Calendar, 
+  Clock, 
+  MessageCircle, 
+  ArrowRight, 
+  Printer, 
+  Share2, 
+  ShieldCheck, 
+  HelpCircle,
+  Building2,
+  Briefcase,
+  AlertCircle,
+  FileSpreadsheet,
+  Download,
+  Trash2,
+  X,
+  Check
+} from 'lucide-react';
+
+export interface BeautyLead {
+  id: string;
+  createdAt: string;
+  fullName: string;
+  whatsapp: string;
+  email: string;
+  instagram: string;
+  niche: string;
+  businessModel: string;
+  formalization: string;
+  painPoints: string[];
+  session: string;
+}
+
+const STORAGE_KEY = 'oeco_beauty_workshop_leads';
+const WEBHOOK_STORAGE_KEY = 'oeco_beauty_webhook_url';
+export const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxn8G-99IDmxIvx3Gd0SqnI86nbHTpzo9mmgoqG7PSfpzn1rdFGBP472po6IgihKV-i/exec';
+
+// 4 Turmas com links dos grupos de WhatsApp e Google Agenda
+export const SESSIONS = [
+  {
+    id: 'seg-18',
+    label: 'Segunda-feira (26/10) • 18:00',
+    day: '26/10 (Segunda)',
+    time: '18:00',
+    whatsappGroupUrl: 'https://chat.whatsapp.com/L28bVWfDbsP72xs9mfHF4E',
+    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NHU0NTdsdDA5OHRrZDNrZGxjcXA3ZWRpMXIgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+  },
+  {
+    id: 'seg-19',
+    label: 'Segunda-feira (26/10) • 19:00',
+    day: '26/10 (Segunda)',
+    time: '19:00',
+    whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
+    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NXF0bjFyNmUwMzFmMDNwOXFtbGI2OWEwOHEgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+  },
+  {
+    id: 'ter-18',
+    label: 'Terça-feira (27/10) • 18:00',
+    day: '27/10 (Terça)',
+    time: '18:00',
+    whatsappGroupUrl: 'https://chat.whatsapp.com/Jb9u7VsIcou4S5DJWaEtLd',
+    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NG5hcXFlZzByNGUxcWE4NHZzbmF1ZXZkODggb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+  },
+  {
+    id: 'ter-19',
+    label: 'Terça-feira (27/10) • 19:00',
+    day: '27/10 (Terça)',
+    time: '19:00',
+    whatsappGroupUrl: 'https://chat.whatsapp.com/Jb9u7VsIcou4S5DJWaEtLd',
+    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NWhhaG82NmYydTNzcW91YWtyYTBmMzlyMzMgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+  }
+];
+
+export const NICHES = [
+  { id: 'nails', label: '💅 Nails & Manicure' },
+  { id: 'hair', label: '💇‍♀️ Cabelo & Terapia Capilar' },
+  { id: 'barber', label: '💈 Barbearia' },
+  { id: 'lash', label: '👁️ Lash & Sobrancelhas' },
+  { id: 'estetica', label: '💆‍♀️ Estética Facial & Corporal / Spa' },
+  { id: 'depilacao', label: '🍯 Depilação & Epilação' },
+  { id: 'podologia', label: '🦶 Podologia' },
+  { id: 'make', label: '💄 Maquiagem Profissional' },
+  { id: 'salao', label: '🏢 Salão / Clínica Multidisciplinar' },
+  { id: 'outro', label: '✨ Outro Nicho da Beleza' },
+];
+
+export const BUSINESS_MODELS = [
+  { id: 'autonoma', label: '👤 Atuo 100% autônoma (alugo cadeira/espaço ou a domicílio)' },
+  { id: 'estudio_solo', label: '🏠 Tenho meu próprio estúdio / espaço (atendimento solo)' },
+  { id: 'equipe', label: '👥 Tenho salão / espaço com equipe ou parceiros' }
+];
+
+export const FORMALIZATIONS = [
+  { id: 'mei', label: '📑 Sim, sou MEI' },
+  { id: 'me_ltda', label: '🏢 Sim, sou ME / LTDA (empresa formal)' },
+  { id: 'informal', label: '⏳ Ainda não (Pessoa Física / informal)' },
+  { id: 'processo', label: '🔄 Em processo de abertura de CNPJ' }
+];
+
+export const PAIN_POINTS = [
+  { 
+    id: 'mistura_contas', 
+    label: '🌪️ Mistura de contas PF e PJ',
+    desc: 'Uso a mesma conta ou cartão para despesas pessoais e do salão, sem saber meu salário real.'
+  },
+  { 
+    id: 'precificacao', 
+    label: '💸 Insegurança na precificação',
+    desc: 'Não sei se o valor cobrado pelos procedimentos cobre todos os custos de produtos, tempo e margem.'
+  },
+  { 
+    id: 'taxas_cartao', 
+    label: '💳 Taxas de maquininha & antecipação',
+    desc: 'Desconto automático de taxas e antecipação comendo uma fatia invisível do meu faturamento.'
+  },
+  { 
+    id: 'comissoes', 
+    label: '🤝 Repasses e comissões de parceiros',
+    desc: 'Dificuldade em calcular divisões justas de equipe/parceiros e organizar a Lei do Salão-Parceiro.'
+  },
+  { 
+    id: 'sem_lucro', 
+    label: '📉 Agenda cheia, mas bolso vazio',
+    desc: 'Trabalho muito o mês todo, entra dinheiro, mas chega no dia 30 e quase não sobra lucro no banco.'
+  },
+  { 
+    id: 'sazonalidade', 
+    label: '📊 Falta de reserva para meses fracos',
+    desc: 'O caixa oscila muito de um mês para o outro e não tenho previsibilidade para pagar contas fixas.'
+  },
+  { 
+    id: 'outro', 
+    label: '✍️ Outro desafio financeiro',
+    desc: 'Quero compartilhar uma dificuldade específica do meu negócio ou rotina.'
+  }
+];
+
+export const BeautyWorkshopPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const isPrintMode = searchParams.get('print') === 'true';
+
+  // Form State
+  const [fullName, setFullName] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
+  const [email, setEmail] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [niche, setNiche] = useState('');
+  const [customNiche, setCustomNiche] = useState('');
+  const [businessModel, setBusinessModel] = useState('');
+  const [formalization, setFormalization] = useState('');
+  const [painPoints, setPainPoints] = useState<string[]>([]);
+  const [customPainPoint, setCustomPainPoint] = useState('');
+  const [sessionId, setSessionId] = useState('seg-19');
+
+  // UI State
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedLead, setSubmittedLead] = useState<BeautyLead | null>(null);
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [leadsList, setLeadsList] = useState<BeautyLead[]>([]);
+  const [webhookUrl, setWebhookUrl] = useState('');
+
+  // Load leads and webhook from localStorage
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        setLeadsList(JSON.parse(stored));
+      }
+      const savedWebhook = localStorage.getItem(WEBHOOK_STORAGE_KEY);
+      if (savedWebhook) {
+        setWebhookUrl(savedWebhook);
+      }
+    } catch (e) {
+      console.error('Erro ao ler leads do storage:', e);
+    }
+
+    if (searchParams.get('admin') === 'true') {
+      setShowAdminModal(true);
+    }
+  }, [searchParams]);
+
+  // Format WhatsApp: (99) 99999-9999
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 11) value = value.slice(0, 11);
+    
+    if (value.length > 6) {
+      value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+    } else if (value.length > 2) {
+      value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+    } else if (value.length > 0) {
+      value = `(${value}`;
+    }
+    setWhatsapp(value);
+  };
+
+  const togglePainPoint = (id: string) => {
+    setPainPoints(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  // Submit Handler
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!fullName.trim() || !whatsapp.trim()) {
+      alert('Por favor, preencha pelo menos seu nome e WhatsApp para garantir sua vaga.');
+      return;
+    }
+
+    if (!niche) {
+      alert('Por favor, selecione sua área principal de atuação.');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const resolvedNiche = niche === 'outro' && customNiche.trim()
+      ? `✨ Outro: ${customNiche.trim()}`
+      : (NICHES.find(n => n.id === niche)?.label || niche);
+
+    const resolvedPainPoints = painPoints.map(p => {
+      if (p === 'outro') {
+        return customPainPoint.trim() ? `✍️ Outro: ${customPainPoint.trim()}` : '✍️ Outro desafio específico';
+      }
+      return PAIN_POINTS.find(item => item.id === p)?.label || p;
+    });
+
+    const newLead: BeautyLead = {
+      id: String(Date.now()),
+      createdAt: new Date().toISOString(),
+      fullName: fullName.trim(),
+      whatsapp: whatsapp.trim(),
+      email: email.trim().toLowerCase(),
+      instagram: instagram.trim().replace(/^@/, ''),
+      niche: resolvedNiche,
+      businessModel: BUSINESS_MODELS.find(b => b.id === businessModel)?.label || businessModel,
+      formalization: FORMALIZATIONS.find(f => f.id === formalization)?.label || formalization,
+      painPoints: resolvedPainPoints,
+      session: SESSIONS.find(s => s.id === sessionId)?.label || sessionId
+    };
+
+    // 1. Persist localmente
+    try {
+      const updated = [newLead, ...leadsList];
+      setLeadsList(updated);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch (err) {
+      console.warn('Erro ao salvar lead localmente:', err);
+    }
+
+    // 2. Disparar webhook para Google Sheets
+    const targetWebhook = (webhookUrl.trim() || DEFAULT_WEBHOOK_URL).trim();
+    if (targetWebhook) {
+      try {
+        await fetch(targetWebhook, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(newLead)
+        });
+      } catch (err) {
+        console.warn('Webhook falhou (continuando fluxo normalmente):', err);
+      }
+    }
+
+    setIsSubmitting(false);
+    setSubmittedLead(newLead);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const selectedSessionData = SESSIONS.find(s => s.id === sessionId) || SESSIONS[0];
+
+  // Export CSV
+  const handleExportCSV = () => {
+    if (leadsList.length === 0) {
+      alert('Nenhum cadastro para exportar ainda.');
+      return;
+    }
+
+    const headers = [
+      'Data/Hora',
+      'Nome Completo',
+      'WhatsApp',
+      'E-mail',
+      'Instagram',
+      'Nicho',
+      'Modelo de Atuação',
+      'Formalização (CNPJ)',
+      'Turma Escolhida',
+      'Dores Mapeadas'
+    ];
+
+    const rows = leadsList.map(lead => [
+      new Date(lead.createdAt).toLocaleString('pt-BR'),
+      `"${lead.fullName.replace(/"/g, '""')}"`,
+      `"${lead.whatsapp}"`,
+      `"${lead.email}"`,
+      `"${lead.instagram}"`,
+      `"${lead.niche}"`,
+      `"${lead.businessModel}"`,
+      `"${lead.formalization}"`,
+      `"${lead.session}"`,
+      `"${lead.painPoints.join(' | ').replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = '\uFEFF' + [headers.join(';'), ...rows.map(r => r.join(';'))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `leads-workshop-beleza-${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Folheto & Cartão Imprimível com QR Code
+  if (isPrintMode) {
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent('https://oecofs.com/forms/beleza')}&color=1C1815`;
+    const format = searchParams.get('format') || 'card';
+
+    // Componente do Cartão 90x50 mm
+    const renderCard = (key?: number) => (
+      <div 
+        key={key}
+        className="w-[90mm] h-[50mm] bg-[#FAF8F5] text-[#1C1815] border border-stone-300 rounded-lg p-3 flex flex-row items-center justify-between overflow-hidden shadow-xs relative font-sans box-border select-none print:shadow-none print:border-dashed print:border-stone-400"
+      >
+        {/* Lado Esquerdo: Textos & Benefícios */}
+        <div className="flex-1 pr-2 flex flex-col justify-between h-full">
+          <div>
+            <div className="text-[9px] font-extrabold uppercase tracking-widest text-[#4F6D46] mb-0.5">
+              OECO Financial Solutions
+            </div>
+            <div className="text-[13px] font-black leading-tight text-[#1C1815] tracking-tight">
+              Webinar Beleza das Finanças
+            </div>
+            <div className="text-[8.5px] text-stone-600 font-medium mt-1 space-y-0.5 leading-snug">
+              <div>✓ Precificação com lucro real</div>
+              <div>✓ Fim da mistura PF x PJ</div>
+              <div>✓ Chega de perder nas maquininhas</div>
+            </div>
+          </div>
+
+          <div className="pt-1 border-t border-stone-200 text-[8px] text-stone-500 font-semibold flex items-center justify-between">
+            <span>🗓️ 26 e 27/10 • Online</span>
+            <span className="text-[#4F6D46] font-bold">100% Gratuito</span>
+          </div>
+        </div>
+
+        {/* Lado Direito: QR Code */}
+        <div className="w-[28mm] flex flex-col items-center justify-center shrink-0 pl-1 border-l border-stone-200 h-full">
+          <div className="bg-white p-1 rounded-md border border-stone-200 shadow-xs">
+            <img 
+              src={qrCodeUrl} 
+              alt="QR Code" 
+              className="w-[22mm] h-[22mm] object-contain"
+            />
+          </div>
+          <div className="text-[7.5px] font-bold text-center text-stone-700 mt-1 leading-tight">
+            Aponte a câmera
+          </div>
+          <div className="text-[6.5px] text-stone-400 font-mono text-center">
+            oecofs.com/forms/beleza
+          </div>
+        </div>
+      </div>
+    );
+
+    return (
+      <div className="min-h-screen bg-stone-100 text-[#1C1815] p-4 sm:p-8 flex flex-col items-center font-sans print:bg-white print:p-0">
+        {/* Barra Superior de Formatos (Ocultada na Impressão) */}
+        <div className="max-w-xl w-full bg-white p-3 rounded-2xl shadow-sm border border-stone-200 mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
+          <div className="flex items-center gap-1.5 text-xs font-semibold">
+            <Link
+              to="/forms/beleza?print=true&format=card"
+              className={`px-3 py-1.5 rounded-xl transition-colors ${
+                format === 'card' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
+              }`}
+            >
+              💳 Cartão 90x50mm
+            </Link>
+            <Link
+              to="/forms/beleza?print=true&format=sheet"
+              className={`px-3 py-1.5 rounded-xl transition-colors ${
+                format === 'sheet' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
+              }`}
+            >
+              📄 Folha A4 (10 Cartões)
+            </Link>
+            <Link
+              to="/forms/beleza?print=true&format=flyer"
+              className={`px-3 py-1.5 rounded-xl transition-colors ${
+                format === 'flyer' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
+              }`}
+            >
+              📋 Folheto Completo
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => window.print()}
+              className="bg-[#4F6D46] hover:bg-[#3d5536] text-white px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 shadow-sm transition-colors"
+            >
+              <Printer className="w-3.5 h-3.5" /> Imprimir
+            </button>
+            <Link 
+              to="/forms/beleza"
+              className="text-xs text-stone-500 hover:text-stone-800 underline px-2"
+            >
+              Voltar
+            </Link>
+          </div>
+        </div>
+
+        {/* FORMATO 1: CARTÃO INDIVIDUAL (90x50 mm) */}
+        {format === 'card' && (
+          <div className="flex flex-col items-center gap-4 my-auto">
+            <div className="text-center text-xs text-stone-500 mb-2 print:hidden">
+              Tamanho padrão: <strong>90 mm × 50 mm</strong> (estilo cartão de visita).
+            </div>
+            {renderCard()}
+          </div>
+        )}
+
+        {/* FORMATO 2: FOLHA A4 COM 10 CARTÕES PARA RECORTE */}
+        {format === 'sheet' && (
+          <div className="flex flex-col items-center">
+            <div className="text-center text-xs text-stone-500 mb-4 print:hidden">
+              Grade de 10 cartões (2 colunas × 5 linhas) com guias pontilhadas para corte com régua ou tesoura.
+            </div>
+            <div className="w-[190mm] bg-white p-4 rounded-xl border border-stone-200 grid grid-cols-2 gap-2 print:border-none print:p-0 print:gap-1">
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((idx) => renderCard(idx))}
+            </div>
+          </div>
+        )}
+
+        {/* FORMATO 3: FOLHETO DISPLAY VERTICAL */}
+        {format === 'flyer' && (
+          <div className="max-w-md w-full bg-white border-2 border-dashed border-[#1C1815]/30 rounded-3xl p-8 text-center space-y-6 shadow-sm print:border-none print:shadow-none">
+            <div className="inline-block bg-[#1C1815] text-[#FAF8F5] text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
+              OECO Financial Solutions
+            </div>
+
+            <div className="space-y-2">
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#1C1815]">
+                Webinar Beleza das Finanças
+              </h1>
+              <p className="text-sm text-stone-600 font-medium">
+                Aprenda a precificar seus serviços, separar as contas PF e PJ e fazer o lucro sobrar no fim do mês!
+              </p>
+            </div>
+
+            {/* QR Code */}
+            <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-stone-200 inline-block shadow-inner">
+              <img 
+                src={qrCodeUrl} 
+                alt="QR Code de Inscrição no Webinar"
+                className="w-56 h-56 mx-auto rounded-lg object-contain"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-xs uppercase tracking-wider font-bold text-[#4F6D46]">
+                Aponte a câmera do seu celular
+              </p>
+              <p className="text-xs text-stone-500 font-mono">
+                oecofs.com/forms/beleza
+              </p>
+            </div>
+
+            <div className="bg-stone-50 border border-stone-200 rounded-xl p-3 text-xs text-stone-700 space-y-1">
+              <div className="font-semibold text-stone-900">🗓️ 26 e 27 de Outubro • Online ao Vivo</div>
+              <div>Turmas exclusivas às 18:00 e 19:00 • 100% Gratuito</div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#FAF8F5] text-[#292524] font-sans pb-16 selection:bg-[#4F6D46] selection:text-white">
+      {/* Top Banner do Evento */}
+      <header className="bg-[#1C1815] text-[#FAF8F5] border-b border-[#2E2824] py-6 px-4 sm:px-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#4F6D46]/10 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="max-w-2xl mx-auto space-y-3 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D1B688]/15 border border-[#D1B688]/30 text-[#D1B688] text-xs font-semibold uppercase tracking-wider">
+            <Sparkles className="w-3.5 h-3.5" /> Edição Especial Professional Fair RJ • 100% Gratuito
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#FAF8F5]">
+            Webinar Beleza das Finanças
+          </h1>
+          <p className="text-sm text-[#FAF8F5]/85 max-w-lg mx-auto leading-relaxed">
+            Aprenda a precificar com segurança, separar as contas PF e PJ e fazer o lucro sobrar no fim do mês no seu salão, estúdio ou atendimento.
+          </p>
+
+          <div className="flex items-center justify-center gap-4 pt-2 text-xs text-[#FAF8F5]/70">
+            <span className="flex items-center gap-1.5">
+              <Calendar className="w-4 h-4 text-[#D1B688]" /> 26 e 27 de Outubro
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4 text-[#D1B688]" /> Turmas 18h e 19h
+            </span>
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-[#D1B688]" /> 100% Online
+            </span>
+          </div>
+        </div>
+      </header>
+
+      {/* Conteúdo Principal */}
+      <main className="max-w-2xl mx-auto px-4 sm:px-6 -mt-3">
+        {submittedLead ? (
+          /* TELA DE SUCESSO & ENTRADA NO GRUPO VIP */
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-stone-200 mt-6 space-y-6 animate-in fade-in zoom-in-95 duration-200 text-center">
+            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
+              <CheckCircle2 className="w-10 h-10" />
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold text-stone-900 tracking-tight">
+                Vaga Pré-Reservada com Sucesso, {submittedLead.fullName.split(' ')[0]}! 🎉
+              </h2>
+              <p className="text-sm text-stone-600 max-w-md mx-auto">
+                Sua inscrição para a turma de{' '}
+                <strong className="text-stone-900 font-semibold">{submittedLead.session}</strong> foi confirmada.
+              </p>
+            </div>
+
+            {/* Passo Obrigatório: Entrar no WhatsApp */}
+            <div className="bg-[#FAF8F5] border-2 border-emerald-500/40 rounded-2xl p-5 sm:p-6 text-left space-y-4 shadow-sm">
+              <div className="flex items-start gap-3">
+                <div className="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  1
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-stone-900">
+                    Passo Obrigatório: Entre no Grupo VIP da sua Turma
+                  </h3>
+                  <p className="text-xs text-stone-600 mt-1">
+                    O link do Google Meet e os materiais de apoio serão enviados exclusivamente dentro desse grupo silencioso.
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={selectedSessionData.whatsappGroupUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white py-4 px-6 rounded-xl font-bold text-base flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <MessageCircle className="w-6 h-6 fill-current" />
+                <span>Entrar no Grupo VIP no WhatsApp</span>
+                <ArrowRight className="w-5 h-5" />
+              </a>
+            </div>
+
+            {/* Passo 2: Adicionar à Agenda */}
+            <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 text-left flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded-full bg-stone-300 text-stone-700 flex items-center justify-center font-bold text-sm shrink-0">
+                  2
+                </div>
+                <div className="text-xs text-stone-700">
+                  <div className="font-semibold text-stone-900">Adicionar ao Calendário</div>
+                  <div>Receba um lembrete no celular 15 minutos antes.</div>
+                </div>
+              </div>
+
+              <a
+                href={selectedSessionData.googleCalendarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto text-xs font-semibold px-4 py-2.5 bg-white border border-stone-300 rounded-xl hover:bg-stone-100 text-stone-800 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
+              >
+                <Calendar className="w-4 h-4 text-stone-600" /> Salvar no Google Agenda
+              </a>
+            </div>
+
+            {/* Suporte Matheus */}
+            <div className="pt-2 text-xs text-stone-500">
+              Precisa falar com a gente ou tirar alguma dúvida?{' '}
+              <a 
+                href="https://wa.me/5521973413967?text=Olá,%20Matheus!%20Me%20cadastrei%20no%20workshop%20de%20beleza%20e%20gostaria%20de%20falar%20com%20você."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#4F6D46] font-semibold underline hover:text-stone-900"
+              >
+                Falar com Matheus pelo WhatsApp
+              </a>
+            </div>
+          </div>
+        ) : (
+          /* FORMULÁRIO DE CAPTURA RÁPIDA */
+          <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-5 sm:p-8 shadow-xl border border-stone-200 mt-4 space-y-7">
+            
+            {/* ETAPA 1: CONTATO */}
+            <section className="space-y-4">
+              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+                  1
+                </span>
+                <h2 className="text-base font-bold text-stone-900">
+                  Seus Dados de Contato
+                </h2>
+              </div>
+
+              <div className="space-y-3.5">
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Nome Completo *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Ex: Amanda Silva"
+                    className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent text-sm transition-all"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-700 mb-1">
+                      WhatsApp *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={whatsapp}
+                      onChange={handlePhoneChange}
+                      placeholder="(21) 99999-9999"
+                      className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent text-sm transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-stone-700 mb-1">
+                      E-mail <span className="text-stone-400 font-normal">(opcional)</span>
+                    </label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="amanda@exemplo.com"
+                      className="w-full px-4 py-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent text-sm transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Instagram do seu trabalho / salão <span className="text-stone-400 font-normal">(opcional)</span>
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-4 top-3 text-stone-400 text-sm font-medium">@</span>
+                    <input
+                      type="text"
+                      value={instagram}
+                      onChange={(e) => setInstagram(e.target.value)}
+                      placeholder="studio.amanda"
+                      className="w-full pl-8 pr-4 py-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] focus:border-transparent text-sm transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* ETAPA 2: NICHO DE ATUAÇÃO */}
+            <section className="space-y-3">
+              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+                  2
+                </span>
+                <h2 className="text-base font-bold text-stone-900">
+                  Qual é a sua principal área de atuação? *
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                {NICHES.map(item => {
+                  const isSelected = niche === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setNiche(item.id)}
+                      className={`p-3 rounded-xl text-left border text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
+                        isSelected
+                          ? 'border-[#4F6D46] bg-[#4F6D46]/10 text-[#292524] ring-2 ring-[#4F6D46]'
+                          : 'border-stone-200 bg-stone-50 hover:bg-stone-100 text-stone-700'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Campo para Outro Nicho */}
+              {niche === 'outro' && (
+                <div className="pt-2 animate-in fade-in duration-200">
+                  <label className="block text-xs font-semibold text-stone-700 mb-1">
+                    Qual é a sua especialidade ou nicho?
+                  </label>
+                  <input
+                    type="text"
+                    value={customNiche}
+                    onChange={(e) => setCustomNiche(e.target.value)}
+                    placeholder="Ex: Bronzeamento, Tatuagem, Piercing, Terapias..."
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#4F6D46] bg-white focus:outline-none focus:ring-2 focus:ring-[#4F6D46] text-xs sm:text-sm"
+                    autoFocus
+                  />
+                </div>
+              )}
+            </section>
+
+            {/* ETAPA 3: ESTRUTURA E FORMALIZAÇÃO */}
+            <section className="space-y-4">
+              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+                  3
+                </span>
+                <h2 className="text-base font-bold text-stone-900">
+                  Estrutura & Formalização do seu Negócio
+                </h2>
+              </div>
+
+              {/* Subtópico 1: Modelo */}
+              <div className="space-y-2">
+                <label className="block text-xs font-semibold text-stone-700">
+                  Como você atua hoje?
+                </label>
+                <div className="space-y-2">
+                  {BUSINESS_MODELS.map(model => {
+                    const isSelected = businessModel === model.id;
+                    return (
+                      <label
+                        key={model.id}
+                        className={`flex items-center gap-3 p-3 rounded-xl border text-xs sm:text-sm cursor-pointer transition-all ${
+                          isSelected
+                            ? 'border-[#4F6D46] bg-[#4F6D46]/10 font-semibold text-stone-900'
+                            : 'border-stone-200 hover:bg-stone-50 text-stone-700'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="businessModel"
+                          value={model.id}
+                          checked={isSelected}
+                          onChange={() => setBusinessModel(model.id)}
+                          className="accent-[#4F6D46] w-4 h-4"
+                        />
+                        <span>{model.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Subtópico 2: CNPJ */}
+              <div className="space-y-2 pt-2">
+                <label className="block text-xs font-semibold text-stone-700">
+                  Como está seu registro formal / CNPJ hoje?
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {FORMALIZATIONS.map(form => {
+                    const isSelected = formalization === form.id;
+                    return (
+                      <label
+                        key={form.id}
+                        className={`flex items-center gap-3 p-3 rounded-xl border text-xs sm:text-sm cursor-pointer transition-all ${
+                          isSelected
+                            ? 'border-[#4F6D46] bg-[#4F6D46]/10 font-semibold text-stone-900'
+                            : 'border-stone-200 hover:bg-stone-50 text-stone-700'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="formalization"
+                          value={form.id}
+                          checked={isSelected}
+                          onChange={() => setFormalization(form.id)}
+                          className="accent-[#4F6D46] w-4 h-4"
+                        />
+                        <span>{form.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+
+            {/* ETAPA 4: DORES DO NEGÓCIO (CHECKBOXES) */}
+            <section className="space-y-3">
+              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+                  4
+                </span>
+                <div>
+                  <h2 className="text-base font-bold text-stone-900">
+                    Seus Maiores Desafios Financeiros
+                  </h2>
+                  <p className="text-xs text-stone-500">
+                    Marque todos os pontos que você gostaria de ver solucionados no workshop:
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2.5">
+                {PAIN_POINTS.map(pain => {
+                  const isChecked = painPoints.includes(pain.id);
+                  return (
+                    <div
+                      key={pain.id}
+                      role="checkbox"
+                      aria-checked={isChecked}
+                      tabIndex={0}
+                      onClick={() => togglePainPoint(pain.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === ' ' || e.key === 'Enter') {
+                          e.preventDefault();
+                          togglePainPoint(pain.id);
+                        }
+                      }}
+                      className={`flex items-start gap-3.5 p-4 rounded-2xl border text-xs sm:text-sm cursor-pointer transition-all select-none ${
+                        isChecked
+                          ? 'border-[#4F6D46] bg-[#4F6D46]/10 shadow-sm ring-1 ring-[#4F6D46]'
+                          : 'border-stone-200 bg-stone-50/60 hover:bg-stone-100 hover:border-stone-300 text-stone-700'
+                      }`}
+                    >
+                      <div className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 border transition-all ${
+                        isChecked
+                          ? 'bg-[#4F6D46] border-[#4F6D46] text-white shadow-xs'
+                          : 'border-stone-300 bg-white'
+                      }`}>
+                        {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                      </div>
+                      <div className="space-y-0.5 flex-1">
+                        <div className={`font-semibold ${isChecked ? 'text-stone-900 font-bold' : 'text-stone-800'}`}>
+                          {pain.label}
+                        </div>
+                        {pain.desc && (
+                          <div className="text-[11px] text-stone-500 leading-normal">
+                            {pain.desc}
+                          </div>
+                        )}
+                        {pain.id === 'outro' && isChecked && (
+                          <div 
+                            className="pt-2.5 animate-in fade-in duration-200" 
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <input
+                              type="text"
+                              value={customPainPoint}
+                              onChange={(e) => setCustomPainPoint(e.target.value)}
+                              placeholder="Qual outro desafio você enfrenta? Ex: clientes que desmarcam em cima da hora, cobrança..."
+                              className="w-full px-3 py-2 rounded-xl border border-[#4F6D46] bg-white text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#4F6D46]"
+                              autoFocus
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* ETAPA 5: ESCOLHA DA TURMA DO WORKSHOP */}
+            <section className="space-y-3">
+              <div className="flex items-center gap-2 border-b border-stone-100 pb-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#1C1815] text-white text-xs font-bold flex items-center justify-center">
+                  5
+                </span>
+                <div>
+                  <h2 className="text-base font-bold text-stone-900">
+                    Escolha sua Turma do Workshop *
+                  </h2>
+                  <p className="text-xs text-stone-500">
+                    Selecione o melhor dia e horário para participar ao vivo:
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {SESSIONS.map(session => {
+                  const isSelected = sessionId === session.id;
+                  return (
+                    <label
+                      key={session.id}
+                      className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between gap-3 ${
+                        isSelected
+                          ? 'border-[#4F6D46] bg-[#4F6D46]/15 ring-2 ring-[#4F6D46] shadow-sm'
+                          : 'border-stone-200 bg-stone-50 hover:bg-stone-100'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="radio"
+                          name="session"
+                          value={session.id}
+                          checked={isSelected}
+                          onChange={() => setSessionId(session.id)}
+                          className="accent-[#4F6D46] w-4 h-4"
+                        />
+                        <div>
+                          <div className="text-xs sm:text-sm font-bold text-stone-900">
+                            {session.day}
+                          </div>
+                          <div className="text-xs text-stone-600 font-medium flex items-center gap-1 mt-0.5">
+                            <Clock className="w-3 h-3 text-[#4F6D46]" /> Às {session.time} (ao vivo)
+                          </div>
+                        </div>
+                      </div>
+
+                      <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-white/80 border border-stone-200 text-stone-600">
+                        Vagas Limitadas
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* BOTÃO DE SUBMIT */}
+            <div className="pt-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-[#1C1815] hover:bg-[#2E2824] text-white py-4 px-6 rounded-2xl font-bold text-base flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <span>Salvando inscrição...</span>
+                ) : (
+                  <>
+                    <span>Garantir Minha Vaga Gratuita</span>
+                    <ArrowRight className="w-5 h-5 text-[#D1B688]" />
+                  </>
+                )}
+              </button>
+
+              <p className="text-[11px] text-center text-stone-400 mt-2.5 flex items-center justify-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" /> Seus dados estão seguros. Não enviamos spam.
+              </p>
+            </div>
+          </form>
+        )}
+
+        {/* Rodapé Limpo para Visitantes */}
+        <footer className="mt-10 text-center space-y-2">
+          <p className="text-xs text-stone-400">
+            © {new Date().getFullYear()} OECO Financial Solutions • Feito para o setor de beleza
+          </p>
+        </footer>
+      </main>
+
+      {/* MODAL ADMIN / EXPORTAR LEADS */}
+      {showAdminModal && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-stone-200 overflow-hidden">
+            <div className="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-50">
+              <div className="flex items-center gap-2">
+                <FileSpreadsheet className="w-5 h-5 text-[#4F6D46]" />
+                <h3 className="text-base font-bold text-stone-900">
+                  Leads do Workshop de Beleza ({leadsList.length})
+                </h3>
+              </div>
+              <button 
+                onClick={() => setShowAdminModal(false)}
+                className="p-1 rounded-lg hover:bg-stone-200 text-stone-500"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 flex-1 overflow-y-auto space-y-5 text-xs text-stone-700">
+              {/* Webhook Google Sheets */}
+              <div className="bg-stone-50 border border-stone-200 rounded-xl p-3.5 space-y-2">
+                <div className="font-bold text-stone-900 flex items-center justify-between">
+                  <span>URL de Webhook (Google Sheets / Make):</span>
+                  {webhookUrl && <span className="text-emerald-600 font-semibold">Ativo</span>}
+                </div>
+                <input
+                  type="url"
+                  placeholder="https://script.google.com/macros/s/.../exec"
+                  value={webhookUrl}
+                  onChange={(e) => {
+                    setWebhookUrl(e.target.value);
+                    localStorage.setItem(WEBHOOK_STORAGE_KEY, e.target.value);
+                  }}
+                  className="w-full px-3 py-2 border rounded-lg bg-white text-xs"
+                />
+                <p className="text-[11px] text-stone-500">
+                  Se preenchida, cada lead preenchido será disparado automaticamente para sua planilha Google.
+                </p>
+              </div>
+
+              {/* Botões de Ação */}
+              <div className="flex items-center justify-between gap-3">
+                <button
+                  onClick={handleExportCSV}
+                  className="bg-[#4F6D46] hover:bg-[#3d5536] text-white px-4 py-2 rounded-xl font-bold flex items-center gap-2 text-xs shadow"
+                >
+                  <Download className="w-4 h-4" /> Exportar para Planilha (.CSV)
+                </button>
+
+                {leadsList.length > 0 && (
+                  <button
+                    onClick={() => {
+                      if (confirm('Tem certeza que deseja apagar todos os leads deste dispositivo?')) {
+                        setLeadsList([]);
+                        localStorage.removeItem(STORAGE_KEY);
+                      }
+                    }}
+                    className="text-red-600 hover:text-red-800 flex items-center gap-1 font-medium"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" /> Limpar Leads Locais
+                  </button>
+                )}
+              </div>
+
+              {/* Lista Rápida */}
+              {leadsList.length === 0 ? (
+                <div className="text-center py-8 text-stone-400">
+                  Nenhum cadastro recebido ainda. Preencha o formulário para testar!
+                </div>
+              ) : (
+                <div className="divide-y divide-stone-100 border rounded-xl overflow-hidden">
+                  {leadsList.map(lead => (
+                    <div key={lead.id} className="p-3 bg-white space-y-1">
+                      <div className="flex items-center justify-between font-bold text-stone-900">
+                        <span>{lead.fullName}</span>
+                        <span className="text-[10px] text-stone-500">{new Date(lead.createdAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</span>
+                      </div>
+                      <div className="text-stone-600 flex flex-wrap gap-2 text-[11px]">
+                        <span>📱 {lead.whatsapp}</span>
+                        <span>✉️ {lead.email}</span>
+                        {lead.instagram && <span>📸 @{lead.instagram}</span>}
+                      </div>
+                      <div className="text-stone-500 text-[11px]">
+                        <strong>Turma:</strong> {lead.session} | <strong>Nicho:</strong> {lead.niche}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

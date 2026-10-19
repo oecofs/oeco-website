@@ -10,6 +10,7 @@ import { BniHubPage } from './pages/bni/BniHubPage';
 import { BniBioPage } from './pages/bni/BniBioPage';
 import { BniGainsPage } from './pages/bni/BniGainsPage';
 import { Forms001Page } from './pages/Forms001Page';
+import { BeautyWorkshopPage } from './pages/BeautyWorkshopPage';
 import { DiagnosticModalProvider, useDiagnosticModal } from './context/DiagnosticModalContext';
 import { DiagnosticModal } from './components/DiagnosticModal';
 
@@ -17,7 +18,7 @@ function AppContent() {
   const location = useLocation();
   const { openModal } = useDiagnosticModal();
   const isBniPage = location.pathname.toLowerCase().startsWith('/bni') || location.pathname.toLowerCase().startsWith('/matheus-perfilgains');
-  const isFormsPage = location.pathname.toLowerCase().startsWith('/forms');
+  const isFormsPage = location.pathname.toLowerCase().startsWith('/forms') || location.pathname.toLowerCase().startsWith('/beleza');
   const isStandalone = isBniPage || isFormsPage;
 
   React.useEffect(() => {
@@ -57,8 +58,11 @@ function AppContent() {
           {/* Rota legada BNI */}
           <Route path="/matheus-perfilgains" element={<BniHubPage />} />
 
+          {/* Formulários de Eventos & Pesquisa */}
           <Route path="/forms001" element={<Forms001Page />} />
           <Route path="/forms" element={<Forms001Page />} />
+          <Route path="/forms/beleza" element={<BeautyWorkshopPage />} />
+          <Route path="/beleza" element={<BeautyWorkshopPage />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </main>
