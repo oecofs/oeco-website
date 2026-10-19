@@ -578,52 +578,52 @@ export const BeautyWorkshopPage: React.FC = () => {
       </div>
     );
 
-    // Componente do Folheto A7 (74 mm × 105 mm)
+    // Componente do Folheto A7 (74 mm × 105 mm - Tamanho Bolso / Display)
     const renderFlyerA7 = (key?: number) => (
       <div 
         key={key}
-        className={`w-[74mm] h-[105mm] ${currentTheme.cardBg} ${currentTheme.textColor} border ${currentTheme.borderColor} rounded-2xl p-[3.5mm] text-center flex flex-col justify-between shadow-xs print:shadow-none print:border-dashed overflow-hidden relative box-border select-none`}
+        className={`w-[74mm] h-[105mm] ${currentTheme.cardBg} ${currentTheme.textColor} border ${currentTheme.borderColor} rounded-2xl p-[4.5mm] pt-[5mm] text-center flex flex-col justify-between shadow-xs print:shadow-none print:border-dashed overflow-hidden relative box-border select-none`}
       >
         {/* Top: Logo Oficial + Título do Webinar + Subtítulo */}
-        <div className="space-y-1">
-          <div className="flex justify-center mb-0.5">
+        <div className="flex flex-col items-center">
+          <div className="flex justify-center mb-1.5">
             <img 
               src={currentTheme.logoSrc} 
               alt="OECO Financial Solutions" 
-              className="h-[4.5mm] w-auto object-contain"
+              className="h-[6.5mm] w-auto object-contain"
             />
           </div>
 
-          <div className={`text-[10.5px] font-black leading-tight tracking-tight ${currentTheme.titleColor}`}>
+          <div className={`text-[13.5px] font-black leading-tight tracking-tight mb-1.5 ${currentTheme.titleColor}`}>
             Webinar <span className={currentTheme.titleHighlight}>Beleza das Finanças</span>
           </div>
 
-          <p className={`text-[6.8px] ${currentTheme.subtextColor} font-medium leading-[1.25] px-1`}>
+          <p className={`text-[9px] ${currentTheme.subtextColor} font-medium leading-[1.3] px-1 max-w-[65mm]`}>
             Pare de pagar para trabalhar: precificação certa, caixa blindado e lucro real no seu negócio de beleza.
           </p>
         </div>
 
-        {/* Meio: QR Code em destaque */}
+        {/* Meio: QR Code grande em destaque */}
         <div className="flex flex-col items-center justify-center my-auto py-1">
-          <div className={`${currentTheme.qrBg} p-1.5 rounded-xl border ${currentTheme.qrBorder} shadow-xs`}>
+          <div className={`${currentTheme.qrBg} p-2 rounded-2xl border-2 ${currentTheme.qrBorder} shadow-sm`}>
             <img 
               src={qrCodeUrl} 
               alt="QR Code de Inscrição"
-              className="w-[30mm] h-[30mm] object-contain"
+              className="w-[40mm] h-[40mm] object-contain"
             />
           </div>
-          <div className={`text-[6.5px] font-extrabold uppercase tracking-wider ${currentTheme.textColor} mt-1 flex items-center justify-center gap-1`}>
+          <div className={`text-[8px] font-black uppercase tracking-wider ${currentTheme.textColor} mt-1.5 flex items-center justify-center gap-1`}>
             <span>📸 Aponte a câmera do celular</span>
           </div>
         </div>
 
         {/* Base: Data das Turmas e Selo Gratuito */}
-        <div className={`border-t ${currentTheme.dividerColor} pt-1.5 text-[6.5px] ${currentTheme.footerBg} flex items-center justify-between font-bold`}>
+        <div className={`border-t ${currentTheme.dividerColor} pt-2 text-[8px] ${currentTheme.footerBg} flex items-center justify-between font-bold`}>
           <div className="text-left leading-tight">
-            <div>🗓️ 26 e 27/10 • Ao Vivo</div>
-            <div className="text-[5.5px] opacity-80">Turmas às 18h e 19h</div>
+            <div className="font-extrabold text-[8.5px]">🗓️ 26 e 27/10 • Ao Vivo</div>
+            <div className="text-[7.5px] opacity-90 mt-0.5">Turmas às 18h e 19h</div>
           </div>
-          <span className={`px-1.5 py-0.5 rounded text-[6.5px] font-black uppercase tracking-wider ${currentTheme.pillBg}`}>
+          <span className={`px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-wider shadow-xs ${currentTheme.pillBg}`}>
             100% Gratuito
           </span>
         </div>
