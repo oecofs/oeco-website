@@ -578,6 +578,58 @@ export const BeautyWorkshopPage: React.FC = () => {
       </div>
     );
 
+    // Componente do Folheto A7 (74 mm × 105 mm)
+    const renderFlyerA7 = (key?: number) => (
+      <div 
+        key={key}
+        className={`w-[74mm] h-[105mm] ${currentTheme.cardBg} ${currentTheme.textColor} border ${currentTheme.borderColor} rounded-2xl p-[3.5mm] text-center flex flex-col justify-between shadow-xs print:shadow-none print:border-dashed overflow-hidden relative box-border select-none`}
+      >
+        {/* Top: Logo Oficial + Título do Webinar + Subtítulo */}
+        <div className="space-y-1">
+          <div className="flex justify-center mb-0.5">
+            <img 
+              src={currentTheme.logoSrc} 
+              alt="OECO Financial Solutions" 
+              className="h-[4.5mm] w-auto object-contain"
+            />
+          </div>
+
+          <div className={`text-[10.5px] font-black leading-tight tracking-tight ${currentTheme.titleColor}`}>
+            Webinar <span className={currentTheme.titleHighlight}>Beleza das Finanças</span>
+          </div>
+
+          <p className={`text-[6.8px] ${currentTheme.subtextColor} font-medium leading-[1.25] px-1`}>
+            Pare de pagar para trabalhar: precificação certa, caixa blindado e lucro real no seu negócio de beleza.
+          </p>
+        </div>
+
+        {/* Meio: QR Code em destaque */}
+        <div className="flex flex-col items-center justify-center my-auto py-1">
+          <div className={`${currentTheme.qrBg} p-1.5 rounded-xl border ${currentTheme.qrBorder} shadow-xs`}>
+            <img 
+              src={qrCodeUrl} 
+              alt="QR Code de Inscrição"
+              className="w-[30mm] h-[30mm] object-contain"
+            />
+          </div>
+          <div className={`text-[6.5px] font-extrabold uppercase tracking-wider ${currentTheme.textColor} mt-1 flex items-center justify-center gap-1`}>
+            <span>📸 Aponte a câmera do celular</span>
+          </div>
+        </div>
+
+        {/* Base: Data das Turmas e Selo Gratuito */}
+        <div className={`border-t ${currentTheme.dividerColor} pt-1.5 text-[6.5px] ${currentTheme.footerBg} flex items-center justify-between font-bold`}>
+          <div className="text-left leading-tight">
+            <div>🗓️ 26 e 27/10 • Ao Vivo</div>
+            <div className="text-[5.5px] opacity-80">Turmas às 18h e 19h</div>
+          </div>
+          <span className={`px-1.5 py-0.5 rounded text-[6.5px] font-black uppercase tracking-wider ${currentTheme.pillBg}`}>
+            100% Gratuito
+          </span>
+        </div>
+      </div>
+    );
+
     return (
       <div className="min-h-screen bg-stone-100 text-[#1C1815] p-4 sm:p-8 flex flex-col items-center font-sans print:bg-white print:p-0">
         {/* Barra Superior de Formatos e Temas (Ocultada na Impressão) */}
@@ -608,7 +660,15 @@ export const BeautyWorkshopPage: React.FC = () => {
                   format === 'flyer' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
                 }`}
               >
-                📋 Folheto Display
+                📋 Folheto A7 (74×105mm)
+              </Link>
+              <Link
+                to={getFormatUrl('flyer_sheet')}
+                className={`px-3 py-1.5 rounded-xl transition-colors ${
+                  format === 'flyer_sheet' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
+                }`}
+              >
+                📑 Folha A4 (4 Folhetos A7)
               </Link>
             </div>
 
@@ -743,50 +803,24 @@ export const BeautyWorkshopPage: React.FC = () => {
           </div>
         )}
 
-        {/* FORMATO 3: FOLHETO DISPLAY VERTICAL */}
+        {/* FORMATO 3: FOLHETO A7 INDIVIDUAL (74 mm × 105 mm) */}
         {format === 'flyer' && (
-          <div className={`max-w-md w-full ${currentTheme.cardBg} ${currentTheme.textColor} border-2 border-dashed ${currentTheme.borderColor} rounded-3xl p-8 text-center space-y-6 shadow-md print:border-none print:shadow-none transition-colors`}>
-            {/* Logo Oficial OECO */}
-            <div className="flex justify-center mb-2">
-              <img 
-                src={currentTheme.logoSrc} 
-                alt="OECO Financial Solutions" 
-                className="h-[6mm] w-auto object-contain"
-              />
+          <div className="flex flex-col items-center gap-4 my-auto">
+            <div className="text-center text-xs text-stone-500 mb-2 print:hidden">
+              Tamanho padrão: <strong>Formato A7 (74 mm × 105 mm)</strong> — Ideal para display de balcão e entrega individual.
             </div>
+            {renderFlyerA7()}
+          </div>
+        )}
 
-            <div className="space-y-2">
-              <h1 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${currentTheme.titleColor}`}>
-                Webinar <span className={currentTheme.titleHighlight}>Beleza das Finanças</span>
-              </h1>
-              <p className={`text-sm ${currentTheme.subtextColor} font-medium leading-relaxed`}>
-                Pare de pagar para trabalhar: o método prático para precificar certo, blindar seu caixa e ter lucro real no seu negócio de beleza.
-              </p>
+        {/* FORMATO 4: FOLHA A4 COM 4 FOLHETOS A7 PARA RECORTE */}
+        {format === 'flyer_sheet' && (
+          <div className="flex flex-col items-center">
+            <div className="text-center text-xs text-stone-500 mb-4 print:hidden">
+              Folha A4 com <strong>4 folhetos A7 (74 × 105 mm)</strong> com guias pontilhadas para corte.
             </div>
-
-            {/* QR Code */}
-            <div className={`${currentTheme.qrBg} p-5 rounded-3xl border-2 ${currentTheme.qrBorder} inline-block shadow-sm`}>
-              <img 
-                src={qrCodeUrl} 
-                alt="QR Code de Inscrição no Webinar"
-                className="w-56 h-56 mx-auto rounded-xl object-contain"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <p className={`text-xs uppercase tracking-wider font-extrabold ${currentTheme.titleHighlight} flex items-center justify-center gap-1.5`}>
-                <span>📸 Aponte a câmera do seu celular</span>
-              </p>
-              <div className="inline-block mt-1">
-                <span className={`px-2.5 py-1 rounded-full text-xs font-black uppercase tracking-wider ${currentTheme.pillBg}`}>
-                  100% Gratuito
-                </span>
-              </div>
-            </div>
-
-            <div className={`border ${currentTheme.dividerColor} rounded-2xl p-3.5 text-xs ${currentTheme.footerBg} space-y-1 bg-black/5`}>
-              <div className="font-bold">🗓️ 26 e 27 de Outubro • Online ao Vivo</div>
-              <div>Turmas exclusivas às 18:00 e 19:00 • Vagas Limitadas</div>
+            <div className="w-[160mm] bg-white p-4 rounded-xl border border-stone-200 grid grid-cols-2 gap-3 justify-items-center print:border-none print:p-0 print:gap-2">
+              {[0, 1, 2, 3].map((idx) => renderFlyerA7(idx))}
             </div>
           </div>
         )}
