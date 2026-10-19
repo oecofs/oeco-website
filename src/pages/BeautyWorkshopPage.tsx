@@ -925,7 +925,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                   {/* Cabeçalho da Premiação & Banner de R$ 7.500 */}
                   <div className="bg-gradient-to-r from-[#FFF5F7] via-[#FDF0F3] to-[#FCEAEF] border-2 border-[#D9A3AF] rounded-3xl p-5 sm:p-6 relative overflow-hidden shadow-sm">
                     {/* Banner Dourado / Marsala de Destaque Total de Premiação */}
-                    <div className="bg-gradient-to-r from-[#7D1D32] via-[#94263F] to-[#681729] text-white rounded-2xl p-4 sm:p-5 mb-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-3 relative overflow-hidden">
+                    <div className="bg-gradient-to-r from-[#7D1D32] via-[#94263F] to-[#681729] text-white rounded-2xl p-4 sm:p-5 mb-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden">
                       <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
                       <div className="flex items-center gap-3.5 relative z-10 text-center sm:text-left">
                         <div className="w-12 h-12 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center shrink-0 text-2xl shadow-inner">
@@ -933,20 +933,17 @@ export const BeautyWorkshopPage: React.FC = () => {
                         </div>
                         <div>
                           <div className="text-[10px] font-black uppercase tracking-widest text-[#FCEBEB] bg-white/20 inline-block px-2 py-0.5 rounded-full mb-0.5">
-                            Premiação Exclusiva do Evento
+                            Premiação Oficial do Evento
                           </div>
-                          <div className="text-xl sm:text-2xl font-black tracking-tight text-white">
-                            R$ 7.500,00 em Prêmios
+                          <div className="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
+                            Mais de 10 mil reais em prêmios
                           </div>
                         </div>
                       </div>
-                      <div className="text-center sm:text-right relative z-10 border-t sm:border-t-0 sm:border-l border-white/20 pt-2 sm:pt-0 sm:pl-4">
-                        <span className="text-[11px] text-[#FCEBEB]/90 font-medium block">
-                          Serão 3 profissionais premiadas ao vivo
-                        </span>
-                        <span className="text-xs font-bold text-amber-200 uppercase tracking-wide">
-                          Ganha quem indicar mais!
-                        </span>
+                      <div className="text-center sm:text-right relative z-10 border-t sm:border-t-0 sm:border-l border-white/20 pt-2.5 sm:pt-0 sm:pl-4 sm:max-w-xs">
+                        <p className="text-[11px] sm:text-xs text-[#FCEBEB]/95 font-medium leading-snug">
+                          Premiações ao final de cada webinar e ao final do webinar 4 mostrando ao vivo quem indicou mais para dar os maiores prêmios.
+                        </p>
                       </div>
                     </div>
 
@@ -1149,7 +1146,7 @@ export const BeautyWorkshopPage: React.FC = () => {
             </div>
 
             {/* Banner Dourado / Marsala de Destaque Total de Premiação */}
-            <div className="bg-gradient-to-r from-[#7D1D32] via-[#94263F] to-[#681729] text-white rounded-2xl p-4 sm:p-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-3 relative overflow-hidden">
+            <div className="bg-gradient-to-r from-[#7D1D32] via-[#94263F] to-[#681729] text-white rounded-2xl p-4 sm:p-5 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
               <div className="flex items-center gap-3.5 relative z-10 text-center sm:text-left">
                 <div className="w-12 h-12 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center shrink-0 text-2xl shadow-inner">
@@ -1159,18 +1156,15 @@ export const BeautyWorkshopPage: React.FC = () => {
                   <div className="text-[10px] font-black uppercase tracking-widest text-[#FCEBEB] bg-white/20 inline-block px-2 py-0.5 rounded-full mb-0.5">
                     Premiação Total do Evento
                   </div>
-                  <div className="text-xl sm:text-2xl font-black tracking-tight text-white">
-                    R$ 7.500,00 em Prêmios
+                  <div className="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
+                    Mais de 10 mil reais em prêmios
                   </div>
                 </div>
               </div>
-              <div className="text-center sm:text-right relative z-10 border-t sm:border-t-0 sm:border-l border-white/20 pt-2 sm:pt-0 sm:pl-4">
-                <span className="text-[11px] text-[#FCEBEB]/90 font-medium block">
-                  Serão 3 profissionais premiadas ao vivo
-                </span>
-                <span className="text-xs font-bold text-amber-200 uppercase tracking-wide">
-                  Ganha quem indicar mais!
-                </span>
+              <div className="text-center sm:text-right relative z-10 border-t sm:border-t-0 sm:border-l border-white/20 pt-2.5 sm:pt-0 sm:pl-4 sm:max-w-xs">
+                <p className="text-[11px] sm:text-xs text-[#FCEBEB]/95 font-medium leading-snug">
+                  Premiações ao final de cada webinar e ao final do webinar 4 mostrando ao vivo quem indicou mais para dar os maiores prêmios.
+                </p>
               </div>
             </div>
 
