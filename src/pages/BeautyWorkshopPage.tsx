@@ -366,14 +366,76 @@ export const BeautyWorkshopPage: React.FC = () => {
 
   // Folheto & Cartão Imprimível com QR Code
   if (isPrintMode) {
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent('https://oecofs.com/forms/beleza')}&color=1C1815`;
     const format = searchParams.get('format') || 'card';
+    const colorTheme = searchParams.get('theme') || 'warm'; // 'warm' | 'fendi' | 'olive'
+
+    // Temas de cor disponíveis
+    const themeStyles = {
+      // Opção 1: Bege Quente & Areia Dourada (Sand Warm)
+      warm: {
+        id: 'warm',
+        name: 'Bege Areia Quente',
+        badge: 'Opção 1',
+        cardBg: 'bg-[#F5EFE6]',
+        textColor: 'text-[#241B14]',
+        titleColor: 'text-[#241B14]',
+        subtextColor: 'text-[#4A3E36]',
+        borderColor: 'border-[#D9CEBF]',
+        dividerColor: 'border-[#DFD5C6]',
+        qrBg: 'bg-[#FCFAF7]',
+        qrBorder: 'border-[#DFD5C6]',
+        footerBg: 'text-[#5C4D42]',
+        pillBg: 'bg-[#4F6D46] text-white',
+        qrDotColor: '241B14',
+      },
+      // Opção 2: Bege Fendi & Linho Suave (Earthy Fendi)
+      fendi: {
+        id: 'fendi',
+        name: 'Bege Fendi / Linho',
+        badge: 'Opção 2',
+        cardBg: 'bg-[#ECE5DC]',
+        textColor: 'text-[#1F1C19]',
+        titleColor: 'text-[#1F1C19]',
+        subtextColor: 'text-[#4E4741]',
+        borderColor: 'border-[#D2C8BC]',
+        dividerColor: 'border-[#D8CFB5]',
+        qrBg: 'bg-white',
+        qrBorder: 'border-[#CEC4B7]',
+        footerBg: 'text-[#5E564F]',
+        pillBg: 'bg-[#2E2823] text-white',
+        qrDotColor: '1F1C19',
+      },
+      // Opção 3: Bege Camurça com Verde Oliva OECO (Biophilic Luxury)
+      olive: {
+        id: 'olive',
+        name: 'Bege Camurça & Oliva',
+        badge: 'Opção 3',
+        cardBg: 'bg-[#F3EDE2]',
+        textColor: 'text-[#1A1815]',
+        titleColor: 'text-[#1A1815]',
+        subtextColor: 'text-[#484239]',
+        borderColor: 'border-[#CFBEA5]',
+        dividerColor: 'border-[#D9CCA4]',
+        qrBg: 'bg-white',
+        qrBorder: 'border-[#4F6D46]/30',
+        footerBg: 'text-[#3E3830]',
+        pillBg: 'bg-[#4F6D46] text-white',
+        qrDotColor: '1C1815',
+      }
+    };
+
+    const currentTheme = themeStyles[colorTheme as keyof typeof themeStyles] || themeStyles.warm;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent('https://oecofs.com/forms/beleza')}&color=${currentTheme.qrDotColor}`;
+
+    // Helper para alternar query param sem perder o outro
+    const getThemeUrl = (t: string) => `/forms/beleza?print=true&format=${format}&theme=${t}`;
+    const getFormatUrl = (f: string) => `/forms/beleza?print=true&format=${f}&theme=${colorTheme}`;
 
     // Componente do Cartão 90x50 mm (Proporção 60% / 40%)
     const renderCard = (key?: number) => (
       <div 
         key={key}
-        className="w-[90mm] h-[50mm] bg-[#FAF8F5] text-[#1C1815] border border-stone-300 rounded-lg p-3 flex flex-row items-center justify-between overflow-hidden shadow-xs relative font-sans box-border select-none print:shadow-none print:border-dashed print:border-stone-400"
+        className={`w-[90mm] h-[50mm] ${currentTheme.cardBg} ${currentTheme.textColor} border ${currentTheme.borderColor} rounded-lg p-3 flex flex-row items-center justify-between overflow-hidden shadow-xs relative font-sans box-border select-none print:shadow-none print:border-dashed`}
       >
         {/* Lado Esquerdo (60%): Logo Oficial, Título, Subtítulo Magnético e Data */}
         <div className="w-[58%] pr-2 flex flex-col justify-between h-full">
@@ -388,26 +450,26 @@ export const BeautyWorkshopPage: React.FC = () => {
             </div>
 
             {/* Título do Webinar */}
-            <div className="text-[12px] font-black leading-tight text-[#1C1815] tracking-tight">
+            <div className={`text-[12px] font-black leading-tight ${currentTheme.titleColor} tracking-tight`}>
               Webinar Beleza das Finanças
             </div>
 
             {/* Subtítulo de Alto Desejo */}
-            <p className="text-[8px] text-stone-700 font-medium leading-[1.25] mt-1 pr-1">
+            <p className={`text-[8px] ${currentTheme.subtextColor} font-medium leading-[1.25] mt-1 pr-1`}>
               Pare de pagar para trabalhar: o método prático para precificar certo, blindar seu caixa e ter lucro real no seu negócio de beleza.
             </p>
           </div>
 
           {/* Rodapé do Cartão */}
-          <div className="pt-1 border-t border-stone-200 text-[7.5px] text-stone-600 font-bold flex items-center justify-between">
+          <div className={`pt-1 border-t ${currentTheme.dividerColor} text-[7.5px] ${currentTheme.footerBg} font-bold flex items-center justify-between`}>
             <span>🗓️ 26 e 27/10 • Ao Vivo</span>
             <span className="text-[#4F6D46] font-extrabold uppercase">100% Gratuito</span>
           </div>
         </div>
 
         {/* Lado Direito (40%): QR Code em Destaque com Chamada */}
-        <div className="w-[42%] flex flex-col items-center justify-center shrink-0 pl-1 border-l border-stone-200 h-full">
-          <div className="bg-white p-1 rounded-md border border-stone-200 shadow-xs">
+        <div className={`w-[42%] flex flex-col items-center justify-center shrink-0 pl-1 border-l ${currentTheme.dividerColor} h-full`}>
+          <div className={`${currentTheme.qrBg} p-1 rounded-md border ${currentTheme.qrBorder} shadow-xs`}>
             <img 
               src={qrCodeUrl} 
               alt="QR Code de Inscrição" 
@@ -423,47 +485,91 @@ export const BeautyWorkshopPage: React.FC = () => {
 
     return (
       <div className="min-h-screen bg-stone-100 text-[#1C1815] p-4 sm:p-8 flex flex-col items-center font-sans print:bg-white print:p-0">
-        {/* Barra Superior de Formatos (Ocultada na Impressão) */}
-        <div className="max-w-xl w-full bg-white p-3 rounded-2xl shadow-sm border border-stone-200 mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
-          <div className="flex items-center gap-1.5 text-xs font-semibold">
-            <Link
-              to="/forms/beleza?print=true&format=card"
-              className={`px-3 py-1.5 rounded-xl transition-colors ${
-                format === 'card' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
-              }`}
-            >
-              💳 Cartão 90x50mm
-            </Link>
-            <Link
-              to="/forms/beleza?print=true&format=sheet"
-              className={`px-3 py-1.5 rounded-xl transition-colors ${
-                format === 'sheet' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
-              }`}
-            >
-              📄 Folha A4 (10 Cartões)
-            </Link>
-            <Link
-              to="/forms/beleza?print=true&format=flyer"
-              className={`px-3 py-1.5 rounded-xl transition-colors ${
-                format === 'flyer' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
-              }`}
-            >
-              📋 Folheto Completo
-            </Link>
+        {/* Barra Superior de Formatos e Temas (Ocultada na Impressão) */}
+        <div className="max-w-2xl w-full bg-white p-4 rounded-2xl shadow-sm border border-stone-200 mb-6 flex flex-col gap-3 print:hidden">
+          {/* Linha 1: Formatos */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-100 pb-3">
+            <div className="flex items-center gap-1.5 text-xs font-semibold">
+              <span className="text-stone-400 text-[11px] uppercase mr-1">Formato:</span>
+              <Link
+                to={getFormatUrl('card')}
+                className={`px-3 py-1.5 rounded-xl transition-colors ${
+                  format === 'card' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
+                }`}
+              >
+                💳 Cartão 90x50mm
+              </Link>
+              <Link
+                to={getFormatUrl('sheet')}
+                className={`px-3 py-1.5 rounded-xl transition-colors ${
+                  format === 'sheet' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
+                }`}
+              >
+                📄 Folha A4 (10 Cartões)
+              </Link>
+              <Link
+                to={getFormatUrl('flyer')}
+                className={`px-3 py-1.5 rounded-xl transition-colors ${
+                  format === 'flyer' ? 'bg-[#1C1815] text-white' : 'hover:bg-stone-100 text-stone-700'
+                }`}
+              >
+                📋 Folheto Display
+              </Link>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button 
+                onClick={() => window.print()}
+                className="bg-[#4F6D46] hover:bg-[#3d5536] text-white px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 shadow-sm transition-colors"
+              >
+                <Printer className="w-3.5 h-3.5" /> Imprimir
+              </button>
+              <Link 
+                to="/forms/beleza"
+                className="text-xs text-stone-500 hover:text-stone-800 underline px-2"
+              >
+                Voltar
+              </Link>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button 
-              onClick={() => window.print()}
-              className="bg-[#4F6D46] hover:bg-[#3d5536] text-white px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 shadow-sm transition-colors"
+          {/* Linha 2: Filtros de Paleta de Cores (Bege) */}
+          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+            <span className="text-stone-400 text-[11px] uppercase mr-1">Cor do Cartão:</span>
+            <Link
+              to={getThemeUrl('warm')}
+              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                colorTheme === 'warm' 
+                  ? 'bg-[#F5EFE6] border-[#D9CEBF] text-[#241B14] ring-2 ring-[#4F6D46]' 
+                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+              }`}
             >
-              <Printer className="w-3.5 h-3.5" /> Imprimir
-            </button>
-            <Link 
-              to="/forms/beleza"
-              className="text-xs text-stone-500 hover:text-stone-800 underline px-2"
+              <span className="w-3.5 h-3.5 rounded-full bg-[#F5EFE6] border border-[#D9CEBF] inline-block shadow-inner" />
+              <span>1. Bege Areia Quente</span>
+            </Link>
+
+            <Link
+              to={getThemeUrl('fendi')}
+              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                colorTheme === 'fendi' 
+                  ? 'bg-[#ECE5DC] border-[#D2C8BC] text-[#1F1C19] ring-2 ring-[#4F6D46]' 
+                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+              }`}
             >
-              Voltar
+              <span className="w-3.5 h-3.5 rounded-full bg-[#ECE5DC] border border-[#D2C8BC] inline-block shadow-inner" />
+              <span>2. Bege Fendi / Linho</span>
+            </Link>
+
+            <Link
+              to={getThemeUrl('olive')}
+              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-2 border ${
+                colorTheme === 'olive' 
+                  ? 'bg-[#F3EDE2] border-[#CFBEA5] text-[#1A1815] ring-2 ring-[#4F6D46]' 
+                  : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+              }`}
+            >
+              <span className="w-3.5 h-3.5 rounded-full bg-[#F3EDE2] border border-[#CFBEA5] inline-block shadow-inner" />
+              <span>3. Bege Camurça & Oliva</span>
             </Link>
           </div>
         </div>
