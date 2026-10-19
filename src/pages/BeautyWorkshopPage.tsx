@@ -170,10 +170,12 @@ export const BeautyWorkshopPage: React.FC = () => {
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedMessage, setCopiedMessage] = useState(false);
-  const [referralInput, setReferralInput] = useState('');
-  const [customGeneratedRef, setCustomGeneratedRef] = useState('');
+  const [referralName, setReferralName] = useState('');
+  const [referralPhone, setReferralPhone] = useState('');
+  const [isSavingReferrer, setIsSavingReferrer] = useState(false);
+  const [referrerSavedSuccess, setReferrerSavedSuccess] = useState(false);
 
-  // Referral code vindo da URL (ex: ?ref=amanda-silva)
+  // Referral code vindo da URL (ex: ?ref=21999999999)
   const incomingRef = (searchParams.get('ref') || searchParams.get('indicado_por') || '').trim();
   const [leadsList, setLeadsList] = useState<BeautyLead[]>([]);
   const [webhookUrl, setWebhookUrl] = useState('');
@@ -895,11 +897,9 @@ export const BeautyWorkshopPage: React.FC = () => {
 
             {/* SEGUNDA ETAPA: PROGRAMA DE REFERÊNCIA & PREMIAÇÃO EXCLUSIVA */}
             {(() => {
-              // Código de referência padrão do usuário (baseado no primeiro nome + 4 dígitos do whats)
-              const cleanPhone = submittedLead.whatsapp.replace(/\D/g, '').slice(-4);
-              const cleanFirstName = submittedLead.fullName.trim().split(' ')[0].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-              const defaultRefCode = `${cleanFirstName}-${cleanPhone || 'vip'}`;
-              const activeRefCode = customGeneratedRef || defaultRefCode;
+              // Código de referência do usuário: strictly número de telefone limpo (ex: 21999999999)
+              const cleanPhone = submittedLead.whatsapp.replace(/\D/g, '');
+              const activeRefCode = cleanPhone;
               const personalShareUrl = `https://oecofs.com/forms/beleza?ref=${encodeURIComponent(activeRefCode)}`;
               
               const shareMessage = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar como precificar procedimentos, separar as contas e ter lucro real no salão/estúdio. Garante sua vaga por esse link exclusivo: ${personalShareUrl}`;
@@ -933,70 +933,73 @@ export const BeautyWorkshopPage: React.FC = () => {
                           🎁 Desafio Oficial de Indicação
                         </div>
                         <h3 className="text-lg sm:text-xl font-black text-[#2D0F16] tracking-tight">
-                          Quer Concorrer a Prêmios Exclusivos no Final dos Webinars?
+                          Quer Concorrer a um Prêmio que Será Sorteado ao Final dos Webinars?
                         </h3>
                         <p className="text-xs sm:text-sm text-[#5C2B36] font-medium leading-relaxed">
-                          Quem indicar mais amigas e profissionais da beleza para participarem das turmas gratuitas será premiado(a) ao vivo no encerramento!
+                          A premiação será dada para quem gerar o maior número de referências e indicações confirmadas para o evento. Compartilhe seu link exclusivo abaixo!
                         </p>
                       </div>
                     </div>
 
-                    {/* Os 3 Prêmios */}
+                    {/* Os 3 Prêmios Oficiais OECO */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-4">
                       {/* 1º Lugar */}
-                      <div className="bg-white/95 rounded-2xl p-3.5 border border-[#D9A3AF] shadow-xs flex flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                      <div className="bg-white/95 rounded-2xl p-4 border-2 border-[#D9A3AF] shadow-xs flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
                           1º Lugar
                         </div>
                         <div>
-                          <div className="text-2xl mb-1">🥇</div>
-                          <div className="text-xs font-black text-[#2D0F16]">
-                            6 Meses de Consultoria OECO
+                          <div className="text-2xl mb-1.5">🥇</div>
+                          <div className="text-xs font-black text-[#7D1D32] leading-tight">
+                            6 Meses de Consultoria + Sistema Oeco Start
                           </div>
-                          <p className="text-[11px] text-stone-600 mt-1 leading-snug">
-                            Consultoria e BPO financeiro 100% gratuito para o seu negócio decolar.
+                          <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
+                            • 1h exclusiva de consultoria por mês durante 6 meses<br />
+                            • Acesso ao sistema financeiro <strong>Oeco Start 100% gratuito</strong>
                           </p>
                         </div>
-                        <div className="mt-2 text-[10px] font-bold text-[#7D1D32] uppercase">
-                          Prêmio Máximo
+                        <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-[#7D1D32] uppercase tracking-wide">
+                          Troféu de Ouro
                         </div>
                       </div>
 
                       {/* 2º Lugar */}
-                      <div className="bg-white/95 rounded-2xl p-3.5 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 bg-stone-800 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                      <div className="bg-white/95 rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-stone-800 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
                           2º Lugar
                         </div>
                         <div>
-                          <div className="text-2xl mb-1">🥈</div>
-                          <div className="text-xs font-black text-stone-900">
-                            Diagnóstico + Mentoria
+                          <div className="text-2xl mb-1.5">🥈</div>
+                          <div className="text-xs font-black text-stone-900 leading-tight">
+                            3 Meses de Consultoria + Sistema Oeco Start
                           </div>
-                          <p className="text-[11px] text-stone-600 mt-1 leading-snug">
-                            Diagnóstico profundo + 1 sessão individual com Matheus para precificar tudo.
+                          <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
+                            • 1h exclusiva de consultoria por mês durante 3 meses<br />
+                            • Acesso ao sistema financeiro <strong>Oeco Start 100% gratuito</strong>
                           </p>
                         </div>
-                        <div className="mt-2 text-[10px] font-bold text-stone-600 uppercase">
-                          Mentoria VIP
+                        <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
+                          Troféu de Prata
                         </div>
                       </div>
 
                       {/* 3º Lugar */}
-                      <div className="bg-white/95 rounded-2xl p-3.5 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 bg-stone-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                      <div className="bg-white/95 rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-stone-600 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
                           3º Lugar
                         </div>
                         <div>
-                          <div className="text-2xl mb-1">🥉</div>
-                          <div className="text-xs font-black text-stone-900">
-                            Kit de Planilhas OECO
+                          <div className="text-2xl mb-1.5">🥉</div>
+                          <div className="text-xs font-black text-stone-900 leading-tight">
+                            1 Mês de Consultoria + Sistema Oeco Start
                           </div>
-                          <p className="text-[11px] text-stone-600 mt-1 leading-snug">
-                            Planilha Inteligente de Precificação & Gestão de Comissões de salão.
+                          <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
+                            • 1h exclusiva de consultoria individual<br />
+                            • Acesso ao sistema financeiro <strong>Oeco Start 100% gratuito</strong>
                           </p>
                         </div>
-                        <div className="mt-2 text-[10px] font-bold text-stone-600 uppercase">
-                          Ferramenta Pronta
+                        <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
+                          Troféu de Bronze
                         </div>
                       </div>
                     </div>
@@ -1004,9 +1007,14 @@ export const BeautyWorkshopPage: React.FC = () => {
                     {/* Caixa de Geração e Cópia do Link Pessoal */}
                     <div className="mt-5 bg-white rounded-2xl p-4 border border-[#EAC9D1] space-y-3">
                       <div>
-                        <label className="block text-xs font-bold text-[#2D0F16] mb-1">
-                          🔗 Seu Link Pessoal de Indicação:
-                        </label>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="block text-xs font-bold text-[#2D0F16]">
+                            🔗 Seu Link Exclusivo de Indicação:
+                          </label>
+                          <span className="text-[10px] text-stone-500 font-medium">
+                            Identificador: <strong className="text-[#7D1D32]">{cleanPhone}</strong>
+                          </span>
+                        </div>
                         <div className="flex items-center gap-2">
                           <input
                             type="text"
@@ -1061,7 +1069,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                       </div>
 
                       <p className="text-[10px] text-stone-500 text-center italic pt-1">
-                        💡 Cada amiga que se cadastrar usando o seu link contará automaticamente pontos no seu ranking.
+                        💡 Cada amiga que se cadastrar usando o seu link terá o seu telefone registrado como indicadora. A premiação ocorrerá ao final dos webinars!
                       </p>
                     </div>
                   </div>
@@ -1100,105 +1108,212 @@ export const BeautyWorkshopPage: React.FC = () => {
             </div>
 
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-              Digite seu primeiro nome ou WhatsApp abaixo para gerar o seu link personalizado. Quem acumular mais inscrições confirmadas para o <strong>Webinar Beleza das Finanças</strong> ganhará os prêmios exclusivos no encerramento:
+              Para validar sua participação e vincular as indicações a você, <strong>preencha seu nome e WhatsApp</strong>. A premiação será dada para quem gerar o maior número de referências confirmadas no <strong>Webinar Beleza das Finanças</strong>:
             </p>
 
-            {/* Os 3 Prêmios */}
+            {/* Os 3 Prêmios Oficiais OECO */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <div className="bg-[#FFF8F9] rounded-2xl p-3.5 border border-[#D9A3AF] shadow-xs relative">
-                <div className="text-2xl mb-1">🥇</div>
-                <div className="text-xs font-black text-[#7D1D32] uppercase">1º Lugar</div>
-                <div className="text-xs font-bold text-[#2D0F16] mt-0.5">6 Meses de Consultoria OECO</div>
-                <p className="text-[11px] text-stone-600 mt-1">Acompanhamento e BPO financeiro 100% gratuito.</p>
+              {/* 1º Lugar */}
+              <div className="bg-white rounded-2xl p-4 border-2 border-[#D9A3AF] shadow-xs flex flex-col justify-between relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                  1º Lugar
+                </div>
+                <div>
+                  <div className="text-2xl mb-1.5">🥇</div>
+                  <div className="text-xs font-black text-[#7D1D32] leading-tight">
+                    6 Meses de Consultoria + Sistema Oeco Start
+                  </div>
+                  <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
+                    • 1h exclusiva de consultoria por mês durante 6 meses<br />
+                    • Sistema financeiro <strong>Oeco Start 100% gratuito</strong>
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-[#7D1D32] uppercase">
+                  Troféu de Ouro
+                </div>
               </div>
 
-              <div className="bg-stone-50 rounded-2xl p-3.5 border border-stone-200 shadow-xs relative">
-                <div className="text-2xl mb-1">🥈</div>
-                <div className="text-xs font-black text-stone-700 uppercase">2º Lugar</div>
-                <div className="text-xs font-bold text-stone-900 mt-0.5">Diagnóstico + Mentoria VIP</div>
-                <p className="text-[11px] text-stone-600 mt-1">1 sessão individual com Matheus para precificar tudo.</p>
+              {/* 2º Lugar */}
+              <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-stone-800 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                  2º Lugar
+                </div>
+                <div>
+                  <div className="text-2xl mb-1.5">🥈</div>
+                  <div className="text-xs font-black text-stone-900 leading-tight">
+                    3 Meses de Consultoria + Sistema Oeco Start
+                  </div>
+                  <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
+                    • 1h exclusiva de consultoria por mês durante 3 meses<br />
+                    • Sistema financeiro <strong>Oeco Start 100% gratuito</strong>
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase">
+                  Troféu de Prata
+                </div>
               </div>
 
-              <div className="bg-stone-50 rounded-2xl p-3.5 border border-stone-200 shadow-xs relative">
-                <div className="text-2xl mb-1">🥉</div>
-                <div className="text-xs font-black text-stone-600 uppercase">3º Lugar</div>
-                <div className="text-xs font-bold text-stone-900 mt-0.5">Kit de Planilhas OECO</div>
-                <p className="text-[11px] text-stone-600 mt-1">Planilha inteligente de precificação & comissões.</p>
+              {/* 3º Lugar */}
+              <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-stone-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                  3º Lugar
+                </div>
+                <div>
+                  <div className="text-2xl mb-1.5">🥉</div>
+                  <div className="text-xs font-black text-stone-900 leading-tight">
+                    1 Mês de Consultoria + Sistema Oeco Start
+                  </div>
+                  <p className="text-[11px] text-stone-600 mt-2 leading-relaxed">
+                    • 1h exclusiva de consultoria individual<br />
+                    • Sistema financeiro <strong>Oeco Start 100% gratuito</strong>
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase">
+                  Troféu de Bronze
+                </div>
               </div>
             </div>
 
-            {/* Gerador de Link */}
-            <div className="bg-[#FFF9FA] rounded-2xl p-4 sm:p-5 border border-[#EAC9D1] space-y-3.5">
-              <div>
-                <label className="block text-xs font-bold text-[#2D0F16] mb-1">
-                  Digite seu Nome ou WhatsApp para criar seu código:
-                </label>
-                <div className="flex gap-2">
+            {/* Formulário Obrigatório: Nome + Telefone */}
+            <div className="bg-[#FFF9FA] rounded-3xl p-5 sm:p-6 border border-[#EAC9D1] space-y-4">
+              <div className="border-b border-[#F4DEE3] pb-2">
+                <h3 className="text-sm font-bold text-[#2D0F16] flex items-center gap-1.5">
+                  <span>📝 Identifique-se para Gerar seu Link</span>
+                </h3>
+                <p className="text-[11px] text-stone-500">
+                  Precisamos do seu nome e WhatsApp para confirmar suas indicações e entrar em contato com você ao final do sorteio.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
+                    Seu Nome Completo *
+                  </label>
                   <input
                     type="text"
-                    value={referralInput}
+                    required
+                    value={referralName}
+                    onChange={(e) => setReferralName(e.target.value)}
+                    placeholder="Ex: Amanda Silva"
+                    className="w-full bg-white border border-stone-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#7D1D32]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
+                    Seu WhatsApp com DDD *
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={referralPhone}
                     onChange={(e) => {
-                      setReferralInput(e.target.value);
-                      const clean = e.target.value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '-');
-                      setCustomGeneratedRef(clean);
+                      let val = e.target.value.replace(/\D/g, '');
+                      if (val.length > 11) val = val.slice(0, 11);
+                      if (val.length > 6) {
+                        val = `(${val.slice(0, 2)}) ${val.slice(2, 7)}-${val.slice(7)}`;
+                      } else if (val.length > 2) {
+                        val = `(${val.slice(0, 2)}) ${val.slice(2)}`;
+                      } else if (val.length > 0) {
+                        val = `(${val}`;
+                      }
+                      setReferralPhone(val);
                     }}
-                    placeholder="Ex: amanda ou 21999999999"
+                    placeholder="(21) 99999-9999"
                     className="w-full bg-white border border-stone-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#7D1D32]"
                   />
                 </div>
               </div>
 
-              {customGeneratedRef && (
-                <div className="space-y-3 animate-in fade-in duration-200 pt-1">
-                  <div>
-                    <label className="block text-xs font-bold text-[#2D0F16] mb-1">
-                      🔗 Seu Link Pessoal Gerado:
-                    </label>
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="text"
-                        readOnly
-                        value={`https://oecofs.com/forms/beleza?ref=${encodeURIComponent(customGeneratedRef)}`}
-                        className="w-full bg-white border border-[#D9A3AF] px-3.5 py-2.5 rounded-xl text-xs font-mono select-all text-[#2D0F16]"
-                      />
+              {(() => {
+                const cleanPhoneDigits = referralPhone.replace(/\D/g, '');
+                const isValid = referralName.trim().length >= 3 && cleanPhoneDigits.length >= 10;
+                const personalLink = `https://oecofs.com/forms/beleza?ref=${cleanPhoneDigits}`;
+                const shareText = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar como precificar procedimentos, separar as contas e ter lucro real no salão/estúdio. Garante sua vaga por esse link exclusivo: ${personalLink}`;
+
+                if (!isValid) {
+                  return (
+                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-800 text-center">
+                      ⚠️ Preencha seu <strong>nome completo</strong> e seu <strong>WhatsApp com DDD</strong> acima para desbloquear seu link oficial.
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="space-y-3.5 animate-in fade-in duration-200 pt-2 border-t border-[#F4DEE3]">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-xs font-bold text-[#2D0F16]">
+                          🔗 Seu Link de Indicação (Pronto para Uso):
+                        </label>
+                        <span className="text-[10px] text-stone-500 font-mono">
+                          ref={cleanPhoneDigits}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          readOnly
+                          value={personalLink}
+                          className="w-full bg-white border border-[#D9A3AF] px-3.5 py-2.5 rounded-xl text-xs font-mono select-all text-[#2D0F16]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard.writeText(personalLink);
+                            setCopiedLink(true);
+                            setTimeout(() => setCopiedLink(false), 2500);
+                          }}
+                          className="px-4 py-2.5 bg-[#7D1D32] hover:bg-[#681729] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shrink-0 transition-colors shadow-xs"
+                        >
+                          {copiedLink ? <CheckCheck className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                          <span>{copiedLink ? 'Copiado!' : 'Copiar'}</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <button
                         type="button"
                         onClick={() => {
-                          navigator.clipboard.writeText(`https://oecofs.com/forms/beleza?ref=${encodeURIComponent(customGeneratedRef)}`);
-                          setCopiedLink(true);
-                          setTimeout(() => setCopiedLink(false), 2500);
+                          window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`, '_blank');
                         }}
-                        className="px-4 py-2.5 bg-[#7D1D32] hover:bg-[#681729] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shrink-0 transition-colors shadow-xs"
+                        className="flex-1 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0"
                       >
-                        {copiedLink ? <CheckCheck className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                        <span>{copiedLink ? 'Copiado!' : 'Copiar'}</span>
+                        <MessageCircle className="w-4 h-4 fill-current" />
+                        <span>Compartilhar no WhatsApp</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText(shareText);
+                          setCopiedMessage(true);
+                          setTimeout(() => setCopiedMessage(false), 2500);
+                        }}
+                        className="px-4 py-3 bg-white hover:bg-stone-50 border border-[#D9A3AF] text-[#7D1D32] rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+                      >
+                        {copiedMessage ? <CheckCheck className="w-4 h-4" /> : <Share2 className="w-4 h-4" />}
+                        <span>{copiedMessage ? 'Mensagem Copiada!' : 'Copiar Texto Pronto'}</span>
                       </button>
                     </div>
-                  </div>
 
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const link = `https://oecofs.com/forms/beleza?ref=${encodeURIComponent(customGeneratedRef)}`;
-                        const msg = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar como precificar procedimentos, separar as contas e ter lucro real no salão/estúdio. Garante sua vaga por esse link exclusivo: ${link}`;
-                        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
-                      }}
-                      className="flex-1 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
-                    >
-                      <MessageCircle className="w-4 h-4 fill-current" />
-                      <span>Compartilhar no WhatsApp</span>
-                    </button>
-
-                    <Link
-                      to="/forms/beleza"
-                      className="px-4 py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl font-semibold text-xs flex items-center justify-center transition-colors"
-                    >
-                      Voltar ao Formulário
-                    </Link>
+                    <p className="text-[10px] text-stone-500 text-center italic">
+                      💡 Cada inscrição confirmada com seu telefone contará pontos para você no ranking oficial!
+                    </p>
                   </div>
-                </div>
-              )}
+                );
+              })()}
+            </div>
+
+            <div className="text-center pt-2">
+              <Link
+                to="/forms/beleza"
+                className="text-xs text-stone-500 hover:text-stone-800 underline font-medium"
+              >
+                ← Voltar para o formulário de inscrição
+              </Link>
             </div>
           </div>
         ) : (
