@@ -902,7 +902,7 @@ export const BeautyWorkshopPage: React.FC = () => {
               const activeRefCode = cleanPhone;
               const personalShareUrl = `https://oecofs.com/forms/beleza?ref=${encodeURIComponent(activeRefCode)}`;
               
-              const shareMessage = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar como precificar procedimentos, separar as contas e ter lucro real no salão/estúdio. Garante sua vaga por esse link exclusivo: ${personalShareUrl}`;
+              const shareMessage = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar sobre gestão financeira do seu negócio, como separar as contas e buscar ter lucro real no seu negócio. Garante sua vaga por esse link exclusivo: ${personalShareUrl}`;
 
               const handleCopyLink = () => {
                 navigator.clipboard.writeText(personalShareUrl);
@@ -1289,7 +1289,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                 const cleanPhoneDigits = referralPhone.replace(/\D/g, '');
                 const isValid = referralName.trim().length >= 3 && cleanPhoneDigits.length >= 10;
                 const personalLink = `https://oecofs.com/forms/beleza?ref=${cleanPhoneDigits}`;
-                const shareText = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar como precificar procedimentos, separar as contas e ter lucro real no salão/estúdio. Garante sua vaga por esse link exclusivo: ${personalLink}`;
+                const shareText = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar sobre gestão financeira do seu negócio, como separar as contas e buscar ter lucro real no seu negócio. Garante sua vaga por esse link exclusivo: ${personalLink}`;
 
                 if (!isValid) {
                   return (
