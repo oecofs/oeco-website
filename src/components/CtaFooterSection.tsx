@@ -66,7 +66,7 @@ export const CtaFooterSection: React.FC = () => {
               />
             </div>
             <p className="text-sm text-[#FAF8F5]/75 leading-relaxed max-w-sm mb-6">
-              Gestão financeira estratégica e BPO para construtoras, empresas de projetos e negócios em expansão. Construindo processos financeiros sólidos, consistentes e sem atalhos.
+              Gestão financeira estratégica e BPO Financeiro para PMEs e negócios em expansão. Construindo processos financeiros sólidos, consistentes e sem atalhos.
             </p>
             <div className="space-y-2.5 text-sm text-[#FAF8F5]/80">
               <p className="flex items-center gap-2.5">
