@@ -18,7 +18,12 @@ import {
   Download,
   Trash2,
   X,
-  Check
+  Check,
+  Trophy,
+  Award,
+  Gift,
+  Copy,
+  CheckCheck
 } from 'lucide-react';
 
 export interface BeautyLead {
@@ -33,6 +38,7 @@ export interface BeautyLead {
   formalization: string;
   painPoints: string[];
   session: string;
+  referredBy?: string;
 }
 
 const STORAGE_KEY = 'oeco_beauty_workshop_leads';
@@ -162,6 +168,13 @@ export const BeautyWorkshopPage: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedLead, setSubmittedLead] = useState<BeautyLead | null>(null);
   const [showAdminModal, setShowAdminModal] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedMessage, setCopiedMessage] = useState(false);
+  const [referralInput, setReferralInput] = useState('');
+  const [customGeneratedRef, setCustomGeneratedRef] = useState('');
+
+  // Referral code vindo da URL (ex: ?ref=amanda-silva)
+  const incomingRef = (searchParams.get('ref') || searchParams.get('indicado_por') || '').trim();
   const [leadsList, setLeadsList] = useState<BeautyLead[]>([]);
   const [webhookUrl, setWebhookUrl] = useState('');
 
@@ -282,7 +295,8 @@ export const BeautyWorkshopPage: React.FC = () => {
       businessModel: BUSINESS_MODELS.find(b => b.id === businessModel)?.label || businessModel,
       formalization: FORMALIZATIONS.find(f => f.id === formalization)?.label || formalization,
       painPoints: resolvedPainPoints,
-      session: SESSIONS.find(s => s.id === sessionId)?.label || sessionId
+      session: SESSIONS.find(s => s.id === sessionId)?.label || sessionId,
+      referredBy: incomingRef || undefined
     };
 
     // 1. Persist localmente
@@ -337,7 +351,8 @@ export const BeautyWorkshopPage: React.FC = () => {
       'Modelo de Atuação',
       'Formalização (CNPJ)',
       'Turma Escolhida',
-      'Dores Mapeadas'
+      'Dores Mapeadas',
+      'Indicado Por (Ref)'
     ];
 
     const rows = leadsList.map(lead => [
@@ -350,7 +365,8 @@ export const BeautyWorkshopPage: React.FC = () => {
       `"${lead.businessModel}"`,
       `"${lead.formalization}"`,
       `"${lead.session}"`,
-      `"${lead.painPoints.join(' | ').replace(/"/g, '""')}"`
+      `"${lead.painPoints.join(' | ').replace(/"/g, '""')}"`,
+      `"${lead.referredBy || ''}"`
     ]);
 
     const csvContent = '\uFEFF' + [headers.join(';'), ...rows.map(r => r.join(';'))].join('\n');
@@ -877,6 +893,182 @@ export const BeautyWorkshopPage: React.FC = () => {
               </a>
             </div>
 
+            {/* SEGUNDA ETAPA: PROGRAMA DE REFERÊNCIA & PREMIAÇÃO EXCLUSIVA */}
+            {(() => {
+              // Código de referência padrão do usuário (baseado no primeiro nome + 4 dígitos do whats)
+              const cleanPhone = submittedLead.whatsapp.replace(/\D/g, '').slice(-4);
+              const cleanFirstName = submittedLead.fullName.trim().split(' ')[0].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+              const defaultRefCode = `${cleanFirstName}-${cleanPhone || 'vip'}`;
+              const activeRefCode = customGeneratedRef || defaultRefCode;
+              const personalShareUrl = `https://oecofs.com/forms/beleza?ref=${encodeURIComponent(activeRefCode)}`;
+              
+              const shareMessage = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar como precificar procedimentos, separar as contas e ter lucro real no salão/estúdio. Garante sua vaga por esse link exclusivo: ${personalShareUrl}`;
+
+              const handleCopyLink = () => {
+                navigator.clipboard.writeText(personalShareUrl);
+                setCopiedLink(true);
+                setTimeout(() => setCopiedLink(false), 2500);
+              };
+
+              const handleCopyMessage = () => {
+                navigator.clipboard.writeText(shareMessage);
+                setCopiedMessage(true);
+                setTimeout(() => setCopiedMessage(false), 2500);
+              };
+
+              const handleWhatsAppShare = () => {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`, '_blank');
+              };
+
+              return (
+                <div className="mt-8 pt-6 border-t-2 border-dashed border-[#EAC9D1] text-left space-y-5 animate-in fade-in duration-300">
+                  {/* Cabeçalho da Premiação */}
+                  <div className="bg-gradient-to-r from-[#FFF5F7] via-[#FDF0F3] to-[#FCEAEF] border-2 border-[#D9A3AF] rounded-3xl p-5 sm:p-6 relative overflow-hidden shadow-sm">
+                    <div className="flex items-start gap-3.5">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7D1D32] to-[#A32A44] text-white flex items-center justify-center shrink-0 shadow-md">
+                        <Trophy className="w-6 h-6 text-[#FCEBEB]" />
+                      </div>
+                      <div className="space-y-1">
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#7D1D32] text-white text-[10px] font-black uppercase tracking-wider">
+                          🎁 Desafio Oficial de Indicação
+                        </div>
+                        <h3 className="text-lg sm:text-xl font-black text-[#2D0F16] tracking-tight">
+                          Quer Concorrer a Prêmios Exclusivos no Final dos Webinars?
+                        </h3>
+                        <p className="text-xs sm:text-sm text-[#5C2B36] font-medium leading-relaxed">
+                          Quem indicar mais amigas e profissionais da beleza para participarem das turmas gratuitas será premiado(a) ao vivo no encerramento!
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Os 3 Prêmios */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-4">
+                      {/* 1º Lugar */}
+                      <div className="bg-white/95 rounded-2xl p-3.5 border border-[#D9A3AF] shadow-xs flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                          1º Lugar
+                        </div>
+                        <div>
+                          <div className="text-2xl mb-1">🥇</div>
+                          <div className="text-xs font-black text-[#2D0F16]">
+                            6 Meses de Consultoria OECO
+                          </div>
+                          <p className="text-[11px] text-stone-600 mt-1 leading-snug">
+                            Consultoria e BPO financeiro 100% gratuito para o seu negócio decolar.
+                          </p>
+                        </div>
+                        <div className="mt-2 text-[10px] font-bold text-[#7D1D32] uppercase">
+                          Prêmio Máximo
+                        </div>
+                      </div>
+
+                      {/* 2º Lugar */}
+                      <div className="bg-white/95 rounded-2xl p-3.5 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-stone-800 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                          2º Lugar
+                        </div>
+                        <div>
+                          <div className="text-2xl mb-1">🥈</div>
+                          <div className="text-xs font-black text-stone-900">
+                            Diagnóstico + Mentoria
+                          </div>
+                          <p className="text-[11px] text-stone-600 mt-1 leading-snug">
+                            Diagnóstico profundo + 1 sessão individual com Matheus para precificar tudo.
+                          </p>
+                        </div>
+                        <div className="mt-2 text-[10px] font-bold text-stone-600 uppercase">
+                          Mentoria VIP
+                        </div>
+                      </div>
+
+                      {/* 3º Lugar */}
+                      <div className="bg-white/95 rounded-2xl p-3.5 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-stone-600 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-bl-lg">
+                          3º Lugar
+                        </div>
+                        <div>
+                          <div className="text-2xl mb-1">🥉</div>
+                          <div className="text-xs font-black text-stone-900">
+                            Kit de Planilhas OECO
+                          </div>
+                          <p className="text-[11px] text-stone-600 mt-1 leading-snug">
+                            Planilha Inteligente de Precificação & Gestão de Comissões de salão.
+                          </p>
+                        </div>
+                        <div className="mt-2 text-[10px] font-bold text-stone-600 uppercase">
+                          Ferramenta Pronta
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Caixa de Geração e Cópia do Link Pessoal */}
+                    <div className="mt-5 bg-white rounded-2xl p-4 border border-[#EAC9D1] space-y-3">
+                      <div>
+                        <label className="block text-xs font-bold text-[#2D0F16] mb-1">
+                          🔗 Seu Link Pessoal de Indicação:
+                        </label>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            readOnly
+                            value={personalShareUrl}
+                            className="w-full bg-[#FFF9FA] border border-[#D9A3AF] px-3.5 py-2.5 rounded-xl text-xs text-[#2D0F16] font-mono select-all focus:outline-none"
+                          />
+                          <button
+                            type="button"
+                            onClick={handleCopyLink}
+                            className="px-4 py-2.5 bg-[#7D1D32] hover:bg-[#681729] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shrink-0 transition-colors shadow-xs"
+                          >
+                            {copiedLink ? (
+                              <>
+                                <CheckCheck className="w-3.5 h-3.5" /> Copiado!
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" /> Copiar Link
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Botões de Ação Rápida no WhatsApp */}
+                      <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={handleWhatsAppShare}
+                          className="flex-1 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                        >
+                          <MessageCircle className="w-4 h-4 fill-current" />
+                          <span>Compartilhar Direto no WhatsApp</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={handleCopyMessage}
+                          className="px-4 py-3 bg-[#FDF0F3] hover:bg-[#F9E2E8] text-[#7D1D32] border border-[#EAC9D1] rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+                        >
+                          {copiedMessage ? (
+                            <>
+                              <CheckCheck className="w-4 h-4" /> Texto Pronto Copiado!
+                            </>
+                          ) : (
+                            <>
+                              <Share2 className="w-4 h-4" /> Copiar Texto Pronto
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      <p className="text-[10px] text-stone-500 text-center italic pt-1">
+                        💡 Cada amiga que se cadastrar usando o seu link contará automaticamente pontos no seu ranking.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
             {/* Suporte Matheus */}
             <div className="pt-2 text-xs text-stone-500">
               Precisa falar com a gente ou tirar alguma dúvida?{' '}
@@ -884,10 +1076,129 @@ export const BeautyWorkshopPage: React.FC = () => {
                 href="https://wa.me/5521973413967?text=Olá,%20Matheus!%20Me%20cadastrei%20no%20workshop%20de%20beleza%20e%20gostaria%20de%20falar%20com%20você."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#4F6D46] font-semibold underline hover:text-stone-900"
+                className="text-[#7D1D32] font-semibold underline hover:text-stone-900"
               >
                 Falar com Matheus pelo WhatsApp
               </a>
+            </div>
+          </div>
+        ) : searchParams.get('indicar') === 'true' || searchParams.get('desafio') === 'true' ? (
+          /* PÁGINA DEDICADA DE INDICAÇÃO & GERAÇÃO DE LINK PARA QUEM JÁ ESTÁ NO WHATSAPP */
+          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-[#EAC9D1] mt-6 space-y-6 animate-in fade-in duration-200 text-left">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#7D1D32] to-[#A32A44] text-white flex items-center justify-center shrink-0 shadow-md">
+                <Trophy className="w-6 h-6 text-[#FCEBEB]" />
+              </div>
+              <div>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#7D1D32] text-white text-[10px] font-black uppercase tracking-wider">
+                  🎁 Desafio Oficial de Indicação
+                </span>
+                <h2 className="text-xl sm:text-2xl font-black text-[#2D0F16] tracking-tight mt-1">
+                  Gere Seu Link Exclusivo & Concorra a Prêmios
+                </h2>
+              </div>
+            </div>
+
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+              Digite seu primeiro nome ou WhatsApp abaixo para gerar o seu link personalizado. Quem acumular mais inscrições confirmadas para o <strong>Webinar Beleza das Finanças</strong> ganhará os prêmios exclusivos no encerramento:
+            </p>
+
+            {/* Os 3 Prêmios */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <div className="bg-[#FFF8F9] rounded-2xl p-3.5 border border-[#D9A3AF] shadow-xs relative">
+                <div className="text-2xl mb-1">🥇</div>
+                <div className="text-xs font-black text-[#7D1D32] uppercase">1º Lugar</div>
+                <div className="text-xs font-bold text-[#2D0F16] mt-0.5">6 Meses de Consultoria OECO</div>
+                <p className="text-[11px] text-stone-600 mt-1">Acompanhamento e BPO financeiro 100% gratuito.</p>
+              </div>
+
+              <div className="bg-stone-50 rounded-2xl p-3.5 border border-stone-200 shadow-xs relative">
+                <div className="text-2xl mb-1">🥈</div>
+                <div className="text-xs font-black text-stone-700 uppercase">2º Lugar</div>
+                <div className="text-xs font-bold text-stone-900 mt-0.5">Diagnóstico + Mentoria VIP</div>
+                <p className="text-[11px] text-stone-600 mt-1">1 sessão individual com Matheus para precificar tudo.</p>
+              </div>
+
+              <div className="bg-stone-50 rounded-2xl p-3.5 border border-stone-200 shadow-xs relative">
+                <div className="text-2xl mb-1">🥉</div>
+                <div className="text-xs font-black text-stone-600 uppercase">3º Lugar</div>
+                <div className="text-xs font-bold text-stone-900 mt-0.5">Kit de Planilhas OECO</div>
+                <p className="text-[11px] text-stone-600 mt-1">Planilha inteligente de precificação & comissões.</p>
+              </div>
+            </div>
+
+            {/* Gerador de Link */}
+            <div className="bg-[#FFF9FA] rounded-2xl p-4 sm:p-5 border border-[#EAC9D1] space-y-3.5">
+              <div>
+                <label className="block text-xs font-bold text-[#2D0F16] mb-1">
+                  Digite seu Nome ou WhatsApp para criar seu código:
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={referralInput}
+                    onChange={(e) => {
+                      setReferralInput(e.target.value);
+                      const clean = e.target.value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '-');
+                      setCustomGeneratedRef(clean);
+                    }}
+                    placeholder="Ex: amanda ou 21999999999"
+                    className="w-full bg-white border border-stone-300 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#7D1D32]"
+                  />
+                </div>
+              </div>
+
+              {customGeneratedRef && (
+                <div className="space-y-3 animate-in fade-in duration-200 pt-1">
+                  <div>
+                    <label className="block text-xs font-bold text-[#2D0F16] mb-1">
+                      🔗 Seu Link Pessoal Gerado:
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        readOnly
+                        value={`https://oecofs.com/forms/beleza?ref=${encodeURIComponent(customGeneratedRef)}`}
+                        className="w-full bg-white border border-[#D9A3AF] px-3.5 py-2.5 rounded-xl text-xs font-mono select-all text-[#2D0F16]"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText(`https://oecofs.com/forms/beleza?ref=${encodeURIComponent(customGeneratedRef)}`);
+                          setCopiedLink(true);
+                          setTimeout(() => setCopiedLink(false), 2500);
+                        }}
+                        className="px-4 py-2.5 bg-[#7D1D32] hover:bg-[#681729] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shrink-0 transition-colors shadow-xs"
+                      >
+                        {copiedLink ? <CheckCheck className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                        <span>{copiedLink ? 'Copiado!' : 'Copiar'}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const link = `https://oecofs.com/forms/beleza?ref=${encodeURIComponent(customGeneratedRef)}`;
+                        const msg = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar como precificar procedimentos, separar as contas e ter lucro real no salão/estúdio. Garante sua vaga por esse link exclusivo: ${link}`;
+                        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
+                      }}
+                      className="flex-1 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
+                    >
+                      <MessageCircle className="w-4 h-4 fill-current" />
+                      <span>Compartilhar no WhatsApp</span>
+                    </button>
+
+                    <Link
+                      to="/forms/beleza"
+                      className="px-4 py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl font-semibold text-xs flex items-center justify-center transition-colors"
+                    >
+                      Voltar ao Formulário
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ) : (
