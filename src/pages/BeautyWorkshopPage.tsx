@@ -369,48 +369,53 @@ export const BeautyWorkshopPage: React.FC = () => {
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent('https://oecofs.com/forms/beleza')}&color=1C1815`;
     const format = searchParams.get('format') || 'card';
 
-    // Componente do Cartão 90x50 mm
+    // Componente do Cartão 90x50 mm (Proporção 60% / 40%)
     const renderCard = (key?: number) => (
       <div 
         key={key}
         className="w-[90mm] h-[50mm] bg-[#FAF8F5] text-[#1C1815] border border-stone-300 rounded-lg p-3 flex flex-row items-center justify-between overflow-hidden shadow-xs relative font-sans box-border select-none print:shadow-none print:border-dashed print:border-stone-400"
       >
-        {/* Lado Esquerdo: Textos & Benefícios */}
-        <div className="flex-1 pr-2 flex flex-col justify-between h-full">
+        {/* Lado Esquerdo (60%): Logo Oficial, Título, Subtítulo Magnético e Data */}
+        <div className="w-[58%] pr-2 flex flex-col justify-between h-full">
           <div>
-            <div className="text-[9px] font-extrabold uppercase tracking-widest text-[#4F6D46] mb-0.5">
-              OECO Financial Solutions
+            {/* Logo Oficial OECO */}
+            <div className="mb-1">
+              <img 
+                src="/images/brand/sublogo-oeco-dark.png" 
+                alt="OECO Financial Solutions" 
+                className="h-[4.5mm] w-auto object-contain"
+              />
             </div>
-            <div className="text-[13px] font-black leading-tight text-[#1C1815] tracking-tight">
+
+            {/* Título do Webinar */}
+            <div className="text-[12px] font-black leading-tight text-[#1C1815] tracking-tight">
               Webinar Beleza das Finanças
             </div>
-            <div className="text-[8.5px] text-stone-600 font-medium mt-1 space-y-0.5 leading-snug">
-              <div>✓ Precificação com lucro real</div>
-              <div>✓ Fim da mistura PF x PJ</div>
-              <div>✓ Chega de perder nas maquininhas</div>
-            </div>
+
+            {/* Subtítulo de Alto Desejo */}
+            <p className="text-[8px] text-stone-700 font-medium leading-[1.25] mt-1 pr-1">
+              Pare de pagar para trabalhar: o método prático para precificar certo, blindar seu caixa e ter lucro real no seu negócio de beleza.
+            </p>
           </div>
 
-          <div className="pt-1 border-t border-stone-200 text-[8px] text-stone-500 font-semibold flex items-center justify-between">
-            <span>🗓️ 26 e 27/10 • Online</span>
-            <span className="text-[#4F6D46] font-bold">100% Gratuito</span>
+          {/* Rodapé do Cartão */}
+          <div className="pt-1 border-t border-stone-200 text-[7.5px] text-stone-600 font-bold flex items-center justify-between">
+            <span>🗓️ 26 e 27/10 • Ao Vivo</span>
+            <span className="text-[#4F6D46] font-extrabold uppercase">100% Gratuito</span>
           </div>
         </div>
 
-        {/* Lado Direito: QR Code */}
-        <div className="w-[28mm] flex flex-col items-center justify-center shrink-0 pl-1 border-l border-stone-200 h-full">
+        {/* Lado Direito (40%): QR Code em Destaque com Chamada */}
+        <div className="w-[42%] flex flex-col items-center justify-center shrink-0 pl-1 border-l border-stone-200 h-full">
           <div className="bg-white p-1 rounded-md border border-stone-200 shadow-xs">
             <img 
               src={qrCodeUrl} 
-              alt="QR Code" 
-              className="w-[22mm] h-[22mm] object-contain"
+              alt="QR Code de Inscrição" 
+              className="w-[26mm] h-[26mm] object-contain"
             />
           </div>
-          <div className="text-[7.5px] font-bold text-center text-stone-700 mt-1 leading-tight">
-            Aponte a câmera
-          </div>
-          <div className="text-[6.5px] text-stone-400 font-mono text-center">
-            oecofs.com/forms/beleza
+          <div className="text-[8px] font-extrabold text-center text-stone-900 mt-1 uppercase tracking-wider flex items-center justify-center gap-0.5">
+            <span>Aponte a câmera</span>
           </div>
         </div>
       </div>
