@@ -166,7 +166,14 @@ export const BeautyWorkshopPage: React.FC = () => {
 
   // UI State
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submittedLead, setSubmittedLead] = useState<BeautyLead | null>(null);
+  const [submittedLead, setSubmittedLead] = useState<BeautyLead | null>(() => {
+    try {
+      const saved = localStorage.getItem('oeco_beauty_last_submitted_lead');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedMessage, setCopiedMessage] = useState(false);
@@ -179,6 +186,61 @@ export const BeautyWorkshopPage: React.FC = () => {
   const incomingRef = (searchParams.get('ref') || searchParams.get('indicado_por') || '').trim();
   const [leadsList, setLeadsList] = useState<BeautyLead[]>([]);
   const [webhookUrl, setWebhookUrl] = useState('');
+
+  // Estados do Fluxo de Onboarding Sequencial Passo a Passo (Mobile-First)
+  const [onboardingStep, setOnboardingStep] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('oeco_beauty_onboarding_step');
+      return saved !== null ? Number(saved) : 0;
+    } catch {
+      return 0;
+    }
+  });
+  const [waitingReturnFrom, setWaitingReturnFrom] = useState<'whatsapp' | 'calendar' | null>(null);
+  const [celebrationMessage, setCelebrationMessage] = useState<string | null>(null);
+
+  // Detecção Inteligente de Retorno de Aba / App no Celular
+  useEffect(() => {
+    const handleReturn = () => {
+      if (document.visibilityState === 'visible') {
+        if (waitingReturnFrom === 'whatsapp') {
+          setWaitingReturnFrom(null);
+          setCelebrationMessage('🎉 Grupo VIP Conectado! Avançando para a Agenda...');
+          setTimeout(() => {
+            setCelebrationMessage(null);
+            setOnboardingStep(2);
+            try {
+              localStorage.setItem('oeco_beauty_onboarding_step', '2');
+            } catch (e) {
+              console.warn(e);
+            }
+          }, 1200);
+        } else if (waitingReturnFrom === 'calendar') {
+          setWaitingReturnFrom(null);
+          setCelebrationMessage('🎉 Evento Salvo no Calendário! Desbloqueando Prêmios...');
+          setTimeout(() => {
+            setCelebrationMessage(null);
+            setOnboardingStep(3);
+            try {
+              localStorage.setItem('oeco_beauty_onboarding_step', '3');
+            } catch (e) {
+              console.warn(e);
+            }
+          }, 1200);
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleReturn);
+    window.addEventListener('focus', handleReturn);
+    window.addEventListener('pageshow', handleReturn);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleReturn);
+      window.removeEventListener('focus', handleReturn);
+      window.removeEventListener('pageshow', handleReturn);
+    };
+  }, [waitingReturnFrom]);
 
   // Load leads, webhook and session counts from localStorage & Webhook
   useEffect(() => {
@@ -200,6 +262,10 @@ export const BeautyWorkshopPage: React.FC = () => {
       const savedWebhook = localStorage.getItem(WEBHOOK_STORAGE_KEY);
       if (savedWebhook) {
         setWebhookUrl(savedWebhook);
+      }
+      const savedLead = localStorage.getItem('oeco_beauty_last_submitted_lead');
+      if (savedLead) {
+        setSubmittedLead(JSON.parse(savedLead));
       }
     } catch (e) {
       console.error('Erro ao ler leads do storage:', e);
@@ -331,6 +397,29 @@ export const BeautyWorkshopPage: React.FC = () => {
 
     setIsSubmitting(false);
     setSubmittedLead(newLead);
+    setOnboardingStep(0);
+    try {
+      localStorage.setItem('oeco_beauty_onboarding_step', '0');
+      localStorage.setItem('oeco_beauty_last_submitted_lead', JSON.stringify(newLead));
+    } catch (err) {
+      console.warn('Erro ao salvar onboardingStep:', err);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNewRegistration = () => {
+    try {
+      localStorage.removeItem('oeco_beauty_last_submitted_lead');
+      localStorage.removeItem('oeco_beauty_onboarding_step');
+    } catch (e) {
+      console.warn(e);
+    }
+    setSubmittedLead(null);
+    setOnboardingStep(0);
+    setFullName('');
+    setWhatsapp('');
+    setEmail('');
+    setInstagram('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -863,74 +952,324 @@ export const BeautyWorkshopPage: React.FC = () => {
       {/* Conteúdo Principal */}
       <main className="max-w-2xl mx-auto px-4 sm:px-6 -mt-3">
         {submittedLead ? (
-          /* TELA DE SUCESSO & ENTRADA NO GRUPO VIP */
-          <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-stone-200 mt-6 space-y-6 animate-in fade-in zoom-in-95 duration-200 text-center">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
-              <CheckCircle2 className="w-10 h-10" />
+          /* TELA DE SUCESSO & ONBOARDING SEQUENCIAL PASSO A PASSO (MOBILE-FIRST) */
+          <div className="bg-white rounded-3xl p-5 sm:p-8 shadow-xl border border-stone-200 mt-6 space-y-6 animate-in fade-in zoom-in-95 duration-200 text-center relative overflow-hidden">
+            
+            {/* Mensagem Flutuante de Celebração de Retorno Automático */}
+            {celebrationMessage && (
+              <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-emerald-600 text-white px-5 py-3 rounded-2xl shadow-2xl font-bold text-xs sm:text-sm flex items-center gap-2 animate-bounce">
+                <CheckCircle2 className="w-5 h-5 text-white shrink-0" />
+                <span>{celebrationMessage}</span>
+              </div>
+            )}
+
+            {/* Barra de Progresso das 3 Etapas Obrigatórias */}
+            <div className="bg-stone-50 border border-stone-200/80 rounded-2xl p-3 sm:p-4 text-left">
+              <div className="flex items-center justify-between text-xs font-bold text-stone-600 mb-2 px-1">
+                <span className="text-[11px] uppercase tracking-wider text-stone-500 font-extrabold">
+                  {onboardingStep === 0 && 'Etapa Inicial • Alinhamento'}
+                  {onboardingStep === 1 && 'Passo 1 de 3 • Grupo VIP'}
+                  {onboardingStep === 2 && 'Passo 2 de 3 • Agenda'}
+                  {onboardingStep === 3 && 'Passo 3 de 3 • Prêmios Liberados'}
+                </span>
+                <span className="text-[11px] text-[#7D1D32] font-black">
+                  {onboardingStep === 0 && '0% Concluído'}
+                  {onboardingStep === 1 && '33% Concluído'}
+                  {onboardingStep === 2 && '66% Concluído'}
+                  {onboardingStep === 3 && '100% Concluído!'}
+                </span>
+              </div>
+
+              {/* Trilho da Barra */}
+              <div className="w-full bg-stone-200 h-2 rounded-full overflow-hidden mb-3">
+                <div 
+                  className="bg-gradient-to-r from-[#7D1D32] to-[#B8543B] h-full transition-all duration-500 rounded-full"
+                  style={{ width: `${onboardingStep === 0 ? 10 : onboardingStep === 1 ? 33 : onboardingStep === 2 ? 66 : 100}%` }}
+                />
+              </div>
+
+              {/* Pílulas dos 3 Passos */}
+              <div className="grid grid-cols-3 gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOnboardingStep(1);
+                    try {
+                      localStorage.setItem('oeco_beauty_onboarding_step', '1');
+                    } catch (e) {
+                      console.warn(e);
+                    }
+                  }}
+                  className={`py-1.5 px-1 rounded-xl font-bold flex items-center justify-center gap-1 transition-all ${
+                    onboardingStep === 1
+                      ? 'bg-[#7D1D32] text-white shadow-xs'
+                      : onboardingStep > 1
+                      ? 'bg-emerald-100 text-emerald-800'
+                      : 'bg-white text-stone-500 border border-stone-200'
+                  }`}
+                >
+                  <span>{onboardingStep > 1 ? '✓' : '1.'}</span>
+                  <span className="truncate">WhatsApp</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onboardingStep >= 1) {
+                      setOnboardingStep(2);
+                      try {
+                        localStorage.setItem('oeco_beauty_onboarding_step', '2');
+                      } catch (e) {
+                        console.warn(e);
+                      }
+                    }
+                  }}
+                  className={`py-1.5 px-1 rounded-xl font-bold flex items-center justify-center gap-1 transition-all ${
+                    onboardingStep === 2
+                      ? 'bg-[#7D1D32] text-white shadow-xs'
+                      : onboardingStep > 2
+                      ? 'bg-emerald-100 text-emerald-800'
+                      : 'bg-white text-stone-400 border border-stone-100 opacity-80 cursor-not-allowed'
+                  }`}
+                >
+                  <span>{onboardingStep > 2 ? '✓' : '2.'}</span>
+                  <span className="truncate">Agenda</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onboardingStep >= 2) {
+                      setOnboardingStep(3);
+                      try {
+                        localStorage.setItem('oeco_beauty_onboarding_step', '3');
+                      } catch (e) {
+                        console.warn(e);
+                      }
+                    }
+                  }}
+                  className={`py-1.5 px-1 rounded-xl font-bold flex items-center justify-center gap-1 transition-all ${
+                    onboardingStep === 3
+                      ? 'bg-[#7D1D32] text-white shadow-xs'
+                      : 'bg-white text-stone-400 border border-stone-100 opacity-80 cursor-not-allowed'
+                  }`}
+                >
+                  <span>3.</span>
+                  <span className="truncate">Prêmios</span>
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold text-stone-900 tracking-tight">
-                Vaga Pré-Reservada com Sucesso, {submittedLead.fullName.split(' ')[0]}! 🎉
-              </h2>
-              <p className="text-sm text-stone-600 max-w-md mx-auto">
-                Sua inscrição para a turma de{' '}
-                <strong className="text-stone-900 font-semibold">{submittedLead.session}</strong> foi confirmada.
-              </p>
-            </div>
-
-            {/* Passo Obrigatório: Entrar no WhatsApp */}
-            <div className="bg-[#FAF8F5] border-2 border-emerald-500/40 rounded-2xl p-5 sm:p-6 text-left space-y-4 shadow-sm">
-              <div className="flex items-start gap-3">
-                <div className="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
-                  1
+            {/* PASSO 0: TELA DE ALINHAMENTO INICIAL */}
+            {onboardingStep === 0 && (
+              <div className="space-y-5 animate-in fade-in duration-300">
+                <div className="w-16 h-16 bg-[#FDF0F3] text-[#7D1D32] rounded-full flex items-center justify-center mx-auto shadow-inner border border-[#EAC9D1]">
+                  <Sparkles className="w-8 h-8" />
                 </div>
-                <div>
-                  <h3 className="text-base font-bold text-stone-900">
-                    Passo Obrigatório: Entre no Grupo VIP da sua Turma
-                  </h3>
-                  <p className="text-xs text-stone-600 mt-1">
-                    O link do Google Meet e os materiais de apoio serão enviados exclusivamente dentro desse grupo silencioso.
+
+                <div className="space-y-1.5">
+                  <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-[11px] uppercase tracking-wider">
+                    🎉 Vaga Pré-Reservada com Sucesso!
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-[#2D0F16] tracking-tight">
+                    Faltam 3 Etapas Obrigatórias, {submittedLead.fullName.split(' ')[0]}!
+                  </h2>
+                  <p className="text-xs sm:text-sm text-stone-600 max-w-md mx-auto leading-relaxed">
+                    Sua inscrição para a turma de <strong>{submittedLead.session}</strong> está registrada. Agora precisamos garantir seu acesso à sala ao vivo e ativar seus prêmios.
                   </p>
                 </div>
-              </div>
 
-              <a
-                href={selectedSessionData.whatsappGroupUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white py-4 px-6 rounded-xl font-bold text-base flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0"
-              >
-                <MessageCircle className="w-6 h-6 fill-current" />
-                <span>Entrar no Grupo VIP no WhatsApp</span>
-                <ArrowRight className="w-5 h-5" />
-              </a>
-            </div>
+                {/* Box de Instrução Sequencial */}
+                <div className="bg-[#FFF9FA] border-2 border-[#D9A3AF] rounded-2xl p-4 sm:p-5 text-left space-y-3 shadow-xs">
+                  <div className="flex items-center gap-2 text-xs font-black text-[#7D1D32] uppercase tracking-wider">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-[#7D1D32]" />
+                    <span>Importante: Realize cada etapa na ordem indicada</span>
+                  </div>
 
-            {/* Passo 2: Adicionar à Agenda */}
-            <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 text-left flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-full bg-stone-300 text-stone-700 flex items-center justify-center font-bold text-sm shrink-0">
-                  2
+                  <div className="space-y-2.5 text-xs text-stone-700">
+                    <div className="flex items-start gap-2.5 bg-white p-3 rounded-xl border border-[#F4DEE3]">
+                      <span className="w-5 h-5 rounded-full bg-[#7D1D32] text-white flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">1</span>
+                      <div>
+                        <strong className="text-stone-900 block font-bold">Entrar no Grupo VIP do WhatsApp</strong>
+                        <span className="text-[11px] text-stone-500">Onde o link do Google Meet e os materiais serão enviados exclusivamente.</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-2.5 bg-white p-3 rounded-xl border border-[#F4DEE3]">
+                      <span className="w-5 h-5 rounded-full bg-stone-700 text-white flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">2</span>
+                      <div>
+                        <strong className="text-stone-900 block font-bold">Salvar no Calendário do seu Celular</strong>
+                        <span className="text-[11px] text-stone-500">Para você não esquecer e receber aviso 15 minutos antes da aula começar.</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-2.5 bg-white p-3 rounded-xl border border-[#F4DEE3]">
+                      <span className="w-5 h-5 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">3</span>
+                      <div>
+                        <strong className="text-stone-900 block font-bold">Desafio de Indicação & Prêmios de R$ 10k</strong>
+                        <span className="text-[11px] text-stone-500">Liberação do seu link exclusivo para concorrer aos 6 meses de consultoria gratuita.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-[11px] text-[#7D1D32] font-semibold bg-[#FDF0F3] p-2.5 rounded-xl text-center">
+                    💡 <strong>Aviso no Celular:</strong> Ao tocar em cada botão, você será direcionada para o app correspondente. Assim que concluir, <strong>retorne a esta página</strong> para avançar ao próximo passo!
+                  </p>
                 </div>
-                <div className="text-xs text-stone-700">
-                  <div className="font-semibold text-stone-900">Adicionar ao Calendário</div>
-                  <div>Receba um lembrete no celular 15 minutos antes.</div>
+
+                {/* Botão de Iniciar */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOnboardingStep(1);
+                    try {
+                      localStorage.setItem('oeco_beauty_onboarding_step', '1');
+                    } catch (e) {
+                      console.warn(e);
+                    }
+                  }}
+                  className="w-full bg-[#7D1D32] hover:bg-[#681729] text-white py-4 px-6 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <span>Começar Agora: Passo 1 (WhatsApp)</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </div>
+            )}
+
+            {/* PASSO 1: ENTRAR NO GRUPO VIP DO WHATSAPP */}
+            {onboardingStep === 1 && (
+              <div className="space-y-5 animate-in fade-in duration-300">
+                <div className="w-16 h-16 bg-[#E8F8EE] text-[#25D366] rounded-full flex items-center justify-center mx-auto shadow-inner border border-[#C2ECCF]">
+                  <MessageCircle className="w-9 h-9 fill-current" />
+                </div>
+
+                <div className="space-y-1.5">
+                  <span className="inline-block px-3 py-1 rounded-full bg-[#E8F8EE] text-[#1E7E34] font-extrabold text-[11px] uppercase tracking-wider">
+                    Passo 1 de 3 • Obrigatório
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                    Entre no Grupo VIP da Sua Turma
+                  </h2>
+                  <p className="text-xs sm:text-sm text-stone-600 max-w-md mx-auto leading-relaxed">
+                    Sua turma: <strong className="text-stone-900">{submittedLead.session}</strong>.<br />
+                    O link exclusivo do Google Meet e os materiais da aula serão enviados <strong>apenas dentro deste grupo silencioso</strong>.
+                  </p>
+                </div>
+
+                <div className="bg-[#FAF8F5] border-2 border-emerald-500/50 rounded-3xl p-5 sm:p-6 text-center space-y-4 shadow-sm">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setWaitingReturnFrom('whatsapp');
+                      window.open(selectedSessionData.whatsappGroupUrl, '_blank');
+                    }}
+                    className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white py-4 px-6 rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                  >
+                    <MessageCircle className="w-6 h-6 fill-current" />
+                    <span>Entrar no Grupo VIP no WhatsApp</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+
+                  <div className="bg-white border border-stone-200 rounded-xl p-3 text-xs text-stone-600 space-y-1">
+                    <p className="font-semibold text-stone-800">
+                      📱 Ao tocar no botão acima, seu WhatsApp vai abrir.
+                    </p>
+                    <p className="text-[11px] text-stone-500">
+                      Basta clicar em <strong>"Entrar no Grupo"</strong> no WhatsApp e depois <strong>voltar para esta página</strong>. Nós detectaremos seu retorno para liberar a etapa da Agenda!
+                    </p>
+                  </div>
+
+                  {/* Botão de Resgate Manual */}
+                  <div className="pt-2 border-t border-stone-200/80">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setWaitingReturnFrom(null);
+                        setOnboardingStep(2);
+                        try {
+                          localStorage.setItem('oeco_beauty_onboarding_step', '2');
+                        } catch (e) {
+                          console.warn(e);
+                        }
+                      }}
+                      className="text-xs font-bold text-[#7D1D32] hover:text-[#521321] hover:underline flex items-center justify-center gap-1.5 mx-auto py-1"
+                    >
+                      <Check className="w-4 h-4 text-emerald-600" />
+                      <span>Já entrei no grupo / Avançar para o Passo 2 (Agenda) ➔</span>
+                    </button>
+                  </div>
                 </div>
               </div>
+            )}
 
-              <a
-                href={selectedSessionData.googleCalendarUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto text-xs font-semibold px-4 py-2.5 bg-white border border-stone-300 rounded-xl hover:bg-stone-100 text-stone-800 transition-colors flex items-center justify-center gap-1.5 shadow-sm"
-              >
-                <Calendar className="w-4 h-4 text-stone-600" /> Salvar no Google Agenda
-              </a>
-            </div>
+            {/* PASSO 2: SALVAR NO CALENDÁRIO / GOOGLE AGENDA */}
+            {onboardingStep === 2 && (
+              <div className="space-y-5 animate-in fade-in duration-300">
+                <div className="w-16 h-16 bg-[#EEF2FF] text-[#4F46E5] rounded-full flex items-center justify-center mx-auto shadow-inner border border-[#C7D2FE]">
+                  <Calendar className="w-8 h-8" />
+                </div>
 
-            {/* SEGUNDA ETAPA: PROGRAMA DE REFERÊNCIA & PREMIAÇÃO EXCLUSIVA */}
-            {(() => {
+                <div className="space-y-1.5">
+                  <span className="inline-block px-3 py-1 rounded-full bg-[#EEF2FF] text-[#4338CA] font-extrabold text-[11px] uppercase tracking-wider">
+                    Passo 2 de 3 • Alarme no Celular
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                    Salve a Data no Seu Calendário
+                  </h2>
+                  <p className="text-xs sm:text-sm text-stone-600 max-w-md mx-auto leading-relaxed">
+                    Data confirmada: <strong className="text-stone-900">{submittedLead.session}</strong>.<br />
+                    Ative o lembrete automático para o seu celular despertar 15 minutos antes da aula começar.
+                  </p>
+                </div>
+
+                <div className="bg-[#FAF8F5] border-2 border-indigo-400/50 rounded-3xl p-5 sm:p-6 text-center space-y-4 shadow-sm">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setWaitingReturnFrom('calendar');
+                      window.open(selectedSessionData.googleCalendarUrl, '_blank');
+                    }}
+                    className="w-full bg-[#1A73E8] hover:bg-[#1557b0] text-white py-4 px-6 rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                  >
+                    <Calendar className="w-6 h-6" />
+                    <span>Salvar no Google Agenda</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+
+                  <div className="bg-white border border-stone-200 rounded-xl p-3 text-xs text-stone-600 space-y-1">
+                    <p className="font-semibold text-stone-800">
+                      📱 Toque em "Salvar" na agenda e volte aqui.
+                    </p>
+                    <p className="text-[11px] text-stone-500">
+                      Ao retornar a esta tela, liberaremos imediatamente sua participação no <strong>Desafio de Indicação com mais de R$ 10 mil em prêmios</strong>!
+                    </p>
+                  </div>
+
+                  {/* Botão de Resgate Manual */}
+                  <div className="pt-2 border-t border-stone-200/80">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setWaitingReturnFrom(null);
+                        setOnboardingStep(3);
+                        try {
+                          localStorage.setItem('oeco_beauty_onboarding_step', '3');
+                        } catch (e) {
+                          console.warn(e);
+                        }
+                      }}
+                      className="text-xs font-bold text-[#7D1D32] hover:text-[#521321] hover:underline flex items-center justify-center gap-1.5 mx-auto py-1"
+                    >
+                      <Check className="w-4 h-4 text-emerald-600" />
+                      <span>Já salvei na agenda / Desbloquear Meus Prêmios ➔</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* PASSO 3: DESAFIO DE INDICAÇÃO & PRÊMIOS (> R$ 10 MIL) */}
+            {onboardingStep === 3 && (() => {
               // Código de referência do usuário: strictly número de telefone limpo (ex: 21999999999)
               const cleanPhone = submittedLead.whatsapp.replace(/\D/g, '');
               const activeRefCode = cleanPhone;
@@ -955,200 +1294,223 @@ export const BeautyWorkshopPage: React.FC = () => {
               };
 
               return (
-                <div className="mt-8 pt-6 border-t-2 border-dashed border-[#EAC9D1] text-left space-y-5 animate-in fade-in duration-300">
-                  {/* Cabeçalho da Premiação & Banner de R$ 7.500 */}
-                  <div className="bg-gradient-to-r from-[#FFF5F7] via-[#FDF0F3] to-[#FCEAEF] border-2 border-[#D9A3AF] rounded-3xl p-5 sm:p-6 relative overflow-hidden shadow-sm">
-                    {/* Banner Marsala Centrado de Destaque */}
-                    <div className="bg-gradient-to-r from-[#7D1D32] via-[#94263F] to-[#681729] text-white rounded-2xl p-6 sm:p-7 mb-5 shadow-md text-center relative overflow-hidden">
-                      <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-                      <div className="relative z-10 max-w-2xl mx-auto space-y-2">
-                        <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
-                          Mais de <span className="text-amber-200">10 mil reais</span> em prêmios
-                        </h3>
-                        <p className="text-xs sm:text-sm text-[#FCEBEB]/90 font-medium leading-relaxed">
-                          Premiações ao final de cada webinar e ao final do webinar 4 mostrando ao vivo quem indicou mais para dar os maiores prêmios.
-                        </p>
-                      </div>
+                <div className="space-y-5 animate-in fade-in duration-300 text-left">
+                  {/* Topo Festivo de Conclusão 100% */}
+                  <div className="text-center space-y-1.5">
+                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-black text-xs uppercase tracking-wider shadow-xs">
+                      🏆 Parabéns! Inscrição 100% Concluída
+                    </span>
+                    <h2 className="text-xl sm:text-2xl font-black text-[#2D0F16] tracking-tight">
+                      Seu Link Oficial de Prêmios Foi Ativado!
+                    </h2>
+                    <p className="text-xs sm:text-sm text-stone-600 max-w-md mx-auto leading-relaxed">
+                      Você está inscrita na turma, no grupo do WhatsApp e com o evento na agenda. Agora concorra aos maiores prêmios do evento indicando suas amigas:
+                    </p>
+                  </div>
+
+                  {/* Banner Marsala Centrado de Destaque */}
+                  <div className="bg-gradient-to-r from-[#7D1D32] via-[#94263F] to-[#681729] text-white rounded-2xl p-6 sm:p-7 shadow-md text-center relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+                    <div className="relative z-10 max-w-2xl mx-auto space-y-2">
+                      <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+                        Mais de <span className="text-amber-200">10 mil reais</span> em prêmios
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#FCEBEB]/90 font-medium leading-relaxed">
+                        Premiações ao final de cada webinar e ao final do webinar 4 mostrando ao vivo quem indicou mais para dar os maiores prêmios.
+                      </p>
                     </div>
+                  </div>
 
-                    <div className="flex items-start gap-3.5">
-                      <div className="w-10 h-10 rounded-xl bg-[#7D1D32] text-white flex items-center justify-center shrink-0 shadow-sm">
-                        <Gift className="w-5 h-5 text-[#FCEBEB]" />
+                  {/* Os 3 Prêmios Oficiais OECO com Valores */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {/* 1º Lugar */}
+                    <div className="bg-white rounded-2xl p-4 border-2 border-[#D9A3AF] shadow-xs flex flex-col justify-between relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
+                        1º Lugar
                       </div>
-                      <div className="space-y-1">
-                        <h3 className="text-base sm:text-lg font-black text-[#2D0F16] tracking-tight">
-                          Como Funciona o Desafio de Indicação?
-                        </h3>
-                        <p className="text-xs sm:text-sm text-[#5C2B36] font-medium leading-relaxed">
-                          A premiação será entregue para as 3 pessoas que gerarem o maior número de amigas e profissionais inscritas no <strong>Webinar Beleza das Finanças</strong>. Todas as premiadas recebem diagnóstico com Matheus!
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Os 3 Prêmios Oficiais OECO com Valores */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
-                      {/* 1º Lugar */}
-                      <div className="bg-white/95 rounded-2xl p-4 border-2 border-[#D9A3AF] shadow-xs flex flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 bg-[#7D1D32] text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
-                          1º Lugar
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-1.5 mb-1.5">
-                            <span className="text-2xl">🥇</span>
-                            <span className="px-2 py-0.5 rounded-full bg-[#7D1D32]/10 text-[#7D1D32] font-black text-xs">
-                              R$ 4.100 em prêmios
-                            </span>
-                          </div>
-                          <div className="text-xs font-black text-[#7D1D32] leading-tight">
-                            6 Meses de Consultoria + Oeco Start
-                          </div>
-                          <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
-                            <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
-                            <li>• <strong>6 meses de consultoria</strong> (1h exclusiva por mês)</li>
-                            <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante os 6 meses de consultoria</li>
-                          </ul>
-                        </div>
-                        <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-[#7D1D32] uppercase tracking-wide">
-                          Troféu de Ouro
-                        </div>
-                      </div>
-
-                      {/* 2º Lugar */}
-                      <div className="bg-white/95 rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 bg-stone-800 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
-                          2º Lugar
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-1.5 mb-1.5">
-                            <span className="text-2xl">🥈</span>
-                            <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-800 font-black text-xs">
-                              R$ 2.300 em prêmios
-                            </span>
-                          </div>
-                          <div className="text-xs font-black text-stone-900 leading-tight">
-                            3 Meses de Consultoria + Oeco Start
-                          </div>
-                          <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
-                            <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
-                            <li>• <strong>3 meses de consultoria</strong> (1h exclusiva por mês)</li>
-                            <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante os 3 meses de consultoria</li>
-                          </ul>
-                        </div>
-                        <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
-                          Troféu de Prata
-                        </div>
-                      </div>
-
-                      {/* 3º Lugar */}
-                      <div className="bg-white/95 rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 bg-stone-600 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
-                          3º Lugar
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-1.5 mb-1.5">
-                            <span className="text-2xl">🥉</span>
-                            <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 font-black text-xs">
-                              R$ 1.100 em prêmios
-                            </span>
-                          </div>
-                          <div className="text-xs font-black text-stone-900 leading-tight">
-                            1 Mês de Consultoria + Oeco Start
-                          </div>
-                          <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
-                            <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
-                            <li>• <strong>1 mês de consultoria</strong> (1h exclusiva individual)</li>
-                            <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante o mês de consultoria</li>
-                          </ul>
-                        </div>
-                        <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
-                          Troféu de Bronze
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Caixa de Geração e Cópia do Link Pessoal */}
-                    <div className="mt-5 bg-white rounded-2xl p-4 border border-[#EAC9D1] space-y-3">
                       <div>
-                        <div className="flex items-center justify-between mb-1">
-                          <label className="block text-xs font-bold text-[#2D0F16]">
-                            🔗 Seu Link Exclusivo de Indicação:
-                          </label>
-                          <span className="text-[10px] text-stone-500 font-medium">
-                            Identificador: <strong className="text-[#7D1D32]">{cleanPhone}</strong>
+                        <div className="flex items-center gap-1.5 mb-1.5">
+                          <span className="text-2xl">🥇</span>
+                          <span className="px-2 py-0.5 rounded-full bg-[#7D1D32]/10 text-[#7D1D32] font-black text-xs">
+                            R$ 4.100 em prêmios
                           </span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            readOnly
-                            value={personalShareUrl}
-                            className="w-full bg-[#FFF9FA] border border-[#D9A3AF] px-3.5 py-2.5 rounded-xl text-xs text-[#2D0F16] font-mono select-all focus:outline-none"
-                          />
-                          <button
-                            type="button"
-                            onClick={handleCopyLink}
-                            className="px-4 py-2.5 bg-[#7D1D32] hover:bg-[#681729] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shrink-0 transition-colors shadow-xs"
-                          >
-                            {copiedLink ? (
-                              <>
-                                <CheckCheck className="w-3.5 h-3.5" /> Copiado!
-                              </>
-                            ) : (
-                              <>
-                                <Copy className="w-3.5 h-3.5" /> Copiar Link
-                              </>
-                            )}
-                          </button>
+                        <div className="text-xs font-black text-[#7D1D32] leading-tight">
+                          6 Meses de Consultoria + Oeco Start
                         </div>
+                        <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                          <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                          <li>• <strong>6 meses de consultoria</strong> (1h exclusiva por mês)</li>
+                          <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante os 6 meses de consultoria</li>
+                        </ul>
                       </div>
+                      <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-[#7D1D32] uppercase tracking-wide">
+                        Troféu de Ouro
+                      </div>
+                    </div>
 
-                      {/* Botões de Ação Rápida no WhatsApp */}
-                      <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                    {/* 2º Lugar */}
+                    <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-stone-800 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
+                        2º Lugar
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5 mb-1.5">
+                          <span className="text-2xl">🥈</span>
+                          <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-800 font-black text-xs">
+                            R$ 2.300 em prêmios
+                          </span>
+                        </div>
+                        <div className="text-xs font-black text-stone-900 leading-tight">
+                          3 Meses de Consultoria + Oeco Start
+                        </div>
+                        <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                          <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                          <li>• <strong>3 meses de consultoria</strong> (1h exclusiva por mês)</li>
+                          <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante os 3 meses de consultoria</li>
+                        </ul>
+                      </div>
+                      <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
+                        Troféu de Prata
+                      </div>
+                    </div>
+
+                    {/* 3º Lugar */}
+                    <div className="bg-white rounded-2xl p-4 border border-stone-200 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                      <div className="absolute top-0 right-0 bg-stone-600 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
+                        3º Lugar
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5 mb-1.5">
+                          <span className="text-2xl">🥉</span>
+                          <span className="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 font-black text-xs">
+                            R$ 1.100 em prêmios
+                          </span>
+                        </div>
+                        <div className="text-xs font-black text-stone-900 leading-tight">
+                          1 Mês de Consultoria + Oeco Start
+                        </div>
+                        <ul className="text-[11px] text-stone-600 mt-2 space-y-1 leading-snug">
+                          <li>• <strong>Diagnóstico Financeiro Oeco</strong> (sessão de 30min a 1h com Matheus)</li>
+                          <li>• <strong>1 mês de consultoria</strong> (1h exclusiva individual)</li>
+                          <li>• Sistema <strong>Oeco Start 100% gratuito</strong> durante o mês de consultoria</li>
+                        </ul>
+                      </div>
+                      <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-black text-stone-600 uppercase tracking-wide">
+                        Troféu de Bronze
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Caixa de Geração e Cópia do Link Pessoal */}
+                  <div className="bg-[#FFF9FA] rounded-3xl p-5 border border-[#EAC9D1] space-y-3.5">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-xs font-bold text-[#2D0F16]">
+                          🔗 Seu Link Exclusivo de Indicação:
+                        </label>
+                        <span className="text-[10px] text-stone-500 font-medium">
+                          Identificador: <strong className="text-[#7D1D32]">{cleanPhone}</strong>
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          readOnly
+                          value={personalShareUrl}
+                          className="w-full bg-white border border-[#D9A3AF] px-3.5 py-2.5 rounded-xl text-xs text-[#2D0F16] font-mono select-all focus:outline-none"
+                        />
                         <button
                           type="button"
-                          onClick={handleWhatsAppShare}
-                          className="flex-1 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                          onClick={handleCopyLink}
+                          className="px-4 py-2.5 bg-[#7D1D32] hover:bg-[#681729] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shrink-0 transition-colors shadow-xs"
                         >
-                          <MessageCircle className="w-4 h-4 fill-current" />
-                          <span>Compartilhar Direto no WhatsApp</span>
-                        </button>
-
-                        <button
-                          type="button"
-                          onClick={handleCopyMessage}
-                          className="px-4 py-3 bg-[#FDF0F3] hover:bg-[#F9E2E8] text-[#7D1D32] border border-[#EAC9D1] rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-colors"
-                        >
-                          {copiedMessage ? (
+                          {copiedLink ? (
                             <>
-                              <CheckCheck className="w-4 h-4" /> Texto Pronto Copiado!
+                              <CheckCheck className="w-3.5 h-3.5" /> Copiado!
                             </>
                           ) : (
                             <>
-                              <Share2 className="w-4 h-4" /> Copiar Texto Pronto
+                              <Copy className="w-3.5 h-3.5" /> Copiar Link
                             </>
                           )}
                         </button>
                       </div>
-
-                      <p className="text-[10px] text-stone-500 text-center italic pt-1">
-                        💡 Cada amiga que se cadastrar usando o seu link terá o seu telefone registrado como indicadora. A premiação ocorrerá ao final dos webinars!
-                      </p>
                     </div>
+
+                    {/* Botões de Ação Rápida no WhatsApp */}
+                    <div className="flex flex-col sm:flex-row gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={handleWhatsAppShare}
+                        className="flex-1 bg-[#25D366] hover:bg-[#20ba5a] text-white px-4 py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+                      >
+                        <MessageCircle className="w-4 h-4 fill-current" />
+                        <span>Compartilhar Direto no WhatsApp</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={handleCopyMessage}
+                        className="px-4 py-3 bg-[#FDF0F3] hover:bg-[#F9E2E8] text-[#7D1D32] border border-[#EAC9D1] rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-colors"
+                      >
+                        {copiedMessage ? (
+                          <>
+                            <CheckCheck className="w-4 h-4" /> Texto Pronto Copiado!
+                          </>
+                        ) : (
+                          <>
+                            <Share2 className="w-4 h-4" /> Copiar Texto Pronto
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    <p className="text-[10px] text-stone-500 text-center italic pt-1">
+                      💡 Cada amiga que se cadastrar usando o seu link terá o seu telefone registrado como indicadora. A premiação ocorrerá ao final dos webinars!
+                    </p>
+                  </div>
+
+                  {/* Links de Reabertura Rápida de Passos Anteriores */}
+                  <div className="pt-2 flex flex-wrap items-center justify-center gap-4 text-xs text-stone-500 border-t border-stone-200">
+                    <a
+                      href={selectedSessionData.whatsappGroupUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-emerald-700 flex items-center gap-1 underline"
+                    >
+                      <span>💬 Reabrir Grupo VIP</span>
+                    </a>
+                    <a
+                      href={selectedSessionData.googleCalendarUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-indigo-700 flex items-center gap-1 underline"
+                    >
+                      <span>🗓️ Reabrir Google Agenda</span>
+                    </a>
                   </div>
                 </div>
               );
             })()}
 
-            {/* Suporte Matheus */}
-            <div className="pt-2 text-xs text-stone-500">
-              Precisa falar com a gente ou tirar alguma dúvida?{' '}
+            {/* Rodapé de Ações do Participante */}
+            <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+              <button
+                type="button"
+                onClick={handleNewRegistration}
+                className="hover:text-stone-800 underline text-[11px]"
+              >
+                ← Fazer outra inscrição
+              </button>
+
               <a 
                 href="https://wa.me/5521973413967?text=Olá,%20Matheus!%20Me%20cadastrei%20no%20workshop%20de%20beleza%20e%20gostaria%20de%20falar%20com%20você."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#7D1D32] font-semibold underline hover:text-stone-900"
+                className="text-[#7D1D32] font-semibold hover:underline text-[11px]"
               >
-                Falar com Matheus pelo WhatsApp
+                Falar com Matheus
               </a>
             </div>
           </div>
