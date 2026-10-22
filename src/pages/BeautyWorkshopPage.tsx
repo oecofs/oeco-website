@@ -55,7 +55,7 @@ export const SESSIONS = [
     date: '26/10',
     time: '18:00',
     whatsappGroupUrl: 'https://chat.whatsapp.com/L28bVWfDbsP72xs9mfHF4E',
-    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NHU0NTdsdDA5OHRrZDNrZGxjcXA3ZWRpMXIgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+    googleCalendarUrl: 'https://calendar.app.google/GWM6oiPj5P51tQoc6'
   },
   {
     id: 'seg-19',
@@ -64,7 +64,7 @@ export const SESSIONS = [
     date: '26/10',
     time: '19:00',
     whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
-    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NXF0bjFyNmUwMzFmMDNwOXFtbGI2OWEwOHEgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+    googleCalendarUrl: 'https://calendar.app.google/ETDTLAS23QtKJ9Bw7'
   },
   {
     id: 'seg-nov-09',
@@ -73,7 +73,7 @@ export const SESSIONS = [
     date: '09/11',
     time: '19:00',
     whatsappGroupUrl: 'https://chat.whatsapp.com/Jb9u7VsIcou4S5DJWaEtLd',
-    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NG5hcXFlZzByNGUxcWE4NHZzbmF1ZXZkODggb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+    googleCalendarUrl: 'https://calendar.app.google/VP6K7iF4gj78ik7m8'
   },
   {
     id: 'seg-nov-16',
@@ -82,7 +82,7 @@ export const SESSIONS = [
     date: '16/11',
     time: '19:00',
     whatsappGroupUrl: 'https://chat.whatsapp.com/LhXYq5tTjXp3c4oX6wsq00',
-    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NWhhaG82NmYydTNzcW91YWtyYTBmMzlyMzMgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+    googleCalendarUrl: 'https://calendar.app.google/DSEfqZXH25STsbwK6'
   }
 ];
 
