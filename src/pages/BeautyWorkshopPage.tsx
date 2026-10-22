@@ -52,6 +52,7 @@ export const SESSIONS = [
     id: 'seg-18',
     label: 'Segunda-feira (26/10) • 18:00',
     day: '26/10 (Segunda)',
+    date: '26/10',
     time: '18:00',
     whatsappGroupUrl: 'https://chat.whatsapp.com/L28bVWfDbsP72xs9mfHF4E',
     googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NHU0NTdsdDA5OHRrZDNrZGxjcXA3ZWRpMXIgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
@@ -60,25 +61,52 @@ export const SESSIONS = [
     id: 'seg-19',
     label: 'Segunda-feira (26/10) • 19:00',
     day: '26/10 (Segunda)',
+    date: '26/10',
     time: '19:00',
     whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
     googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NXF0bjFyNmUwMzFmMDNwOXFtbGI2OWEwOHEgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
   },
   {
-    id: 'ter-18',
-    label: 'Terça-feira (27/10) • 18:00',
-    day: '27/10 (Terça)',
-    time: '18:00',
-    whatsappGroupUrl: 'https://chat.whatsapp.com/Jb9u7VsIcou4S5DJWaEtLd',
-    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NG5hcXFlZzByNGUxcWE4NHZzbmF1ZXZkODggb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+    id: 'seg-nov-09',
+    label: 'Segunda-feira (09/11) • 19:00',
+    day: '09/11 (Segunda)',
+    date: '09/11',
+    time: '19:00',
+    whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
+    googleCalendarUrl: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Webinar+Beleza+das+Finan%C3%A7as+-+OECO&dates=20261109T220000Z/20261109T230000Z&details=Workshop+Online+e+Gratuito+Beleza+das+Finan%C3%A7as+com+Matheus+Gurgel+(OECO)&location=Online+(Google+Meet)'
   },
   {
-    id: 'ter-19',
-    label: 'Terça-feira (27/10) • 19:00',
-    day: '27/10 (Terça)',
+    id: 'seg-nov-16',
+    label: 'Segunda-feira (16/11) • 19:00',
+    day: '16/11 (Segunda)',
+    date: '16/11',
     time: '19:00',
-    whatsappGroupUrl: 'https://chat.whatsapp.com/Jb9u7VsIcou4S5DJWaEtLd',
-    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NWhhaG82NmYydTNzcW91YWtyYTBmMzlyMzMgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
+    whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
+    googleCalendarUrl: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Webinar+Beleza+das+Finan%C3%A7as+-+OECO&dates=20261116T220000Z/20261116T230000Z&details=Workshop+Online+e+Gratuito+Beleza+das+Finan%C3%A7as+com+Matheus+Gurgel+(OECO)&location=Online+(Google+Meet)'
+  }
+];
+
+export const TIMELINE_DAYS = [
+  {
+    date: '26/10',
+    weekday: 'Segunda-feira',
+    month: 'Outubro',
+    tag: '1ª Data',
+    sessionIds: ['seg-18', 'seg-19']
+  },
+  {
+    date: '09/11',
+    weekday: 'Segunda-feira',
+    month: 'Novembro',
+    tag: '2ª Data',
+    sessionIds: ['seg-nov-09']
+  },
+  {
+    date: '16/11',
+    weekday: 'Segunda-feira',
+    month: 'Novembro',
+    tag: '3ª Data',
+    sessionIds: ['seg-nov-16']
   }
 ];
 
@@ -644,7 +672,7 @@ export const BeautyWorkshopPage: React.FC = () => {
 
           {/* Rodapé do Cartão */}
           <div className={`pt-1 border-t ${currentTheme.dividerColor} text-[7.5px] ${currentTheme.footerBg} font-bold flex items-center justify-between`}>
-            <span>🗓️ 26 e 27/10 • Ao Vivo</span>
+            <span>🗓️ 26/10, 09/11 e 16/11 • Ao Vivo</span>
             <span className={`px-1.5 py-0.5 rounded text-[7px] font-black uppercase tracking-wider ${currentTheme.pillBg}`}>
               100% Gratuito
             </span>
@@ -709,7 +737,7 @@ export const BeautyWorkshopPage: React.FC = () => {
         {/* Base: Data das Turmas e Selo Gratuito */}
         <div className={`border-t ${currentTheme.dividerColor} pt-2 text-[8px] ${currentTheme.footerBg} flex items-center justify-between font-bold`}>
           <div className="text-left leading-tight">
-            <div className="font-extrabold text-[8.5px]">🗓️ 26 e 27/10 • Ao Vivo</div>
+            <div className="font-extrabold text-[8.5px]">🗓️ 26/10, 09/11 e 16/11 • Ao Vivo</div>
             <div className="text-[7.5px] opacity-90 mt-0.5">Turmas às 18h e 19h</div>
           </div>
           <span className={`px-2 py-1 rounded-md text-[8px] font-black uppercase tracking-wider shadow-xs ${currentTheme.pillBg}`}>
@@ -937,7 +965,7 @@ export const BeautyWorkshopPage: React.FC = () => {
 
           <div className="flex items-center justify-center gap-4 pt-2 text-xs text-[#FCEBEB]/80 font-medium">
             <span className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-[#E8B2BD]" /> 26 e 27 de Outubro
+              <Calendar className="w-4 h-4 text-[#E8B2BD]" /> 26/10, 09/11 e 16/11
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-[#E8B2BD]" /> Turmas 18h e 19h
@@ -1275,7 +1303,7 @@ export const BeautyWorkshopPage: React.FC = () => {
               const activeRefCode = cleanPhone;
               const personalShareUrl = `https://oecofs.com/forms/beleza?ref=${encodeURIComponent(activeRefCode)}`;
               
-              const shareMessage = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar sobre gestão financeira do seu negócio, como separar as contas e buscar ter lucro real no seu negócio. Garante sua vaga por esse link exclusivo: ${personalShareUrl}`;
+              const shareMessage = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26/10, 09/11 e 16/11) e lembrei de você! Eles vão ensinar sobre gestão financeira do seu negócio, como separar as contas e buscar ter lucro real no seu negócio. Garante sua vaga por esse link exclusivo: ${personalShareUrl}`;
 
               const handleCopyLink = () => {
                 navigator.clipboard.writeText(personalShareUrl);
@@ -1685,7 +1713,7 @@ export const BeautyWorkshopPage: React.FC = () => {
                 const cleanPhoneDigits = referralPhone.replace(/\D/g, '');
                 const isValid = referralName.trim().length >= 3 && cleanPhoneDigits.length >= 10;
                 const personalLink = `https://oecofs.com/forms/beleza?ref=${cleanPhoneDigits}`;
-                const shareText = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26 e 27/10) e lembrei de você! Eles vão ensinar sobre gestão financeira do seu negócio, como separar as contas e buscar ter lucro real no seu negócio. Garante sua vaga por esse link exclusivo: ${personalLink}`;
+                const shareText = `Oi! Me inscrevi no Webinar Beleza das Finanças da OECO (100% gratuito e ao vivo nos dias 26/10, 09/11 e 16/11) e lembrei de você! Eles vão ensinar sobre gestão financeira do seu negócio, como separar as contas e buscar ter lucro real no seu negócio. Garante sua vaga por esse link exclusivo: ${personalLink}`;
 
                 if (!isValid) {
                   return (
@@ -2049,8 +2077,8 @@ export const BeautyWorkshopPage: React.FC = () => {
               </div>
             </section>
 
-            {/* ETAPA 5: ESCOLHA DA TURMA DO WORKSHOP */}
-            <section className="space-y-3">
+            {/* ETAPA 5: ESCOLHA DA TURMA DO WORKSHOP (TIMELINE EM 3 COLUNAS) */}
+            <section className="space-y-4">
               <div className="flex items-center gap-2 border-b border-[#F4DEE3] pb-2.5">
                 <span className="w-6 h-6 rounded-full bg-[#7D1D32] text-white text-xs font-bold flex items-center justify-center shadow-xs">
                   5
@@ -2060,64 +2088,150 @@ export const BeautyWorkshopPage: React.FC = () => {
                     Escolha sua Turma do Workshop *
                   </h2>
                   <p className="text-xs text-stone-500">
-                    Selecione o melhor dia e horário para participar ao vivo:
+                    Selecione a data e o melhor horário na timeline abaixo para participar ao vivo:
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {SESSIONS.map(session => {
-                  const isSelected = sessionId === session.id;
-                  const count = sessionCounts[session.id] || 0;
-                  const remaining = Math.max(0, TOTAL_SEATS_PER_SESSION - count);
-                  const isAlmostFull = remaining <= 20 && remaining > 0;
-                  const isSoldOut = remaining === 0;
+              {/* Conector visual da Timeline (Desktop) */}
+              <div className="hidden md:flex items-center justify-between px-6 py-1 text-xs font-semibold text-stone-400">
+                <div className="flex items-center gap-2">
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
+                    ['seg-18', 'seg-19'].includes(sessionId) ? 'bg-[#7D1D32] text-white shadow-xs' : 'bg-stone-200 text-stone-600'
+                  }`}>
+                    1
+                  </span>
+                  <span className={['seg-18', 'seg-19'].includes(sessionId) ? 'text-[#7D1D32] font-bold' : ''}>
+                    26 de Outubro
+                  </span>
+                </div>
+                <div className="flex-1 h-[2px] mx-3 bg-gradient-to-r from-stone-200 via-stone-300 to-stone-200 rounded-full" />
+                <div className="flex items-center gap-2">
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
+                    sessionId === 'seg-nov-09' ? 'bg-[#7D1D32] text-white shadow-xs' : 'bg-stone-200 text-stone-600'
+                  }`}>
+                    2
+                  </span>
+                  <span className={sessionId === 'seg-nov-09' ? 'text-[#7D1D32] font-bold' : ''}>
+                    09 de Novembro
+                  </span>
+                </div>
+                <div className="flex-1 h-[2px] mx-3 bg-gradient-to-r from-stone-200 via-stone-300 to-stone-200 rounded-full" />
+                <div className="flex items-center gap-2">
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-all ${
+                    sessionId === 'seg-nov-16' ? 'bg-[#7D1D32] text-white shadow-xs' : 'bg-stone-200 text-stone-600'
+                  }`}>
+                    3
+                  </span>
+                  <span className={sessionId === 'seg-nov-16' ? 'text-[#7D1D32] font-bold' : ''}>
+                    16 de Novembro
+                  </span>
+                </div>
+              </div>
+
+              {/* Grid em 3 Colunas: 1 coluna por data */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 items-stretch">
+                {TIMELINE_DAYS.map(dayGroup => {
+                  const isDayActive = dayGroup.sessionIds.includes(sessionId);
+                  const daySessions = SESSIONS.filter(s => dayGroup.sessionIds.includes(s.id));
 
                   return (
-                    <label
-                      key={session.id}
-                      className={`p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
-                        isSoldOut
-                          ? 'border-stone-200 bg-stone-100/70 opacity-60 cursor-not-allowed'
-                          : isSelected
-                            ? 'border-[#7D1D32] bg-[#7D1D32]/15 ring-2 ring-[#7D1D32] shadow-sm cursor-pointer'
-                            : 'border-stone-200 bg-stone-50/70 hover:bg-[#FDF3F5] cursor-pointer'
+                    <div
+                      key={dayGroup.date}
+                      className={`rounded-2xl border transition-all p-3.5 flex flex-col justify-between ${
+                        isDayActive
+                          ? 'border-[#7D1D32] bg-[#FDF3F5]/80 ring-2 ring-[#7D1D32]/30 shadow-md'
+                          : 'border-stone-200/90 bg-stone-50/70 hover:border-stone-300 hover:bg-stone-50'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <input
-                          type="radio"
-                          name="session"
-                          value={session.id}
-                          disabled={isSoldOut}
-                          checked={isSelected}
-                          onChange={() => !isSoldOut && setSessionId(session.id)}
-                          className="accent-[#7D1D32] w-4 h-4 cursor-pointer disabled:cursor-not-allowed"
-                        />
-                        <div>
-                          <div className="text-xs sm:text-sm font-bold text-[#2D0F16]">
-                            {session.day}
+                      <div>
+                        {/* Cabeçalho do Dia */}
+                        <div className="flex items-center justify-between mb-2">
+                          <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full transition-all ${
+                            isDayActive ? 'bg-[#7D1D32] text-white' : 'bg-stone-200/90 text-stone-600'
+                          }`}>
+                            {dayGroup.tag}
+                          </span>
+                          <span className="text-[11px] font-semibold text-stone-500 flex items-center gap-1">
+                            <Calendar className={`w-3.5 h-3.5 ${isDayActive ? 'text-[#7D1D32]' : 'text-stone-400'}`} />
+                            {dayGroup.month}
+                          </span>
+                        </div>
+
+                        <div className="text-left">
+                          <div className="text-xl font-black text-[#2D0F16] flex items-baseline gap-1.5">
+                            {dayGroup.date}
+                            <span className="text-xs font-semibold text-stone-500">({dayGroup.weekday})</span>
                           </div>
-                          <div className="text-xs text-stone-600 font-medium flex items-center gap-1 mt-0.5">
-                            <Clock className="w-3 h-3 text-[#7D1D32]" /> Às {session.time} (ao vivo)
-                          </div>
+                        </div>
+
+                        <div className="h-[1px] bg-stone-200/80 my-2.5" />
+
+                        {/* Lista de Horários Disponíveis no Dia */}
+                        <div className="space-y-2">
+                          {daySessions.map(session => {
+                            const isSelected = sessionId === session.id;
+                            const count = sessionCounts[session.id] || 0;
+                            const remaining = Math.max(0, TOTAL_SEATS_PER_SESSION - count);
+                            const isAlmostFull = remaining <= 20 && remaining > 0;
+                            const isSoldOut = remaining === 0;
+
+                            return (
+                              <label
+                                key={session.id}
+                                className={`p-3 rounded-xl border transition-all flex flex-col gap-1.5 ${
+                                  isSoldOut
+                                    ? 'border-stone-200 bg-stone-100/70 opacity-60 cursor-not-allowed'
+                                    : isSelected
+                                      ? 'border-[#7D1D32] bg-white ring-2 ring-[#7D1D32] shadow-sm cursor-pointer'
+                                      : 'border-stone-200/80 bg-white hover:border-[#7D1D32]/50 hover:bg-[#FDF3F5]/30 cursor-pointer'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-2">
+                                    <input
+                                      type="radio"
+                                      name="session"
+                                      value={session.id}
+                                      disabled={isSoldOut}
+                                      checked={isSelected}
+                                      onChange={() => !isSoldOut && setSessionId(session.id)}
+                                      className="accent-[#7D1D32] w-4 h-4 cursor-pointer disabled:cursor-not-allowed"
+                                    />
+                                    <span className="text-sm font-black text-[#2D0F16] flex items-center gap-1">
+                                      <Clock className="w-3.5 h-3.5 text-[#7D1D32]" /> {session.time}
+                                    </span>
+                                  </div>
+                                  <span className="text-[10px] text-stone-500 font-medium">ao vivo</span>
+                                </div>
+
+                                <div className="flex items-center justify-between pt-0.5">
+                                  {isSoldOut ? (
+                                    <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-red-100 border border-red-200 text-red-700">
+                                      Esgotado
+                                    </span>
+                                  ) : isAlmostFull ? (
+                                    <span className="text-[9px] uppercase font-extrabold tracking-wider px-1.5 py-0.5 rounded-full bg-amber-100 border border-amber-300 text-amber-800 animate-pulse flex items-center gap-1 shadow-xs">
+                                      🔥 {remaining} vagas
+                                    </span>
+                                  ) : (
+                                    <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-stone-100 border border-stone-200 text-stone-600">
+                                      Vagas Abertas
+                                    </span>
+                                  )}
+                                </div>
+                              </label>
+                            );
+                          })}
                         </div>
                       </div>
 
-                      {isSoldOut ? (
-                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-red-100 border border-red-200 text-red-700">
-                          Esgotado
-                        </span>
-                      ) : isAlmostFull ? (
-                        <span className="text-[10px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-full bg-amber-100 border border-amber-300 text-amber-800 animate-pulse flex items-center gap-1 shadow-xs">
-                          🔥 {remaining} vagas restantes
-                        </span>
-                      ) : (
-                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-white/80 border border-stone-200 text-stone-600">
-                          Vagas Limitadas
-                        </span>
+                      {daySessions.length === 1 && (
+                        <div className="text-[10px] text-stone-400 text-center pt-2 italic">
+                          Turma única às 19h
+                        </div>
                       )}
-                    </label>
+                    </div>
                   );
                 })}
               </div>
