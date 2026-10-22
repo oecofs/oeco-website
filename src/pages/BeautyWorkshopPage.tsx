@@ -72,7 +72,7 @@ export const SESSIONS = [
     day: '09/11 (Segunda)',
     date: '09/11',
     time: '19:00',
-    whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
+    whatsappGroupUrl: 'https://chat.whatsapp.com/Jb9u7VsIcou4S5DJWaEtLd',
     googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NG5hcXFlZzByNGUxcWE4NHZzbmF1ZXZkODggb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
   },
   {
@@ -81,7 +81,7 @@ export const SESSIONS = [
     day: '16/11 (Segunda)',
     date: '16/11',
     time: '19:00',
-    whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
+    whatsappGroupUrl: 'https://chat.whatsapp.com/LhXYq5tTjXp3c4oX6wsq00',
     googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NWhhaG82NmYydTNzcW91YWtyYTBmMzlyMzMgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
   }
 ];
