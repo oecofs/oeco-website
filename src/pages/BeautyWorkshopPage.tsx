@@ -73,7 +73,7 @@ export const SESSIONS = [
     date: '09/11',
     time: '19:00',
     whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
-    googleCalendarUrl: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Webinar+Beleza+das+Finan%C3%A7as+-+OECO&dates=20261109T220000Z/20261109T230000Z&details=Workshop+Online+e+Gratuito+Beleza+das+Finan%C3%A7as+com+Matheus+Gurgel+(OECO)&location=Online+(Google+Meet)'
+    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NG5hcXFlZzByNGUxcWE4NHZzbmF1ZXZkODggb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
   },
   {
     id: 'seg-nov-16',
@@ -82,7 +82,7 @@ export const SESSIONS = [
     date: '16/11',
     time: '19:00',
     whatsappGroupUrl: 'https://chat.whatsapp.com/IC8KNSmgyfj9zp1LQq42JT',
-    googleCalendarUrl: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Webinar+Beleza+das+Finan%C3%A7as+-+OECO&dates=20261116T220000Z/20261116T230000Z&details=Workshop+Online+e+Gratuito+Beleza+das+Finan%C3%A7as+com+Matheus+Gurgel+(OECO)&location=Online+(Google+Meet)'
+    googleCalendarUrl: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=NWhhaG82NmYydTNzcW91YWtyYTBmMzlyMzMgb2Vjb2ZzQG0&tmsrc=oecofs%40gmail.com'
   }
 ];
 
