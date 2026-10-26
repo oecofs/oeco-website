@@ -210,8 +210,36 @@ export const BeautyWorkshopPage: React.FC = () => {
   const [isSavingReferrer, setIsSavingReferrer] = useState(false);
   const [referrerSavedSuccess, setReferrerSavedSuccess] = useState(false);
 
-  // Referral code vindo da URL (ex: ?ref=21999999999)
-  const incomingRef = (searchParams.get('ref') || searchParams.get('indicado_por') || '').trim();
+  // Referral code vindo da URL (ex: ?ref=21999999999 ou ?convite=...) com persistência em sessão
+  const rawParamRef = (
+    searchParams.get('ref') ||
+    searchParams.get('convite') ||
+    searchParams.get('indicacao') ||
+    searchParams.get('indicado') ||
+    searchParams.get('indicado_por') ||
+    searchParams.get('convidado_por') ||
+    searchParams.get('r') ||
+    ''
+  ).trim();
+
+  const [incomingRef, setIncomingRef] = useState<string>(() => {
+    if (rawParamRef) {
+      try { sessionStorage.setItem('oeco_beauty_incoming_ref', rawParamRef); } catch {}
+      return rawParamRef;
+    }
+    try {
+      return sessionStorage.getItem('oeco_beauty_incoming_ref') || '';
+    } catch {
+      return '';
+    }
+  });
+
+  useEffect(() => {
+    if (rawParamRef) {
+      setIncomingRef(rawParamRef);
+      try { sessionStorage.setItem('oeco_beauty_incoming_ref', rawParamRef); } catch {}
+    }
+  }, [rawParamRef]);
   const [leadsList, setLeadsList] = useState<BeautyLead[]>([]);
   const [webhookUrl, setWebhookUrl] = useState('');
 
@@ -392,7 +420,7 @@ export const BeautyWorkshopPage: React.FC = () => {
       formalization: FORMALIZATIONS.find(f => f.id === formalization)?.label || formalization,
       painPoints: resolvedPainPoints,
       session: SESSIONS.find(s => s.id === sessionId)?.label || sessionId,
-      referredBy: incomingRef || undefined
+      referredBy: incomingRef || ''
     };
 
     // 1. Persist localmente
